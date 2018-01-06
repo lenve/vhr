@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.MenuRoleMapper">
+    <delete id="deleteMenuByRid" parameterType="long">
+        DELETE FROM menu_role WHERE rid=#{rid}
+    </delete>
+    <insert id="addMenu">
+        INSERT INTO menu_role(mid,rid) VALUES
+        <foreach collection="mids" item="mid" separator=",">
+            (#{mid},#{rid})
+        </foreach>
+    </insert>
+</mapper>
