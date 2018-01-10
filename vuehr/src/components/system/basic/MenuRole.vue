@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-  import {isNotNullORBlank} from '../../utils/utils'
+  import {isNotNullORBlank} from '../../../utils/utils'
   export default{
     mounted: function () {
       this.loading = true;
