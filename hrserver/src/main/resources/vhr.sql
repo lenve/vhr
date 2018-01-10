@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-01-06 17:44:49
+Date: 2018-01-10 10:34:42
 */
 CREATE DATABASE `vhr` DEFAULT CHARACTER SET utf8;
 
@@ -65,12 +65,27 @@ DROP TABLE IF EXISTS `department`;
 CREATE TABLE `department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL COMMENT '部门名称',
+  `parentId` int(11) DEFAULT NULL,
+  `depPath` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT '1',
+  `isParent` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of department
 -- ----------------------------
+INSERT INTO `department` VALUES ('1', '股东会', '-1', '.1', '1', '1');
+INSERT INTO `department` VALUES ('4', '董事长', '1', '.1.4', '1', '1');
+INSERT INTO `department` VALUES ('5', '总经理', '4', '.1.4.5', '1', '1');
+INSERT INTO `department` VALUES ('8', '财务部', '5', '.1.4.5.8', '1', '0');
+INSERT INTO `department` VALUES ('78', '市场部', '5', '.1.4.5.78', '1', '1');
+INSERT INTO `department` VALUES ('81', '华北市场部', '78', '.1.4.5.78.81', '1', '1');
+INSERT INTO `department` VALUES ('82', '华南市场部', '78', '.1.4.5.78.82', '1', '0');
+INSERT INTO `department` VALUES ('85', '石家庄市场部', '81', '.1.4.5.78.81.85', '1', '0');
+INSERT INTO `department` VALUES ('86', '西北市场部', '78', '.1.4.5.78.86', '1', '1');
+INSERT INTO `department` VALUES ('87', '西安市场', '86', '.1.4.5.78.86.87', '1', '1');
+INSERT INTO `department` VALUES ('89', '莲湖区市场', '87', '.1.4.5.78.86.87.89', '1', '0');
 
 -- ----------------------------
 -- Table structure for duty
@@ -126,11 +141,12 @@ CREATE TABLE `employee` (
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`departmentId`) REFERENCES `department` (`id`),
   CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`jobId`) REFERENCES `job` (`id`),
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`dutyId`) REFERENCES `duty` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of employee
 -- ----------------------------
+INSERT INTO `employee` VALUES ('1', null, null, null, null, null, null, null, null, null, null, null, '8', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for employeeec
@@ -278,6 +294,7 @@ CREATE TABLE `menu` (
   `keepAlive` tinyint(1) DEFAULT NULL,
   `requireAuth` tinyint(1) DEFAULT NULL,
   `parentId` int(11) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parentId` (`parentId`),
   CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `menu` (`id`)
@@ -286,34 +303,34 @@ CREATE TABLE `menu` (
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu` VALUES ('1', '/', null, null, '所有', null, null, null, null);
-INSERT INTO `menu` VALUES ('2', '/', '/home', 'Home', '员工资料', 'fa fa-user-circle-o', null, '1', '1');
-INSERT INTO `menu` VALUES ('3', '/', '/home', 'Home', '人事管理', 'fa fa-address-card-o', null, '1', '1');
-INSERT INTO `menu` VALUES ('4', '/', '/home', 'Home', '薪资管理', 'fa fa-money', null, '1', '1');
-INSERT INTO `menu` VALUES ('5', '/', '/home', 'Home', '统计管理', 'fa fa-bar-chart', null, '1', '1');
-INSERT INTO `menu` VALUES ('6', '/', '/home', 'Home', '系统管理', 'fa fa-windows', null, '1', '1');
-INSERT INTO `menu` VALUES ('7', '/employee/basic/**', '/emp/basic', 'EmpBasic', '基本资料', null, null, '1', '2');
-INSERT INTO `menu` VALUES ('8', '/employee/advanced/**', '/emp/adv', 'EmpAdv', '高级资料', null, null, '1', '2');
-INSERT INTO `menu` VALUES ('9', '/personnel/emp/**', '/per/emp', 'PerEmp', '员工资料', null, null, '1', '3');
-INSERT INTO `menu` VALUES ('10', '/personnel/ec/**', '/per/ec', 'PerEc', '员工奖惩', null, null, '1', '3');
-INSERT INTO `menu` VALUES ('11', '/personnel/train/**', '/per/train', 'PerTrain', '员工培训', null, null, '1', '3');
-INSERT INTO `menu` VALUES ('12', '/personnel/salary/**', '/per/salary', 'PerSalary', '员工调薪', null, null, '1', '3');
-INSERT INTO `menu` VALUES ('13', '/personnel/remove/**', '/per/mv', 'PerMv', '员工调动', null, null, '1', '3');
-INSERT INTO `menu` VALUES ('14', '/salary/sob/**', '/sal/sob', 'SalSob', '工资账套管理', null, null, '1', '4');
-INSERT INTO `menu` VALUES ('15', '/salary/sobcfg/**', '/sal/sobcfg', 'SalSobCfg', '员工账套设置', null, null, '1', '4');
-INSERT INTO `menu` VALUES ('16', '/salary/table/**', '/sal/table', 'SalTable', '工资表管理', null, null, '1', '4');
-INSERT INTO `menu` VALUES ('17', '/salary/month/**', '/sal/month', 'SalMonth', '月末处理', null, null, '1', '4');
-INSERT INTO `menu` VALUES ('18', '/salary/search/**', '/sal/search', 'SalSearch', '工资表查询', null, null, '1', '4');
-INSERT INTO `menu` VALUES ('19', '/statistics/all/**', '/sta/all', 'StaAll', '综合信息统计', null, null, '1', '5');
-INSERT INTO `menu` VALUES ('20', '/statistics/score/**', '/sta/score', 'StaScore', '员工积分统计', null, null, '1', '5');
-INSERT INTO `menu` VALUES ('21', '/statistics/personnel/**', '/sta/pers', 'StaPers', '人事信息统计', null, null, '1', '5');
-INSERT INTO `menu` VALUES ('22', '/statistics/recored/**', '/sta/record', 'StaRecord', '人事记录统计', null, null, '1', '5');
-INSERT INTO `menu` VALUES ('23', '/system/basic/**', '/sys/basic', 'SysBasic', '基础信息设置', null, null, '1', '6');
-INSERT INTO `menu` VALUES ('24', '/system/cfg/**', '/sys/cfg', 'SysCfg', '系统管理', null, null, '1', '6');
-INSERT INTO `menu` VALUES ('25', '/system/log/**', '/sys/log', 'SysLog', '操作日志管理', null, null, '1', '6');
-INSERT INTO `menu` VALUES ('26', '/system/hr/**', '/sys/hr', 'SysHr', '操作员管理', null, null, '1', '6');
-INSERT INTO `menu` VALUES ('27', '/system/data/**', '/sys/data', 'SysData', '备份恢复数据库', null, null, '1', '6');
-INSERT INTO `menu` VALUES ('28', '/system/init/**', '/sys/init', 'SysInit', '初始化数据库', null, null, '1', '6');
+INSERT INTO `menu` VALUES ('1', '/', null, null, '所有', null, null, null, null, '1');
+INSERT INTO `menu` VALUES ('2', '/', '/home', 'Home', '员工资料', 'fa fa-user-circle-o', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('3', '/', '/home', 'Home', '人事管理', 'fa fa-address-card-o', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('4', '/', '/home', 'Home', '薪资管理', 'fa fa-money', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('5', '/', '/home', 'Home', '统计管理', 'fa fa-bar-chart', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('6', '/', '/home', 'Home', '系统管理', 'fa fa-windows', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('7', '/employee/basic/**', '/emp/basic', 'EmpBasic', '基本资料', null, null, '1', '2', '1');
+INSERT INTO `menu` VALUES ('8', '/employee/advanced/**', '/emp/adv', 'EmpAdv', '高级资料', null, null, '1', '2', '0');
+INSERT INTO `menu` VALUES ('9', '/personnel/emp/**', '/per/emp', 'PerEmp', '员工资料', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('10', '/personnel/ec/**', '/per/ec', 'PerEc', '员工奖惩', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('11', '/personnel/train/**', '/per/train', 'PerTrain', '员工培训', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('12', '/personnel/salary/**', '/per/salary', 'PerSalary', '员工调薪', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('13', '/personnel/remove/**', '/per/mv', 'PerMv', '员工调动', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('14', '/salary/sob/**', '/sal/sob', 'SalSob', '工资账套管理', null, null, '1', '4', '1');
+INSERT INTO `menu` VALUES ('15', '/salary/sobcfg/**', '/sal/sobcfg', 'SalSobCfg', '员工账套设置', null, null, '1', '4', '1');
+INSERT INTO `menu` VALUES ('16', '/salary/table/**', '/sal/table', 'SalTable', '工资表管理', null, null, '1', '4', '1');
+INSERT INTO `menu` VALUES ('17', '/salary/month/**', '/sal/month', 'SalMonth', '月末处理', null, null, '1', '4', '1');
+INSERT INTO `menu` VALUES ('18', '/salary/search/**', '/sal/search', 'SalSearch', '工资表查询', null, null, '1', '4', '1');
+INSERT INTO `menu` VALUES ('19', '/statistics/all/**', '/sta/all', 'StaAll', '综合信息统计', null, null, '1', '5', '1');
+INSERT INTO `menu` VALUES ('20', '/statistics/score/**', '/sta/score', 'StaScore', '员工积分统计', null, null, '1', '5', '1');
+INSERT INTO `menu` VALUES ('21', '/statistics/personnel/**', '/sta/pers', 'StaPers', '人事信息统计', null, null, '1', '5', '1');
+INSERT INTO `menu` VALUES ('22', '/statistics/recored/**', '/sta/record', 'StaRecord', '人事记录统计', null, null, '1', '5', '1');
+INSERT INTO `menu` VALUES ('23', '/system/basic/**', '/sys/basic', 'SysBasic', '基础信息设置', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('24', '/system/cfg/**', '/sys/cfg', 'SysCfg', '系统管理', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('25', '/system/log/**', '/sys/log', 'SysLog', '操作日志管理', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('26', '/system/hr/**', '/sys/hr', 'SysHr', '操作员管理', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('27', '/system/data/**', '/sys/data', 'SysData', '备份恢复数据库', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('28', '/system/init/**', '/sys/init', 'SysInit', '初始化数据库', null, null, '1', '6', '1');
 
 -- ----------------------------
 -- Table structure for menu_role
@@ -333,8 +350,8 @@ CREATE TABLE `menu_role` (
 -- ----------------------------
 -- Records of menu_role
 -- ----------------------------
-INSERT INTO `menu_role` VALUES ('161', '7', '6');
-INSERT INTO `menu_role` VALUES ('162', '8', '6');
+INSERT INTO `menu_role` VALUES ('161', '7', '3');
+INSERT INTO `menu_role` VALUES ('162', '7', '6');
 INSERT INTO `menu_role` VALUES ('163', '9', '6');
 INSERT INTO `menu_role` VALUES ('164', '10', '6');
 INSERT INTO `menu_role` VALUES ('165', '11', '6');
@@ -414,7 +431,7 @@ CREATE TABLE `role` (
   `name` varchar(64) DEFAULT NULL,
   `nameZh` varchar(64) DEFAULT NULL COMMENT '角色名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
@@ -426,6 +443,7 @@ INSERT INTO `role` VALUES ('4', 'ROLE_train', '培训主管');
 INSERT INTO `role` VALUES ('5', 'ROLE_performance', '薪酬绩效主管');
 INSERT INTO `role` VALUES ('6', 'ROLE_admin', '系统管理员');
 INSERT INTO `role` VALUES ('13', 'ROLE_test2', '测试角色2');
+INSERT INTO `role` VALUES ('14', 'ROLE_test1', '测试角色1');
 
 -- ----------------------------
 -- Table structure for salary
@@ -450,4 +468,48 @@ CREATE TABLE `salary` (
 -- ----------------------------
 -- Records of salary
 -- ----------------------------
+
+-- ----------------------------
+-- Procedure structure for addDep
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `addDep`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addDep`(in depName varchar(32),in parentId int,in enabled boolean,out result int,out result2 int)
+begin
+  declare did int;
+  declare pDepPath varchar(64);
+  insert into department set name=depName,parentId=parentId,enabled=enabled;
+  select row_count() into result;
+  select last_insert_id() into did;
+  set result2=did;
+  select depPath into pDepPath from department where id=parentId;
+  update department set depPath=concat(pDepPath,'.',did) where id=did;
+  update department set isParent=true where id=parentId;
+end
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for deleteDep
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `deleteDep`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteDep`(in did int,out result int)
+begin
+  declare ecount int;
+  declare pid int;
+  declare pcount int;
+  select count(*) into ecount from employee where departmentId=did;
+  if ecount>0 then set result=-1;
+  else 
+  select parentId into pid from department where id=did;
+  delete from department where id=did and isParent=false;
+  select row_count() into result;
+  select count(*) into pcount from department where parentId=pid;
+  if pcount=0 then update department set isParent=false where id=pid;
+  end if;
+  end if;
+end
+;;
+DELIMITER ;
 SET FOREIGN_KEY_CHECKS=1;

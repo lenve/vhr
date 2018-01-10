@@ -1,8 +1,10 @@
-package org.sang.controller;
+package org.sang.controller.system;
 
+import org.sang.bean.Department;
 import org.sang.bean.Menu;
 import org.sang.bean.RespBean;
 import org.sang.bean.Role;
+import org.sang.service.DepartmentService;
 import org.sang.service.MenuRoleService;
 import org.sang.service.MenuService;
 import org.sang.service.RoleService;
@@ -28,6 +30,8 @@ public class SystemBasicController {
     MenuService menuService;
     @Autowired
     MenuRoleService menuRoleService;
+    @Autowired
+    DepartmentService departmentService;
 
     @RequestMapping(value = "/role/{rid}", method = RequestMethod.DELETE)
     public RespBean deleteRole(@PathVariable Long rid) {
@@ -66,5 +70,36 @@ public class SystemBasicController {
     @RequestMapping("/roles")
     public List<Role> allRoles() {
         return roleService.roles();
+    }
+
+    @RequestMapping(value = "/dep", method = RequestMethod.POST)
+    public Map<String,Object> addDep(Department department) {
+        Map<String, Object> map = new HashMap<>();
+        if (departmentService.addDep(department) == 1) {
+            map.put("status", "success");
+            map.put("msg", department);
+            return map;
+        }
+        map.put("status", "error");
+        map.put("msg", "添加失败!");
+        return map;
+    }
+
+    @RequestMapping(value = "/dep/{did}", method = RequestMethod.DELETE)
+    public RespBean deleteDep(@PathVariable Long did) {
+        if (departmentService.deleteDep(did) == 1) {
+            return new RespBean("success", "删除成功!");
+        }
+        return new RespBean("error", "删除失败!");
+    }
+
+    @RequestMapping(value = "/dep/{pid}",method = RequestMethod.GET)
+    public List<Department> getDepByPid(@PathVariable Long pid) {
+        return departmentService.getDepByPid(pid);
+    }
+
+    @RequestMapping(value = "/deps",method = RequestMethod.GET)
+    public List<Department> getAllDeps() {
+        return departmentService.getAllDeps();
     }
 }

@@ -1,4 +1,4 @@
-package org.sang.controller;
+package org.sang.controller.system;
 
 import org.sang.bean.Hr;
 import org.sang.bean.RespBean;
