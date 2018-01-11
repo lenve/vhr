@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-01-10 10:34:42
+Date: 2018-01-11 11:40:04
 */
 CREATE DATABASE `vhr` DEFAULT CHARACTER SET utf8;
 
@@ -76,8 +76,8 @@ CREATE TABLE `department` (
 -- Records of department
 -- ----------------------------
 INSERT INTO `department` VALUES ('1', '股东会', '-1', '.1', '1', '1');
-INSERT INTO `department` VALUES ('4', '董事长', '1', '.1.4', '1', '1');
-INSERT INTO `department` VALUES ('5', '总经理', '4', '.1.4.5', '1', '1');
+INSERT INTO `department` VALUES ('4', '董事会', '1', '.1.4', '1', '1');
+INSERT INTO `department` VALUES ('5', '总办', '4', '.1.4.5', '1', '1');
 INSERT INTO `department` VALUES ('8', '财务部', '5', '.1.4.5.8', '1', '0');
 INSERT INTO `department` VALUES ('78', '市场部', '5', '.1.4.5.78', '1', '1');
 INSERT INTO `department` VALUES ('81', '华北市场部', '78', '.1.4.5.78.81', '1', '1');
@@ -86,20 +86,6 @@ INSERT INTO `department` VALUES ('85', '石家庄市场部', '81', '.1.4.5.78.81
 INSERT INTO `department` VALUES ('86', '西北市场部', '78', '.1.4.5.78.86', '1', '1');
 INSERT INTO `department` VALUES ('87', '西安市场', '86', '.1.4.5.78.86.87', '1', '1');
 INSERT INTO `department` VALUES ('89', '莲湖区市场', '87', '.1.4.5.78.86.87.89', '1', '0');
-
--- ----------------------------
--- Table structure for duty
--- ----------------------------
-DROP TABLE IF EXISTS `duty`;
-CREATE TABLE `duty` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL COMMENT '职称',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of duty
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for employee
@@ -119,8 +105,8 @@ CREATE TABLE `employee` (
   `phone` varchar(11) DEFAULT NULL COMMENT '电话号码',
   `address` varchar(64) DEFAULT NULL COMMENT '联系地址',
   `departmentId` int(11) DEFAULT NULL COMMENT '所属部门',
-  `jobId` int(11) DEFAULT NULL COMMENT '职位ID',
-  `dutyId` int(11) DEFAULT NULL COMMENT '职称ID',
+  `jobId` int(11) DEFAULT NULL COMMENT '职称ID',
+  `posId` int(11) DEFAULT NULL COMMENT '职位ID',
   `engageForm` varchar(8) DEFAULT NULL COMMENT '聘用形式',
   `tiptopDegree` varchar(8) DEFAULT NULL COMMENT '最高学历',
   `specialty` varchar(32) DEFAULT NULL COMMENT '所属专业',
@@ -137,10 +123,10 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`id`),
   KEY `departmentId` (`departmentId`),
   KEY `jobId` (`jobId`),
-  KEY `dutyId` (`dutyId`),
+  KEY `dutyId` (`posId`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`departmentId`) REFERENCES `department` (`id`),
-  CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`jobId`) REFERENCES `job` (`id`),
-  CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`dutyId`) REFERENCES `duty` (`id`)
+  CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`jobId`) REFERENCES `joblevel` (`id`),
+  CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`posId`) REFERENCES `position` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -267,17 +253,17 @@ INSERT INTO `hr_role` VALUES ('46', '11', '5');
 INSERT INTO `hr_role` VALUES ('47', '10', '3');
 
 -- ----------------------------
--- Table structure for job
+-- Table structure for joblevel
 -- ----------------------------
-DROP TABLE IF EXISTS `job`;
-CREATE TABLE `job` (
+DROP TABLE IF EXISTS `joblevel`;
+CREATE TABLE `joblevel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL COMMENT '职位名称',
+  `name` varchar(32) DEFAULT NULL COMMENT '职称名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of job
+-- Records of joblevel
 -- ----------------------------
 
 -- ----------------------------
@@ -421,6 +407,24 @@ CREATE TABLE `oplog` (
 -- ----------------------------
 -- Records of oplog
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for position
+-- ----------------------------
+DROP TABLE IF EXISTS `position`;
+CREATE TABLE `position` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL COMMENT '职位',
+  `createDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `enabled` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of position
+-- ----------------------------
+INSERT INTO `position` VALUES ('1', '市场总监', '2018-01-11 11:35:26', '1');
 
 -- ----------------------------
 -- Table structure for role
