@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.JobLevelMapper">
+    <select id="getJobLevelByName" parameterType="string" resultType="org.sang.bean.JobLevel">
+        select * from joblevel WHERE name=#{name};
+    </select>
+    <insert id="addJobLevel" parameterType="org.sang.bean.JobLevel">
+        INSERT INTO joblevel SET name=#{jobLevel.name},titleLevel=#{jobLevel.titleLevel}
+    </insert>
+    <select id="getAllJobLevels" resultType="org.sang.bean.JobLevel">
+        select * from joblevel WHERE enabled=true;
+    </select>
+    <delete id="deleteJobLevelById">
+        DELETE FROM joblevel WHERE id IN
+        <foreach collection="ids" item="id" close=")" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateJobLevel">
+        UPDATE joblevel
+        <set>
+            <if test="jobLevel.name!=null">
+                name=#{jobLevel.name},
+            </if>
+            <if test="jobLevel.titleLevel!=null">
+                titleLevel=#{jobLevel.titleLevel},
+            </if>
+        </set>
+        WHERE id=#{jobLevel.id}
+    </update>
+</mapper>

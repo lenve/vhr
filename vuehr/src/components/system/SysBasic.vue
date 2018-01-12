@@ -5,10 +5,10 @@
         <dep-mana></dep-mana>
       </el-tab-pane>
       <el-tab-pane label="职位管理" name="positionMana">
-        <pos-mana></pos-mana>
+        <pos-mana state="position"></pos-mana>
       </el-tab-pane>
       <el-tab-pane label="职称管理" name="jobTitleMana">
-        <jobtitle-mana></jobtitle-mana>
+        <pos-mana state="jobtitle"></pos-mana>
       </el-tab-pane>
       <el-tab-pane label="奖惩规则" name="ecCfg">
         <ec-mana></ec-mana>

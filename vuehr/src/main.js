@@ -11,6 +11,9 @@ import {postRequest} from './utils/api'
 import {deleteRequest} from './utils/api'
 import {putRequest} from './utils/api'
 import {initMenu} from './utils/utils'
+import {isNotNullORBlank} from './utils/utils'
+import './utils/filter_utils'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
@@ -18,6 +21,7 @@ Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.putRequest = putRequest;
+Vue.prototype.isNotNullORBlank = isNotNullORBlank;
 
 router.beforeEach((to, from, next)=> {
     if (to.name == 'Login') {

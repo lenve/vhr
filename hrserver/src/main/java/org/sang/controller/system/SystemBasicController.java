@@ -1,13 +1,7 @@
 package org.sang.controller.system;
 
-import org.sang.bean.Department;
-import org.sang.bean.Menu;
-import org.sang.bean.RespBean;
-import org.sang.bean.Role;
-import org.sang.service.DepartmentService;
-import org.sang.service.MenuRoleService;
-import org.sang.service.MenuService;
-import org.sang.service.RoleService;
+import org.sang.bean.*;
+import org.sang.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +26,10 @@ public class SystemBasicController {
     MenuRoleService menuRoleService;
     @Autowired
     DepartmentService departmentService;
+    @Autowired
+    PositionService positionService;
+    @Autowired
+    JobLevelService jobLevelService;
 
     @RequestMapping(value = "/role/{rid}", method = RequestMethod.DELETE)
     public RespBean deleteRole(@PathVariable Long rid) {
@@ -73,7 +71,7 @@ public class SystemBasicController {
     }
 
     @RequestMapping(value = "/dep", method = RequestMethod.POST)
-    public Map<String,Object> addDep(Department department) {
+    public Map<String, Object> addDep(Department department) {
         Map<String, Object> map = new HashMap<>();
         if (departmentService.addDep(department) == 1) {
             map.put("status", "success");
@@ -93,13 +91,77 @@ public class SystemBasicController {
         return new RespBean("error", "删除失败!");
     }
 
-    @RequestMapping(value = "/dep/{pid}",method = RequestMethod.GET)
+    @RequestMapping(value = "/dep/{pid}", method = RequestMethod.GET)
     public List<Department> getDepByPid(@PathVariable Long pid) {
         return departmentService.getDepByPid(pid);
     }
 
-    @RequestMapping(value = "/deps",method = RequestMethod.GET)
+    @RequestMapping(value = "/deps", method = RequestMethod.GET)
     public List<Department> getAllDeps() {
         return departmentService.getAllDeps();
+    }
+
+    @RequestMapping(value = "/position", method = RequestMethod.POST)
+    public RespBean addPos(Position pos) {
+        int result = positionService.addPos(pos);
+        if (result == 1) {
+            return new RespBean("success", "添加成功!");
+        } else if (result == -1) {
+            return new RespBean("error", "职位名重复，添加失败!");
+        }
+        return new RespBean("error", "添加失败!");
+    }
+
+    @RequestMapping(value = "/positions", method = RequestMethod.GET)
+    public List<Position> getAllPos() {
+        return positionService.getAllPos();
+    }
+
+    @RequestMapping("/position/{pids}")
+    public RespBean deletePosById(@PathVariable String pids) {
+        if (positionService.deletePosById(pids)) {
+            return new RespBean("success", "删除成功!");
+        }
+        return new RespBean("error", "删除失败!");
+    }
+
+    @RequestMapping(value = "/position", method = RequestMethod.PUT)
+    public RespBean updatePosById(Position position) {
+        if (positionService.updatePosById(position) == 1) {
+            return new RespBean("success", "修改成功!");
+        }
+        return new RespBean("error", "修改失败!");
+    }
+
+    @RequestMapping(value = "/joblevel",method = RequestMethod.POST)
+    public RespBean addJobLevel(JobLevel jobLevel) {
+        int result = jobLevelService.addJobLevel(jobLevel);
+        if (result == 1) {
+            return new RespBean("success", "添加成功!");
+        } else if (result == -1) {
+            return new RespBean("error", "职称名重复，添加失败!");
+        }
+        return new RespBean("error", "添加失败!");
+    }
+
+    @RequestMapping(value = "/joblevels",method = RequestMethod.GET)
+    public List<JobLevel> getAllJobLevels() {
+        return jobLevelService.getAllJobLevels();
+    }
+
+    @RequestMapping(value = "/joblevel/{ids}",method = RequestMethod.DELETE)
+    public RespBean deleteJobLevelById(@PathVariable String ids) {
+        if (jobLevelService.deleteJobLevelById(ids)) {
+            return new RespBean("success", "删除成功!");
+        }
+        return new RespBean("error", "删除失败!");
+    }
+
+    @RequestMapping(value = "/joblevel",method = RequestMethod.PUT)
+    public RespBean updateJobLevel(JobLevel jobLevel) {
+        if (jobLevelService.updateJobLevel(jobLevel) == 1) {
+            return new RespBean("success", "修改成功!");
+        }
+        return new RespBean("error", "修改失败!");
     }
 }
