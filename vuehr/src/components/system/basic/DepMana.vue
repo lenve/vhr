@@ -37,7 +37,7 @@
           </div>
           <div style="margin-top: 10px">
             <span>部门名称</span>
-            <el-input size="mini" style="width: 200px;" v-model="depName" placeholder="请输入部门名称..."></el-input>
+            <el-input size="mini" style="width: 200px;" v-model="depName" placeholder="请输入部门名称..." @keyup.enter.native="addDep"></el-input>
           </div>
           <span slot="footer" class="dialog-footer">
     <el-button size="small" @click="dialogVisible = false">取消</el-button>
