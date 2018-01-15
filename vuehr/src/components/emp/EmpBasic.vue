@@ -1,20 +1,34 @@
 <template>
   <div>
     <el-container>
-      <el-header style="padding: 0px;display:flex;justify-content:flex-start;align-items: center">
-        <el-input
-          placeholder="通过员工名搜索员工,记得回车哦..."
-          clearable
-          @change="keywordsChange"
-          style="width: 300px;margin: 0px;padding: 0px;"
-          size="mini"
-          @keyup.enter.native="searchEmp"
-          prefix-icon="el-icon-search"
-          v-model="keywords">
-        </el-input>
-        <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" @click="searchEmp">搜索
-        </el-button>
-        <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-plus" @click="showAddEmpView">
+      <el-header style="padding: 0px;display:flex;justify-content:space-between;align-items: center">
+        <div style="display: inline">
+          <el-input
+            placeholder="通过员工名搜索员工,记得回车哦..."
+            clearable
+            @change="keywordsChange"
+            style="width: 300px;margin: 0px;padding: 0px;"
+            size="mini"
+            @keyup.enter.native="searchEmp"
+            prefix-icon="el-icon-search"
+            v-model="keywords">
+          </el-input>
+          <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" @click="searchEmp">搜索
+          </el-button>
+          <el-popover
+            placement="bottom"
+            title="标题"
+            width="200"
+            v-model="advanceSearchViewVisible"
+            trigger="manual"
+            content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+            <el-button slot="reference" type="primary" size="mini" style="margin-left: 5px" @click="showAdvanceSearchView"><i
+              class="fa fa-angle-double-down fa-lg" style="margin-right: 5px"></i>高级搜索
+            </el-button>
+          </el-popover>
+        </div>
+        <el-button type="primary" size="mini" style="margin-left: 5px;margin-right: 20px" icon="el-icon-plus"
+                   @click="showAddEmpView">
           添加员工
         </el-button>
       </el-header>
@@ -174,7 +188,9 @@
             </el-table-column>
           </el-table>
           <div style="display: flex;justify-content: space-between;margin: 2px">
-            <el-button type="danger" size="mini" v-if="emps.length>0" :disabled="multipleSelection.length==0" @click="deleteManyEmps">批量删除</el-button>
+            <el-button type="danger" size="mini" v-if="emps.length>0" :disabled="multipleSelection.length==0"
+                       @click="deleteManyEmps">批量删除
+            </el-button>
             <el-pagination
               background
               :page-size="10"
@@ -482,7 +498,7 @@
       return {
         emps: [],
         keywords: '',
-        dialogTitle:'',
+        dialogTitle: '',
         multipleSelection: [],
         depTextColor: '#c0c4cc',
         nations: [],
@@ -503,6 +519,7 @@
         },
         dialogVisible: false,
         tableLoading: false,
+        advanceSearchViewVisible: false,
         showOrHidePop: false,
         emp: {
           name: '',
@@ -579,6 +596,9 @@
       this.loadEmps();
     },
     methods: {
+      showAdvanceSearchView(){
+        this.advanceSearchViewVisible = true;
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -588,9 +608,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var ids='';
-          for(var i=0;i<this.multipleSelection.length;i++) {
-            ids += this.multipleSelection[i].id+",";
+          var ids = '';
+          for (var i = 0; i < this.multipleSelection.length; i++) {
+            ids += this.multipleSelection[i].id + ",";
           }
           this.doDelete(ids);
         }).catch(() => {
