@@ -130,6 +130,19 @@ npm run build
 16.[组件复用](https://github.com/lenve/vhr/wiki/16.%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8)  
 17.[[题外话]利用git标签回退至任意版本](https://github.com/lenve/vhr/wiki/17.%5B%E9%A2%98%E5%A4%96%E8%AF%9D%5D%E5%88%A9%E7%94%A8git%E6%A0%87%E7%AD%BE%E5%9B%9E%E9%80%80%E8%87%B3%E4%BB%BB%E6%84%8F%E7%89%88%E6%9C%AC)  
 
+### 2018.1.15 更新
+
+本次更新版本：v20180115  
+
+本次更新完成了员工基本信息管理，页面在 **[员工资料->基本资料]**  
+
+>本次更新也更新了数据库脚本，小伙伴们需要重新下载数据库脚本执行。  
+
+#### 相关文档：  
+
+18.[员工基本信息管理功能介绍](https://github.com/lenve/vhr/wiki/18.%E5%91%98%E5%B7%A5%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D)  
+19.[SpringBoot中自定义参数绑定](https://github.com/lenve/vhr/wiki/19.SpringBoot%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A)  
+
 ## 其他资料
 
 关注公众号查看更多全栈资料：  
