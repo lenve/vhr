@@ -70,10 +70,10 @@ public class EmpBasicController {
     }
 
     @RequestMapping(value = "/emp", method = RequestMethod.GET)
-    public Map<String, Object> getEmployeeByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam(defaultValue = "") String keywords) {
+    public Map<String, Object> getEmployeeByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam(defaultValue = "") String keywords, Long politicId, Long nationId, Long posId, Long jobLevelId, String engageForm, Long departmentId, String beginDateScope) {
         Map<String, Object> map = new HashMap<>();
-        List<Employee> employeeByPage = empService.getEmployeeByPage(page, size, keywords);
-        Long count = empService.getCountByKeywords(keywords);
+        List<Employee> employeeByPage = empService.getEmployeeByPage(page, size, keywords,politicId,nationId,posId,jobLevelId,engageForm,departmentId,beginDateScope);
+        Long count = empService.getCountByKeywords(keywords,politicId,nationId,posId,jobLevelId,engageForm,departmentId,beginDateScope);
         map.put("emps", employeeByPage);
         map.put("count", count);
         return map;

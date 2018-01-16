@@ -9,23 +9,18 @@
             @change="keywordsChange"
             style="width: 300px;margin: 0px;padding: 0px;"
             size="mini"
+            :disabled="advanceSearchViewVisible"
             @keyup.enter.native="searchEmp"
             prefix-icon="el-icon-search"
             v-model="keywords">
           </el-input>
           <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" @click="searchEmp">搜索
           </el-button>
-          <el-popover
-            placement="bottom"
-            title="标题"
-            width="200"
-            v-model="advanceSearchViewVisible"
-            trigger="manual"
-            content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-            <el-button slot="reference" type="primary" size="mini" style="margin-left: 5px" @click="showAdvanceSearchView"><i
-              class="fa fa-angle-double-down fa-lg" style="margin-right: 5px"></i>高级搜索
-            </el-button>
-          </el-popover>
+          <el-button slot="reference" type="primary" size="mini" style="margin-left: 5px"
+                     @click="showAdvanceSearchView"><i
+            class="fa fa-lg" v-bind:class="[advanceSearchViewVisible ? faangledoubleup:faangledoubledown]"
+            style="margin-right: 5px"></i>高级搜索
+          </el-button>
         </div>
         <el-button type="primary" size="mini" style="margin-left: 5px;margin-right: 20px" icon="el-icon-plus"
                    @click="showAddEmpView">
@@ -34,6 +29,99 @@
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
+          <transition name="slide-fade">
+            <div
+              style="margin-bottom: 10px;border: 1px;border-radius: 5px;border-style: solid;padding: 5px 0px 5px 0px;box-sizing:border-box;border-color: #20a0ff"
+              v-show="advanceSearchViewVisible">
+              <el-row>
+                <el-col :span="5">
+                  政治面貌:
+                  <el-select v-model="emp.politicId" style="width: 130px" size="mini" placeholder="政治面貌">
+                    <el-option
+                      v-for="item in politics"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="4">
+                  民族:
+                  <el-select v-model="emp.nationId" style="width: 130px" size="mini" placeholder="请选择民族">
+                    <el-option
+                      v-for="item in nations"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="4">
+                  职位:
+                  <el-select v-model="emp.posId" style="width: 130px" size="mini" placeholder="请选择职位">
+                    <el-option
+                      v-for="item in positions"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="4">
+                  职称:
+                  <el-select v-model="emp.jobLevelId" style="width: 130px" size="mini" placeholder="请选择职称">
+                    <el-option
+                      v-for="item in joblevels"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="7">
+                  聘用形式:
+                  <el-radio-group v-model="emp.engageForm">
+                    <el-radio label="劳动合同">劳动合同</el-radio>
+                    <el-radio style="margin-left: 15px" label="劳务合同">劳务合同</el-radio>
+                  </el-radio-group>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 10px">
+                <el-col :span="5">
+                  所属部门:
+                  <el-popover
+                    v-model="showOrHidePop"
+                    placement="right"
+                    title="请选择部门"
+                    trigger="manual">
+                    <el-tree :data="deps" :default-expand-all="true" :props="defaultProps" :expand-on-click-node="false"
+                             @node-click="handleNodeClick"></el-tree>
+                    <div slot="reference"
+                         style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                         @click.left="showDepTree" v-bind:style="{color: depTextColor}">{{emp.departmentName}}
+                    </div>
+                  </el-popover>
+                </el-col>
+                <el-col :span="10">
+                  入职日期:
+                  <el-date-picker
+                    v-model="beginDateScope"
+                    unlink-panels
+                    size="mini"
+                    type="daterange"
+                    value-format="yyyy-MM-dd"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                  </el-date-picker>
+                </el-col>
+                <el-col :span="5" :offset="4">
+                  <el-button size="mini" @click="cancelSearch">取消</el-button>
+                  <el-button icon="el-icon-search" type="primary" size="mini" @click="searchEmp">搜索</el-button>
+                </el-col>
+              </el-row>
+            </div>
+          </transition>
           <el-table
             :data="emps"
             v-loading="tableLoading"
@@ -498,6 +586,9 @@
       return {
         emps: [],
         keywords: '',
+        beginDateScope: '',
+        faangledoubleup: 'fa-angle-double-up',
+        faangledoubledown: 'fa-angle-double-down',
         dialogTitle: '',
         multipleSelection: [],
         depTextColor: '#c0c4cc',
@@ -596,8 +687,20 @@
       this.loadEmps();
     },
     methods: {
+      cancelSearch(){
+        this.advanceSearchViewVisible = false;
+        this.emptyEmpData();
+        this.beginDateScope = '';
+        this.loadEmps();
+      },
       showAdvanceSearchView(){
-        this.advanceSearchViewVisible = true;
+        this.advanceSearchViewVisible = !this.advanceSearchViewVisible;
+        this.keywords = '';
+        if (!this.advanceSearchViewVisible) {
+          this.emptyEmpData();
+          this.beginDateScope = '';
+          this.loadEmps();
+        }
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
@@ -653,12 +756,13 @@
       loadEmps(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/emp/basic/emp?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
+        this.getRequest("/emp/basic/emp?page=" + this.currentPage + "&size=10&keywords=" + this.keywords + "&politicId=" + this.emp.politicId + "&nationId=" + this.emp.nationId + "&posId=" + this.emp.posId + "&jobLevelId=" + this.emp.jobLevelId + "&engageForm=" + this.emp.engageForm + "&departmentId=" + this.emp.departmentId + "&beginDateScope=" + this.beginDateScope).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
             _this.emps = data.emps;
             _this.totalCount = data.count;
+//            _this.emptyEmpData();
           }
         })
       },
@@ -797,5 +901,18 @@
   .el-dialog__body {
     padding-top: 0px;
     padding-bottom: 0px;
+  }
+
+  .slide-fade-enter-active {
+    transition: all .8s ease;
+  }
+
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+
+  .slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
   }
 </style>

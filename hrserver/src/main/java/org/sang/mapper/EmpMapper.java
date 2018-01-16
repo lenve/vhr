@@ -6,6 +6,7 @@ import org.sang.bean.Employee;
 import org.sang.bean.Nation;
 import org.sang.bean.PoliticsStatus;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,9 +22,9 @@ public interface EmpMapper {
 
     Long getMaxId();
 
-    List<Employee> getEmployeeByPage(@Param("start") int start, @Param("size") Integer size, @Param("keywords") String keywords);
+    List<Employee> getEmployeeByPage(@Param("start") int start, @Param("size") Integer size, @Param("keywords") String keywords, @Param("politicId") Long politicId, @Param("nationId") Long nationId, @Param("posId") Long posId, @Param("jobLevelId") Long jobLevelId, @Param("engageForm") String engageForm, @Param("departmentId")Long  departmentId, @Param("startBeginDate") Date startBeginDate, @Param("endBeginDate") Date endBeginDate);
 
-    Long getCountByKeywords(@Param("keywords") String keywords);
+    Long getCountByKeywords(@Param("keywords") String keywords, @Param("politicId") Long politicId, @Param("nationId") Long nationId, @Param("posId") Long posId, @Param("jobLevelId") Long jobLevelId, @Param("engageForm") String engageForm, @Param("departmentId")Long  departmentId, @Param("startBeginDate") Date startBeginDate, @Param("endBeginDate") Date endBeginDate);
 
     int updateEmp(@Param("emp") Employee employee);
 
