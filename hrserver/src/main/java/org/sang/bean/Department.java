@@ -16,6 +16,28 @@ public class Department {
     private boolean enabled;
     private boolean isParent;
 
+    public Department() {
+    }
+
+    public Department(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Department that = (Department) o;
+
+        return name != null ? name.equals(that.name) : that.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
+
     //存储过程执行结果
     private Integer result;
     private List<Department> children = new ArrayList<>();

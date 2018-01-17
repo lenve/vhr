@@ -74,7 +74,7 @@ public class EmpService {
             } catch (ParseException e) {
             }
         }
-        return empMapper.getCountByKeywords(keywords,politicId, nationId, posId, jobLevelId, engageForm, departmentId, startBeginDate, endBeginDate);
+        return empMapper.getCountByKeywords(keywords, politicId, nationId, posId, jobLevelId, engageForm, departmentId, startBeginDate, endBeginDate);
     }
 
     public int updateEmp(Employee employee) {
@@ -88,5 +88,13 @@ public class EmpService {
     public boolean deleteEmpById(String ids) {
         String[] split = ids.split(",");
         return empMapper.deleteEmpById(split) == split.length;
+    }
+
+    public List<Employee> getAllEmployees() {
+        return empMapper.getEmployeeByPage(null, null, "", null, null, null, null, null, null, null, null);
+    }
+
+    public int addEmps(List<Employee> emps) {
+        return empMapper.addEmps(emps);
     }
 }

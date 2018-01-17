@@ -1,6 +1,5 @@
 package org.sang.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.sang.bean.Menu;
 
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 /**
  * Created by sang on 2017/12/28.
  */
-@Mapper
 public interface MenuMapper {
     List<Menu> getAllMenu();
 

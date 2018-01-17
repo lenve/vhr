@@ -2,12 +2,15 @@ package org.sang.controller.emp;
 
 import org.sang.bean.Employee;
 import org.sang.bean.RespBean;
+import org.sang.common.poi.PoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.EmpService;
 import org.sang.service.JobLevelService;
 import org.sang.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,10 +75,24 @@ public class EmpBasicController {
     @RequestMapping(value = "/emp", method = RequestMethod.GET)
     public Map<String, Object> getEmployeeByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam(defaultValue = "") String keywords, Long politicId, Long nationId, Long posId, Long jobLevelId, String engageForm, Long departmentId, String beginDateScope) {
         Map<String, Object> map = new HashMap<>();
-        List<Employee> employeeByPage = empService.getEmployeeByPage(page, size, keywords,politicId,nationId,posId,jobLevelId,engageForm,departmentId,beginDateScope);
-        Long count = empService.getCountByKeywords(keywords,politicId,nationId,posId,jobLevelId,engageForm,departmentId,beginDateScope);
+        List<Employee> employeeByPage = empService.getEmployeeByPage(page, size, keywords, politicId, nationId, posId, jobLevelId, engageForm, departmentId, beginDateScope);
+        Long count = empService.getCountByKeywords(keywords, politicId, nationId, posId, jobLevelId, engageForm, departmentId, beginDateScope);
         map.put("emps", employeeByPage);
         map.put("count", count);
         return map;
+    }
+
+    @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> exportEmp() {
+        return PoiUtils.exportEmp2Excel(empService.getAllEmployees());
+    }
+
+    @RequestMapping(value = "/importEmp", method = RequestMethod.POST)
+    public RespBean importEmp(MultipartFile file) {
+        List<Employee> emps = PoiUtils.importEmp2List(file,empService.getAllNations(),empService.getAllPolitics(),departmentService.getAllDeps(),positionService.getAllPos(),jobLevelService.getAllJobLevels());
+        if (empService.addEmps(emps) == emps.size()) {
+            return new RespBean("success", "导入成功!");
+        }
+        return new RespBean("error", "导入失败!");
     }
 }

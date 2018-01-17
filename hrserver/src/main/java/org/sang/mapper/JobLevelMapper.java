@@ -1,6 +1,5 @@
 package org.sang.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sang.bean.JobLevel;
 
@@ -9,7 +8,6 @@ import java.util.List;
 /**
  * Created by sang on 2018/1/11.
  */
-@Mapper
 public interface JobLevelMapper {
     JobLevel getJobLevelByName(String name);
 

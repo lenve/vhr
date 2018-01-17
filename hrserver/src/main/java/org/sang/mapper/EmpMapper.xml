@@ -112,7 +112,9 @@
         <if test="startBeginDate!=null and endBeginDate!=null">
             AND e.beginDate BETWEEN #{startBeginDate} AND #{endBeginDate}
         </if>
-        order by e.id limit #{start},#{size}
+        <if test="start!=null and size!=null">
+            order by e.id limit #{start},#{size}
+        </if>
     </select>
     <select id="getCountByKeywords" resultType="Long">
         SELECT count(*) FROM employee e WHERE e.name LIKE concat('%',#{keywords},'%')
@@ -225,4 +227,30 @@
             #{id}
         </foreach>
     </delete>
+    <insert id="addEmps">
+        insert into employee (name, gender,
+        birthday, idCard, wedlock, nationId,
+        nativePlace, politicId, email,
+        phone, address, departmentId,
+        jobLevelId, posId, engageForm,
+        tiptopDegree, specialty, school,
+        beginDate,workID,
+        contractTerm, conversionTime,
+        beginContract, endContract, workAge
+        )
+        values
+        <foreach collection="emps" item="emp" separator=",">
+            (#{emp.name,jdbcType=VARCHAR}, #{emp.gender,jdbcType=CHAR},
+            #{emp.birthday,jdbcType=DATE}, #{emp.idCard,jdbcType=CHAR}, #{emp.wedlock,jdbcType=CHAR}, #{emp.nationId,jdbcType=BIGINT},
+            #{emp.nativePlace,jdbcType=VARCHAR}, #{emp.politicId,jdbcType=BIGINT}, #{emp.email,jdbcType=VARCHAR},
+            #{emp.phone,jdbcType=VARCHAR}, #{emp.address,jdbcType=VARCHAR}, #{emp.departmentId,jdbcType=BIGINT},
+            #{emp.jobLevelId,jdbcType=BIGINT}, #{emp.posId,jdbcType=BIGINT}, #{emp.engageForm,jdbcType=VARCHAR},
+            #{emp.tiptopDegree,jdbcType=VARCHAR}, #{emp.specialty,jdbcType=VARCHAR}, #{emp.school,jdbcType=VARCHAR},
+            #{emp.beginDate,jdbcType=DATE},#{emp.workID,jdbcType=BIGINT},
+            #{emp.contractTerm,jdbcType=BIGINT}, #{emp.conversionTime,jdbcType=DATE},
+            #{emp.beginContract,jdbcType=DATE}, #{emp.endContract,jdbcType=DATE}, #{emp.workAge,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
 </mapper>

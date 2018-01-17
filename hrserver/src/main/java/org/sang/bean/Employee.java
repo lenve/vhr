@@ -24,6 +24,7 @@ public class Employee {
     private Long jobLevelId;
     private String jobLevelName;
     private Long posId;
+    private String posName;
     private String engageForm;
     private String tiptopDegree;
     private String specialty;
@@ -42,6 +43,14 @@ public class Employee {
     private JobLevel jobLevel;
     private Position position;
     private PoliticsStatus politicsStatus;
+
+    public String getPosName() {
+        return posName;
+    }
+
+    public void setPosName(String posName) {
+        this.posName = posName;
+    }
 
     public Department getDepartment() {
         return department;
