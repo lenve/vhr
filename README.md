@@ -161,7 +161,7 @@ npm run build
 
 ### 相关文档：
 
-21.[SpringMVC文件下载](https://github.com/lenve/vhr/wiki/21.SpringMVC%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD)  
+21.[SpringMVC文件下载的两种方式](https://github.com/lenve/vhr/wiki/21.SpringMVC%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F)  
 22.[POI生成Excel](https://github.com/lenve/vhr/wiki/22.POI%E7%94%9F%E6%88%90Excel)  
 23.[axios下载文件](https://github.com/lenve/vhr/wiki/23.axios%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6)  
 24.[使用POI实现Excel导入](https://github.com/lenve/vhr/wiki/24.%E4%BD%BF%E7%94%A8POI%E5%AE%9E%E7%8E%B0Excel%E5%AF%BC%E5%85%A5)  
