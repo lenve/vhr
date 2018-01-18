@@ -106,15 +106,15 @@
                 <el-col :span="5">
                   所属部门:
                   <el-popover
-                    v-model="showOrHidePop"
+                    v-model="showOrHidePop2"
                     placement="right"
                     title="请选择部门"
                     trigger="manual">
                     <el-tree :data="deps" :default-expand-all="true" :props="defaultProps" :expand-on-click-node="false"
-                             @node-click="handleNodeClick"></el-tree>
+                             @node-click="handleNodeClick2"></el-tree>
                     <div slot="reference"
                          style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
-                         @click.left="showDepTree" v-bind:style="{color: depTextColor}">{{emp.departmentName}}
+                         @click="showDepTree2" v-bind:style="{color: depTextColor}">{{emp.departmentName}}
                     </div>
                   </el-popover>
                 </el-col>
@@ -629,6 +629,7 @@
         tableLoading: false,
         advanceSearchViewVisible: false,
         showOrHidePop: false,
+        showOrHidePop2: false,
         emp: {
           name: '',
           gender: '',
@@ -820,8 +821,8 @@
                   var data = resp.data;
                   _this.$message({type: data.status, message: data.msg});
                   _this.dialogVisible = false;
-                  _this.loadEmps();
                   _this.emptyEmpData();
+                  _this.loadEmps();
                 }
               })
             } else {
@@ -833,8 +834,8 @@
                   var data = resp.data;
                   _this.$message({type: data.status, message: data.msg});
                   _this.dialogVisible = false;
-                  _this.emptyEmpData();
                   _this.loadEmps();
+                  _this.emptyEmpData();
                 }
               })
             }
@@ -850,10 +851,19 @@
       showDepTree(){
         this.showOrHidePop = !this.showOrHidePop;
       },
+      showDepTree2(){
+        this.showOrHidePop2 = !this.showOrHidePop2;
+      },
       handleNodeClick(data) {
         this.emp.departmentName = data.name;
         this.emp.departmentId = data.id;
         this.showOrHidePop = false;
+        this.depTextColor = '#606266';
+      },
+      handleNodeClick2(data) {
+        this.emp.departmentName = data.name;
+        this.emp.departmentId = data.id;
+        this.showOrHidePop2 = false;
         this.depTextColor = '#606266';
       },
       initData(){
@@ -871,6 +881,7 @@
         })
       },
       showEditEmpView(row){
+        console.log(row)
         this.dialogTitle = "编辑员工";
         this.emp = row;
         this.emp.birthday = this.formatDate(row.birthday);
@@ -884,11 +895,11 @@
         this.emp.departmentName = row.department.name;
         this.emp.jobLevelId = row.jobLevel.id;
         this.emp.posId = row.position.id;
-        delete this.emp.department;
-        delete this.emp.jobLevel;
-        delete this.emp.position;
-        delete this.emp.nation;
-        delete this.emp.politicsStatus;
+//        delete this.emp.department;
+//        delete this.emp.jobLevel;
+//        delete this.emp.position;
+//        delete this.emp.nation;
+//        delete this.emp.politicsStatus;
         delete this.emp.workAge;
         delete this.emp.notWorkDate;
         this.dialogVisible = true;
