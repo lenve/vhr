@@ -167,6 +167,18 @@ npm run build
 24.[axios下载文件](https://github.com/lenve/vhr/wiki/24.axios%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6)  
 25.[使用POI实现Excel导入](https://github.com/lenve/vhr/wiki/25.%E4%BD%BF%E7%94%A8POI%E5%AE%9E%E7%8E%B0Excel%E5%AF%BC%E5%85%A5)  
 
+## 2018.1.19 更新
+
+本次更新版本：v20180119  
+
+本次更新主要实现了当管理员添加一个用户时，添加成功后，会根据该用户的邮箱自动向用户发送一封欢迎入职邮件，，页面在 **[员工资料->基本资料->添加员工]** 详情可以参考下面的文档。 **注意：邮件发送需要小伙伴小伙伴自己配置授权码，配置方式参考下面的文档，配置文件在[src/main/java/org/sang/common/EmailRunnable.java](https://github.com/lenve/vhr/blob/master/hrserver/src/main/java/org/sang/common/EmailRunnable.java)**   
+
+### 相关文档：
+
+26.[SpringBoot中使用Freemarker邮件模板生成邮件](https://github.com/lenve/vhr/wiki/26.SpringBoot%E4%B8%AD%E4%BD%BF%E7%94%A8Freemarker%E9%82%AE%E4%BB%B6%E6%A8%A1%E6%9D%BF%E7%94%9F%E6%88%90%E9%82%AE%E4%BB%B6)  
+27.[Java中邮件的发送](https://github.com/lenve/vhr/wiki/27.Java%E4%B8%AD%E9%82%AE%E4%BB%B6%E7%9A%84%E5%8F%91%E9%80%81)  
+28.[SpringBoot中使用新线程发送邮件](https://github.com/lenve/vhr/wiki/28.SpringBoot%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%96%B0%E7%BA%BF%E7%A8%8B%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6)  
+
 ## 其他资料
 
 关注公众号查看更多全栈资料：  
