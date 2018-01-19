@@ -908,7 +908,7 @@
         this.dialogTitle = "添加员工";
         this.dialogVisible = true;
         var _this = this;
-        this.getRequest("/emp/basic/maxEmpId").then(resp=> {
+        this.getRequest("/emp/basic/maxWorkID").then(resp=> {
           if (resp && resp.status == 200) {
             _this.emp.workID = resp.data;
           }

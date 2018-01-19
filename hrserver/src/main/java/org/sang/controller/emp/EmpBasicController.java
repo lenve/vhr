@@ -48,8 +48,8 @@ public class EmpBasicController {
         return map;
     }
 
-    @RequestMapping("/maxEmpId")
-    public String maxEmpId() {
+    @RequestMapping("/maxWorkID")
+    public String maxWorkID() {
         return String.format("%08d", empService.getMaxWorkID() + 1);
     }
 
