@@ -834,8 +834,8 @@
                   var data = resp.data;
                   _this.$message({type: data.status, message: data.msg});
                   _this.dialogVisible = false;
-                  _this.loadEmps();
                   _this.emptyEmpData();
+                  _this.loadEmps();
                 }
               })
             }

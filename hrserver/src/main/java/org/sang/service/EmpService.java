@@ -43,9 +43,9 @@ public class EmpService {
         return empMapper.addEmp(employee);
     }
 
-    public Long getMaxId() {
-        Long maxId = empMapper.getMaxId();
-        return maxId == null ? 0 : maxId;
+    public Long getMaxWorkID() {
+        Long maxWorkID = empMapper.getMaxWorkID();
+        return maxWorkID == null ? 0 : maxWorkID;
     }
 
     public List<Employee> getEmployeeByPage(Integer page, Integer size, String keywords, Long politicId, Long nationId, Long posId, Long jobLevelId, String engageForm, Long departmentId, String beginDateScope) {

@@ -31,8 +31,8 @@
       #{beginContract,jdbcType=DATE}, #{endContract,jdbcType=DATE}, #{workAge,jdbcType=INTEGER}
       )
     </insert>
-    <select id="getMaxId" resultType="Long">
-        select max(id) from employee
+    <select id="getMaxWorkID" resultType="Long">
+        SELECT workID from employee where id=(select max(id) from employee)
     </select>
     <resultMap id="BaseResultMap" type="org.sang.bean.Employee">
         <id column="id" property="id"/>

@@ -1,7 +1,9 @@
 package org.sang.controller.emp;
 
 import org.sang.bean.Employee;
+import org.sang.bean.Position;
 import org.sang.bean.RespBean;
+import org.sang.common.EmailRunnable;
 import org.sang.common.poi.PoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.EmpService;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by sang on 2018/1/12.
@@ -30,6 +33,8 @@ public class EmpBasicController {
     PositionService positionService;
     @Autowired
     JobLevelService jobLevelService;
+    @Autowired
+    ExecutorService executorService;
 
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
@@ -39,18 +44,25 @@ public class EmpBasicController {
         map.put("deps", departmentService.getDepByPid(-1L));
         map.put("positions", positionService.getAllPos());
         map.put("joblevels", jobLevelService.getAllJobLevels());
-        map.put("workID", String.format("%08d", empService.getMaxId() + 1));
+        map.put("workID", String.format("%08d", empService.getMaxWorkID() + 1));
         return map;
     }
 
     @RequestMapping("/maxEmpId")
     public String maxEmpId() {
-        return String.format("%08d", empService.getMaxId() + 1);
+        return String.format("%08d", empService.getMaxWorkID() + 1);
     }
 
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
     public RespBean addEmp(Employee employee) {
         if (empService.addEmp(employee) == 1) {
+            List<Position> allPos = positionService.getAllPos();
+            for (Position allPo : allPos) {
+                if (allPo.getId() == employee.getPosId()) {
+                    employee.setPosName(allPo.getName());
+                }
+            }
+            executorService.execute(new EmailRunnable(employee));
             return new RespBean("success", "添加成功!");
         }
         return new RespBean("error", "添加失败!");
