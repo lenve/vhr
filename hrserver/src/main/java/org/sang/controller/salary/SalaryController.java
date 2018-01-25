@@ -2,6 +2,7 @@ package org.sang.controller.salary;
 
 import org.sang.bean.RespBean;
 import org.sang.bean.Salary;
+import org.sang.service.EmpService;
 import org.sang.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +16,12 @@ import java.util.List;
  * 工资账套配置
  */
 @RestController
-@RequestMapping("/sal")
-public class SalaryCfgController {
+@RequestMapping("/salary/sob")
+public class SalaryController {
     @Autowired
     SalaryService salaryService;
+    @Autowired
+    EmpService empService;
 
     @RequestMapping(value = "/salary", method = RequestMethod.POST)
     public RespBean addSalaryCfg(Salary salary) {
@@ -48,4 +51,5 @@ public class SalaryCfgController {
         }
         return new RespBean("success", "删除失败!");
     }
+
 }

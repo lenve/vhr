@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService;
  * Created by sang on 2018/1/12.
  */
 @RestController
-@RequestMapping("/emp/basic")
+@RequestMapping("/employee/basic")
 public class EmpBasicController {
     @Autowired
     EmpService empService;

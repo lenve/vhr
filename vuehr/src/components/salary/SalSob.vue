@@ -334,21 +334,22 @@
       doDelete(id){
         var _this = this;
         _this.tableLoading = true;
-        this.deleteRequest("/sal/salary/" + id).then(resp=> {
+        this.deleteRequest("/salary/sob/salary/" + id).then(resp=>{
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
             _this.$message({type: data.status, message: data.msg});
             _this.loadSalaryCfg();
           }
-        })
+        });
       },
       next(){
         var _this = this;
         if (this.index == 7) {
+          if(this.salary.createDate&&this.salary.basicSalary&&this.salary.trafficSalary&&this.salary.lunchSalary&&this.salary.bonus&&this.salary.pensionBase&&this.salary.pensionPer&&this.salary.medicalBase&&this.salary.medicalPer&&this.salary.accumulationFundBase&&this.salary.accumulationFundPer){
           if (this.salary.id) {//更新
             _this.tableLoading = true;
-            this.putRequest("/sal/salary", this.salary).then(resp=> {
+            this.putRequest("/salary/sob/salary", this.salary).then(resp=> {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
@@ -364,7 +365,7 @@
               cancelButtonText: '取消'
             }).then(({value}) => {
               this.salary.name = value;
-              this.postRequest("/sal/salary", this.salary).then(resp=> {
+              this.postRequest("/salary/sob/salary", this.salary).then(resp=> {
                 if (resp && resp.status == 200) {
                   var data = resp.data;
                   _this.$message({type: data.status, message: data.msg});
@@ -376,6 +377,9 @@
             }).catch(() => {
             });
           }
+          }else{
+            this.$message({type: 'error', message: '字段不能为空!'});
+          }
         } else {
           this.index++;
         }
@@ -383,7 +387,7 @@
       loadSalaryCfg(){
         this.tableLoading = true;
         var _this = this;
-        this.getRequest("/sal/salary").then(resp=> {
+        this.getRequest("/salary/sob/salary").then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             _this.salaries = resp.data;

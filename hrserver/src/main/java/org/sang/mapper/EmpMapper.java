@@ -29,4 +29,6 @@ public interface EmpMapper {
     int deleteEmpById(@Param("ids") String[] ids);
 
     int addEmps(@Param("emps") List<Employee> emps);
+
+    List<Employee> getEmployeeByPageShort(@Param("start") int start, @Param("size") Integer size);
 }

@@ -52,7 +52,7 @@ public class EmpService {
         int start = (page - 1) * size;
         Date startBeginDate = null;
         Date endBeginDate = null;
-        if (beginDateScope.contains(",")) {
+        if (beginDateScope != null && beginDateScope.contains(",")) {
             try {
                 String[] split = beginDateScope.split(",");
                 startBeginDate = birthdayFormat.parse(split[0]);
@@ -66,7 +66,7 @@ public class EmpService {
     public Long getCountByKeywords(String keywords, Long politicId, Long nationId, Long posId, Long jobLevelId, String engageForm, Long departmentId, String beginDateScope) {
         Date startBeginDate = null;
         Date endBeginDate = null;
-        if (beginDateScope.contains(",")) {
+        if (beginDateScope != null && beginDateScope.contains(",")) {
             try {
                 String[] split = beginDateScope.split(",");
                 startBeginDate = birthdayFormat.parse(split[0]);
@@ -96,5 +96,10 @@ public class EmpService {
 
     public int addEmps(List<Employee> emps) {
         return empMapper.addEmps(emps);
+    }
+
+    public List<Employee> getEmployeeByPageShort(Integer page, Integer size) {
+        int start = (page - 1) * size;
+        return empMapper.getEmployeeByPageShort(start,size);
     }
 }

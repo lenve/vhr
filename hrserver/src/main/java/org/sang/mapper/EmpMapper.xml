@@ -84,6 +84,22 @@
             <id property="id" column="psid"/>
             <result property="name" column="psname"/>
         </association>
+        <association property="salary" javaType="org.sang.bean.Salary">
+            <id column="sid" jdbcType="INTEGER" property="id" />
+            <result column="bonus" jdbcType="INTEGER" property="bonus" />
+            <result column="lunchSalary" jdbcType="INTEGER" property="lunchSalary" />
+            <result column="trafficSalary" jdbcType="INTEGER" property="trafficSalary" />
+            <result column="basicSalary" jdbcType="INTEGER" property="basicSalary" />
+            <result column="allSalary" jdbcType="INTEGER" property="allSalary" />
+            <result column="pensionBase" jdbcType="INTEGER" property="pensionBase" />
+            <result column="pensionPer" jdbcType="REAL" property="pensionPer" />
+            <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+            <result column="medicalBase" jdbcType="INTEGER" property="medicalBase" />
+            <result column="medicalPer" jdbcType="REAL" property="medicalPer" />
+            <result column="accumulationFundBase" jdbcType="INTEGER" property="accumulationFundBase" />
+            <result column="accumulationFundPer" jdbcType="REAL" property="accumulationFundPer" />
+            <result column="sname" jdbcType="VARCHAR" property="name" />
+        </association>
     </resultMap>
     <select id="getEmployeeByPage" resultMap="BaseResultMap">
         select e.*,jl.`id` as jlid,jl.`name` as jlname,jl.`titleLevel` as jlTitleLevel,d.`id` as did,d.`name` as
@@ -241,7 +257,8 @@
         values
         <foreach collection="emps" item="emp" separator=",">
             (#{emp.name,jdbcType=VARCHAR}, #{emp.gender,jdbcType=CHAR},
-            #{emp.birthday,jdbcType=DATE}, #{emp.idCard,jdbcType=CHAR}, #{emp.wedlock,jdbcType=CHAR}, #{emp.nationId,jdbcType=BIGINT},
+            #{emp.birthday,jdbcType=DATE}, #{emp.idCard,jdbcType=CHAR}, #{emp.wedlock,jdbcType=CHAR},
+            #{emp.nationId,jdbcType=BIGINT},
             #{emp.nativePlace,jdbcType=VARCHAR}, #{emp.politicId,jdbcType=BIGINT}, #{emp.email,jdbcType=VARCHAR},
             #{emp.phone,jdbcType=VARCHAR}, #{emp.address,jdbcType=VARCHAR}, #{emp.departmentId,jdbcType=BIGINT},
             #{emp.jobLevelId,jdbcType=BIGINT}, #{emp.posId,jdbcType=BIGINT}, #{emp.engageForm,jdbcType=VARCHAR},
@@ -252,5 +269,7 @@
             )
         </foreach>
     </insert>
-
+    <select id="getEmployeeByPageShort" resultMap="BaseResultMap">
+select e.*,d.`id` as did,d.`name` as dname,s.`id` as sid,s.`accumulationFundBase`,s.`accumulationFundPer`,s.`allSalary`,s.`basicSalary`,s.`bonus`,s.`createDate`,s.`lunchSalary`,s.`medicalBase`,s.`medicalPer`,s.`name` as sname,s.`pensionBase`,s.`pensionPer`,s.`trafficSalary` from employee e left join department d on e.`departmentId`=d.id left join empsalary es on es.`eid`=e.`id` left join salary s on s.`id`=es.`sid` ORDER BY e.id limit #{start},#{size}
+    </select>
 </mapper>

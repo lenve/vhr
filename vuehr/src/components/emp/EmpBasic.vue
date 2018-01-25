@@ -26,7 +26,7 @@
           <el-upload
             :show-file-list="false"
             accept="application/vnd.ms-excel"
-            action="/emp/basic/importEmp"
+            action="/employee/basic/importEmp"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError" :disabled="fileUploadBtnText=='正在导入'"
             :before-upload="beforeFileUpload" style="display: inline">
@@ -722,12 +722,12 @@
       exportEmps(){
 //        var iframe = document.createElement("iframe");
 //        iframe.style.display = 'none';
-//        iframe.src = "/emp/basic/exportEmp";
+//        iframe.src = "/employee/basic/exportEmp";
 //        iframe.onload=function () {
 //          document.body.removeChild(iframe);
 //        }
 //        document.body.appendChild(iframe);
-        window.open("/emp/basic/exportEmp", "_parent");
+        window.open("/employee/basic/exportEmp", "_parent");
       },
       cancelSearch(){
         this.advanceSearchViewVisible = false;
@@ -774,7 +774,7 @@
       doDelete(ids){
         this.tableLoading = true;
         var _this = this;
-        this.deleteRequest("/emp/basic/emp/" + ids).then(resp=> {
+        this.deleteRequest("/employee/basic/emp/" + ids).then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
@@ -798,7 +798,7 @@
       loadEmps(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/emp/basic/emp?page=" + this.currentPage + "&size=10&keywords=" + this.keywords + "&politicId=" + this.emp.politicId + "&nationId=" + this.emp.nationId + "&posId=" + this.emp.posId + "&jobLevelId=" + this.emp.jobLevelId + "&engageForm=" + this.emp.engageForm + "&departmentId=" + this.emp.departmentId + "&beginDateScope=" + this.beginDateScope).then(resp=> {
+        this.getRequest("/employee/basic/emp?page=" + this.currentPage + "&size=10&keywords=" + this.keywords + "&politicId=" + this.emp.politicId + "&nationId=" + this.emp.nationId + "&posId=" + this.emp.posId + "&jobLevelId=" + this.emp.jobLevelId + "&engageForm=" + this.emp.engageForm + "&departmentId=" + this.emp.departmentId + "&beginDateScope=" + this.beginDateScope).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
@@ -815,7 +815,7 @@
             if (this.emp.id) {
               //更新
               this.tableLoading = true;
-              this.putRequest("/emp/basic/emp", this.emp).then(resp=> {
+              this.putRequest("/employee/basic/emp", this.emp).then(resp=> {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
@@ -828,7 +828,7 @@
             } else {
               //添加
               this.tableLoading = true;
-              this.postRequest("/emp/basic/emp", this.emp).then(resp=> {
+              this.postRequest("/employee/basic/emp", this.emp).then(resp=> {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
@@ -868,7 +868,7 @@
       },
       initData(){
         var _this = this;
-        this.getRequest("/emp/basic/basicdata").then(resp=> {
+        this.getRequest("/employee/basic/basicdata").then(resp=> {
           if (resp && resp.status == 200) {
             var data = resp.data;
             _this.nations = data.nations;
@@ -908,7 +908,7 @@
         this.dialogTitle = "添加员工";
         this.dialogVisible = true;
         var _this = this;
-        this.getRequest("/emp/basic/maxWorkID").then(resp=> {
+        this.getRequest("/employee/basic/maxWorkID").then(resp=> {
           if (resp && resp.status == 200) {
             _this.emp.workID = resp.data;
           }
