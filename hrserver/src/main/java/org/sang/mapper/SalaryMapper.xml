@@ -69,4 +69,10 @@
             #{id}
         </foreach>
     </delete>
+    <delete id="deleteSalaryByEid">
+        DELETE FROM empsalary WHERE eid=#{eid}
+    </delete>
+    <insert id="addSidAndEid">
+        INSERT INTO empsalary set eid=#{eid},sid=#{sid}
+    </insert>
 </mapper>

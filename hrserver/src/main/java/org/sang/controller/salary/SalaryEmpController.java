@@ -1,6 +1,7 @@
 package org.sang.controller.salary;
 
 import org.sang.bean.Employee;
+import org.sang.bean.RespBean;
 import org.sang.bean.Salary;
 import org.sang.service.EmpService;
 import org.sang.service.SalaryService;
@@ -25,7 +26,15 @@ public class SalaryEmpController {
     @Autowired
     EmpService empService;
 
-    @RequestMapping(value = "/salaries",method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public RespBean updateEmpSalary(Integer sid, Long eid) {
+        if (salaryService.updateEmpSalary(sid, eid) == 1) {
+            return new RespBean("success", "修改成功!");
+        }
+        return new RespBean("error", "修改失败!");
+    }
+
+    @RequestMapping(value = "/salaries", method = RequestMethod.GET)
     public List<Salary> salaries() {
         return salaryService.getAllSalary();
     }

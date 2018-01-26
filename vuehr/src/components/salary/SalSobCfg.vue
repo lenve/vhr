@@ -98,6 +98,7 @@
           <el-popover
             placement="right"
             width="200"
+            @hide="updateSalaryCfg(scope.row.id)"
             :key="scope.row.id"
             trigger="click">
             <el-select size="mini" v-model="sid" placeholder="请选择">
@@ -136,6 +137,7 @@
         tableLoading: false,
         totalCount: -1,
         sid: '',
+        osid: '',
         currentPage: 1
       }
     },
@@ -145,10 +147,12 @@
     methods: {
       showUpdateView(data){
         this.loadSalaries();
-        if(data.salary) {
+        if (data.salary) {
           this.sid = data.salary.id;
-        }else{
+          this.osid = data.salary.id;
+        } else {
           this.sid = '';
+          this.osid = '';
         }
       },
       loadSalaries(){
@@ -159,8 +163,18 @@
           }
         })
       },
-      updateSalaryCfg(index, row){
-        alert("aaa");
+      updateSalaryCfg(eid){
+        var _this = this;
+        if(this.osid==this.sid) {
+          return;
+        }
+        this.putRequest("/salary/sobcfg/", {eid: eid, sid: this.sid}).then(resp=> {
+          if(resp&&resp.status==200) {
+            var data = resp.data;
+            _this.$message({type: data.status, message: data.msg});
+            _this.loadEmps();
+          }
+        })
       },
       currentChange(currentPage){
         this.currentPage = currentPage;
