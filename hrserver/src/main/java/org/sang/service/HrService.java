@@ -1,6 +1,7 @@
 package org.sang.service;
 
 import org.sang.bean.Hr;
+import org.sang.common.HrUtils;
 import org.sang.mapper.HrMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,5 +61,9 @@ public class HrService implements UserDetailsService {
 
     public int deleteHr(Long hrId) {
         return hrMapper.deleteHr(hrId);
+    }
+
+    public List<Hr> getAllHr() {
+        return hrMapper.getAllHr(HrUtils.getCurrentHr().getId());
     }
 }

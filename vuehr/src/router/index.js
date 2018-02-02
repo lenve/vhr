@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+import Chat from '@/components/chat/Chat'
 // import EmpAdv from '@/components/emp/EmpAdv'
 // import EmpBasic from '@/components/emp/EmpBasic'
 // import PerEc from '@/components/personnel/PerEc'
@@ -33,15 +34,27 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login,
-      hidden:true
-    },{
+      hidden: true
+    }, {
       path: '/home',
       name: '主页',
       component: Home,
-      hidden:true,
-      meta:{
-        requireAuth:true
-      }
+      hidden: true,
+      meta: {
+        requireAuth: true
+      },
+      children: [
+        {
+          path: '/chat',
+          name: '消息',
+          component: Chat,
+          hidden: true,
+          meta: {
+            keepAlive: false,
+            requireAuth: true
+          }
+        }
+      ]
     }
   ]
 })

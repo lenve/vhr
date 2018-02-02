@@ -20,6 +20,7 @@ export const initMenu = (router, store)=> {
       var fmtRoutes = formatRoutes(resp.data);
       router.addRoutes(fmtRoutes);
       store.commit('initMenu', fmtRoutes);
+      store.dispatch('connect');
     }
   })
 }

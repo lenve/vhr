@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import '../lib/sockjs'
+import '../lib/stomp'
 
 Vue.use(Vuex)
 
@@ -7,9 +9,14 @@ export default new Vuex.Store({
   state: {
     user: {
       name: window.localStorage.getItem('user' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).name,
-      userface: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userface
+      userface: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userface,
+      username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username
     },
-    routes: []
+    routes: [],
+    msgList: [],
+    isDotMap: new Map(),
+    currentFriend: {},
+    chatStomp: Stomp.over(new SockJS("/ws/endpointChat"))
   },
   mutations: {
     initMenu(state, menus){
@@ -22,8 +29,50 @@ export default new Vuex.Store({
     logout(state){
       window.localStorage.removeItem('user');
       state.routes = [];
+    },
+    updateMsgList(state, newMsgList){
+      state.msgList = newMsgList;
+    },
+    updateCurrentFriend(state, newFriend){
+      state.currentFriend = newFriend;
+    },
+    addValue2DotMap(state, key){
+      state.isDotMap.set(key, "您有未读消息")
+    },
+    removeValueDotMap(state, key){
+      state.isDotMap.delete(key);
     }
   },
   actions: {
+    connect(context){
+      context.state.chatStomp = Stomp.over(new SockJS("/ws/endpointChat"));
+      context.state.chatStomp.connect({}, frame=> {
+        context.state.chatStomp.subscribe("/user/queue/chat", message=> {
+          var msg = JSON.parse(message.body);
+          var oldMsg = window.localStorage.getItem(context.state.user.username + "#" + msg.from);
+          if (oldMsg == null) {
+            oldMsg = [];
+            oldMsg.push(msg);
+            window.localStorage.setItem(context.state.user.username + "#" + msg.from, JSON.stringify(oldMsg))
+          } else {
+            var oldMsgJson = JSON.parse(oldMsg);
+            oldMsgJson.push(msg);
+            window.localStorage.setItem(context.state.user.username + "#" + msg.from, JSON.stringify(oldMsgJson))
+          }
+          if (msg.from != context.state.currentFriend.username) {
+            context.commit("addValue2DotMap", "isDot#" + context.state.user.username + "#" + msg.from);
+          }
+          //更新msgList
+          var oldMsg2 = window.localStorage.getItem(context.state.user.username + "#" + context.state.currentFriend.username);
+          if (oldMsg2 == null) {
+            context.commit('updateMsgList', []);
+          } else {
+            context.commit('updateMsgList', JSON.parse(oldMsg2));
+          }
+        });
+      }, failedMsg=> {
+
+      });
+    }
   }
 });

@@ -93,4 +93,7 @@
     <delete id="deleteHr" parameterType="Long">
         DELETE FROM hr WHERE id=#{hrId}
     </delete>
+    <select id="getAllHr" resultType="org.sang.bean.Hr">
+        select * from hr WHERE id !=#{currentId}
+    </select>
 </mapper>

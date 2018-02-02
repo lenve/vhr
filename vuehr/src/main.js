@@ -38,6 +38,8 @@ router.beforeEach((to, from, next)=> {
       }
     } else {
       initMenu(router, store);
+      if(to.path=='/chat')
+        store.commit("updateMsgList", []);
       next();
     }
   }
