@@ -10,13 +10,15 @@ export default new Vuex.Store({
     user: {
       name: window.localStorage.getItem('user' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).name,
       userface: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userface,
-      username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username
+      username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username,
+      roles: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).roles
     },
     routes: [],
     msgList: [],
     isDotMap: new Map(),
     currentFriend: {},
-    chatStomp: Stomp.over(new SockJS("/ws/endpointChat"))
+    stomp: Stomp.over(new SockJS("/ws/endpointChat")),
+    nfDot: false
   },
   mutations: {
     initMenu(state, menus){
@@ -29,6 +31,9 @@ export default new Vuex.Store({
     logout(state){
       window.localStorage.removeItem('user');
       state.routes = [];
+    },
+    toggleNFDot(state, newValue){
+      state.nfDot = newValue;
     },
     updateMsgList(state, newMsgList){
       state.msgList = newMsgList;
@@ -45,9 +50,9 @@ export default new Vuex.Store({
   },
   actions: {
     connect(context){
-      context.state.chatStomp = Stomp.over(new SockJS("/ws/endpointChat"));
-      context.state.chatStomp.connect({}, frame=> {
-        context.state.chatStomp.subscribe("/user/queue/chat", message=> {
+      context.state.stomp = Stomp.over(new SockJS("/ws/endpointChat"));
+      context.state.stomp.connect({}, frame=> {
+        context.state.stomp.subscribe("/user/queue/chat", message=> {
           var msg = JSON.parse(message.body);
           var oldMsg = window.localStorage.getItem(context.state.user.username + "#" + msg.from);
           if (oldMsg == null) {
@@ -69,6 +74,9 @@ export default new Vuex.Store({
           } else {
             context.commit('updateMsgList', JSON.parse(oldMsg2));
           }
+        });
+        context.state.stomp.subscribe("/topic/nf", message=> {
+          context.commit('toggleNFDot', true);
         });
       }, failedMsg=> {
 

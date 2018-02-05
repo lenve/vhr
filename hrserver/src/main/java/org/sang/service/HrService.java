@@ -63,7 +63,10 @@ public class HrService implements UserDetailsService {
         return hrMapper.deleteHr(hrId);
     }
 
-    public List<Hr> getAllHr() {
+    public List<Hr> getAllHrExceptAdmin() {
         return hrMapper.getAllHr(HrUtils.getCurrentHr().getId());
+    }
+    public List<Hr> getAllHr() {
+        return hrMapper.getAllHr(null);
     }
 }

@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top: 10px">
-      <el-tab-pane label="好友聊天" name="chat"><fc></fc></el-tab-pane>
       <el-tab-pane label="系统通知" name="notification"><nf></nf></el-tab-pane>
+      <el-tab-pane label="好友聊天" name="chat"><fc></fc></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -12,7 +12,7 @@
   export default {
     data() {
       return {
-        activeName: 'chat'
+        activeName: 'notification'
       };
     },
     methods: {

@@ -94,6 +94,9 @@
         DELETE FROM hr WHERE id=#{hrId}
     </delete>
     <select id="getAllHr" resultType="org.sang.bean.Hr">
-        select * from hr WHERE id !=#{currentId}
+        select * from hr
+        <if test="currentId!=null">
+            WHERE id !=#{currentId}
+        </if>
     </select>
 </mapper>

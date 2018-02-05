@@ -3,6 +3,7 @@ package org.sang.controller;
 import org.sang.bean.ChatResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -22,5 +23,11 @@ public class WsController {
         String destUser = msg.substring(msg.lastIndexOf(";") + 1, msg.length());
         String message = msg.substring(0, msg.lastIndexOf(";"));
         messagingTemplate.convertAndSendToUser(destUser, "/queue/chat", new ChatResp(message, principal.getName()));
+    }
+
+    @MessageMapping("/ws/nf")
+    @SendTo("/topic/nf")
+    public String handleNF() {
+        return "系统消息";
     }
 }

@@ -89,7 +89,7 @@
           oldMsgJson.push({msg: this.msg, from: this.$store.state.user.username});
           window.localStorage.setItem(this.$store.state.user.username + "#" + this.currentFriend.username, JSON.stringify(oldMsgJson))
         }
-        this.$store.state.chatStomp.send("/ws/chat", {}, this.msg + ";" + this.currentFriend.username);
+        this.$store.state.stomp.send("/ws/chat", {}, this.msg + ";" + this.currentFriend.username);
         this.msg = '';
         this.updateChatDiv();
       },

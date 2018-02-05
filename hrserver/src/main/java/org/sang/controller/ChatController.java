@@ -1,10 +1,15 @@
 package org.sang.controller;
 
 import org.sang.bean.Hr;
+import org.sang.bean.MsgContent;
+import org.sang.bean.RespBean;
+import org.sang.bean.SysMsg;
 import org.sang.service.HrService;
+import org.sang.service.SysMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,8 +23,41 @@ import java.util.List;
 public class ChatController {
     @Autowired
     HrService hrService;
-    @RequestMapping(value = "/hrs",method = RequestMethod.GET)
+    @Autowired
+    SysMsgService sysMsgService;
+
+    @RequestMapping(value = "/hrs", method = RequestMethod.GET)
     public List<Hr> getAllHr() {
-        return hrService.getAllHr();
+        return hrService.getAllHrExceptAdmin();
+    }
+
+    @RequestMapping(value = "/nf", method = RequestMethod.POST)
+    public RespBean sendNf(MsgContent msg) {
+        if (sysMsgService.sendMsg(msg)) {
+            return new RespBean("success", "发送成功!");
+        }
+        return new RespBean("error", "发送失败!");
+    }
+
+    @RequestMapping("/sysmsgs")
+    public List<SysMsg> getSysMsg(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        return sysMsgService.getSysMsgByPage(page, size);
+    }
+
+    @RequestMapping(value = "/markread", method = RequestMethod.PUT)
+    public RespBean markRead(Long flag) {
+        if (sysMsgService.markRead(flag)) {
+            if (flag == -1) {
+                return new RespBean("success", "multiple");
+            } else {
+                return new RespBean("success", "single");
+            }
+        } else {
+            if (flag == -1) {
+                return new RespBean("error", "multiple");
+            } else {
+                return new RespBean("error", "single");
+            }
+        }
     }
 }

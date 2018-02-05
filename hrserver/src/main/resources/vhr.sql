@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-01-26 09:27:02
+Date: 2018-02-05 11:25:15
 */
 CREATE DATABASE `vhr` DEFAULT CHARACTER SET utf8;
 
@@ -410,7 +410,7 @@ CREATE TABLE `empsalary` (
   KEY `empsalary_ibfk_2` (`sid`),
   CONSTRAINT `empsalary_ibfk_1` FOREIGN KEY (`eid`) REFERENCES `employee` (`id`),
   CONSTRAINT `empsalary_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `salary` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of empsalary
@@ -422,6 +422,9 @@ INSERT INTO `empsalary` VALUES ('10', '5', '9');
 INSERT INTO `empsalary` VALUES ('11', '6', '13');
 INSERT INTO `empsalary` VALUES ('12', '7', '13');
 INSERT INTO `empsalary` VALUES ('13', '2', '13');
+INSERT INTO `empsalary` VALUES ('14', '8', '10');
+INSERT INTO `empsalary` VALUES ('15', '9', '10');
+INSERT INTO `empsalary` VALUES ('16', '10', '13');
 
 -- ----------------------------
 -- Table structure for hr
@@ -446,9 +449,9 @@ CREATE TABLE `hr` (
 -- ----------------------------
 INSERT INTO `hr` VALUES ('3', '系统管理员', '18568887789', '029-82881234', '深圳南山', '1', 'admin', '$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm', 'http://bpic.588ku.com/element_pic/01/40/00/64573ce2edc0728.jpg', null);
 INSERT INTO `hr` VALUES ('5', '李白', '18568123489', '029-82123434', '海口美兰', '1', 'libai', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', null);
-INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '029-82111555', '广州番禺', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', null);
+INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '029-82111555', '广州番禺', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1406745149,1563524794&fm=27&gp=0.jpg', null);
 INSERT INTO `hr` VALUES ('11', '柳宗元', '18568123377', '029-82111333', '广州天河', '1', 'liuzongyuan', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515233756&di=0856d923a0a37a87fd26604a2c871370&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2014-09-27%2F041716704.jpg', null);
-INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '029-82111222', '广州越秀', '1', 'zenggong', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', null);
+INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '029-82111222', '广州越秀', '1', 'zenggong', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517070040185&di=be0375e0c3db6c311b837b28c208f318&imgtype=0&src=http%3A%2F%2Fimg2.soyoung.com%2Fpost%2F20150213%2F6%2F20150213141918532.jpg', null);
 
 -- ----------------------------
 -- Table structure for hr_role
@@ -629,6 +632,27 @@ INSERT INTO `menu_role` VALUES ('274', '25', '1');
 INSERT INTO `menu_role` VALUES ('275', '26', '1');
 INSERT INTO `menu_role` VALUES ('276', '27', '1');
 INSERT INTO `menu_role` VALUES ('277', '28', '1');
+
+-- ----------------------------
+-- Table structure for msgcontent
+-- ----------------------------
+DROP TABLE IF EXISTS `msgcontent`;
+CREATE TABLE `msgcontent` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of msgcontent
+-- ----------------------------
+INSERT INTO `msgcontent` VALUES ('14', '2222222222', '11111111111111111', '2018-02-02 20:46:19');
+INSERT INTO `msgcontent` VALUES ('15', '22222222', '3333333333333333333333', '2018-02-02 21:45:57');
+INSERT INTO `msgcontent` VALUES ('16', '通知标题1', '通知内容1', '2018-02-03 11:41:39');
+INSERT INTO `msgcontent` VALUES ('17', '通知标题2', '通知内容2', '2018-02-03 11:52:37');
+INSERT INTO `msgcontent` VALUES ('18', '通知标题3', '通知内容3', '2018-02-03 12:19:41');
 
 -- ----------------------------
 -- Table structure for nation
@@ -819,6 +843,52 @@ CREATE TABLE `salary` (
 INSERT INTO `salary` VALUES ('9', '9000', '4000', '800', '500', null, '2000', '0.07', '2018-01-24 00:00:00', '2000', '0.07', '2000', '0.07', '市场部工资账套');
 INSERT INTO `salary` VALUES ('10', '2000', '2000', '400', '1000', null, '2000', '0.07', '2018-01-01 00:00:00', '2000', '0.07', '2000', '0.07', '人事部工资账套');
 INSERT INTO `salary` VALUES ('13', '10000', '3000', '500', '500', null, '4000', '0.07', '2018-01-25 00:00:00', '4000', '0.07', '4000', '0.07', '运维部工资账套');
+
+-- ----------------------------
+-- Table structure for sysmsg
+-- ----------------------------
+DROP TABLE IF EXISTS `sysmsg`;
+CREATE TABLE `sysmsg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mid` int(11) DEFAULT NULL COMMENT '消息id',
+  `type` int(11) DEFAULT '0' COMMENT '0表示群发消息',
+  `hrid` int(11) DEFAULT NULL COMMENT '这条消息是给谁的',
+  `state` int(11) DEFAULT '0' COMMENT '0 未读 1 已读',
+  PRIMARY KEY (`id`),
+  KEY `hrid` (`hrid`),
+  KEY `sysmsg_ibfk_1` (`mid`),
+  CONSTRAINT `sysmsg_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `msgcontent` (`id`),
+  CONSTRAINT `sysmsg_ibfk_2` FOREIGN KEY (`hrid`) REFERENCES `hr` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sysmsg
+-- ----------------------------
+INSERT INTO `sysmsg` VALUES ('57', '14', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('58', '14', '0', '5', '1');
+INSERT INTO `sysmsg` VALUES ('59', '14', '0', '10', '1');
+INSERT INTO `sysmsg` VALUES ('60', '14', '0', '11', '0');
+INSERT INTO `sysmsg` VALUES ('61', '14', '0', '12', '0');
+INSERT INTO `sysmsg` VALUES ('62', '15', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('63', '15', '0', '5', '1');
+INSERT INTO `sysmsg` VALUES ('64', '15', '0', '10', '1');
+INSERT INTO `sysmsg` VALUES ('65', '15', '0', '11', '0');
+INSERT INTO `sysmsg` VALUES ('66', '15', '0', '12', '0');
+INSERT INTO `sysmsg` VALUES ('67', '16', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('68', '16', '0', '5', '1');
+INSERT INTO `sysmsg` VALUES ('69', '16', '0', '10', '1');
+INSERT INTO `sysmsg` VALUES ('70', '16', '0', '11', '0');
+INSERT INTO `sysmsg` VALUES ('71', '16', '0', '12', '0');
+INSERT INTO `sysmsg` VALUES ('72', '17', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('73', '17', '0', '5', '1');
+INSERT INTO `sysmsg` VALUES ('74', '17', '0', '10', '1');
+INSERT INTO `sysmsg` VALUES ('75', '17', '0', '11', '0');
+INSERT INTO `sysmsg` VALUES ('76', '17', '0', '12', '0');
+INSERT INTO `sysmsg` VALUES ('77', '18', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('78', '18', '0', '5', '0');
+INSERT INTO `sysmsg` VALUES ('79', '18', '0', '10', '0');
+INSERT INTO `sysmsg` VALUES ('80', '18', '0', '11', '0');
+INSERT INTO `sysmsg` VALUES ('81', '18', '0', '12', '0');
 
 -- ----------------------------
 -- Procedure structure for addDep

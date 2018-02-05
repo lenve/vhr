@@ -203,6 +203,29 @@ npm run build
 
 30.[员工账套设置功能介绍](https://github.com/lenve/vhr/wiki/30.%E5%91%98%E5%B7%A5%E8%B4%A6%E5%A5%97%E8%AE%BE%E7%BD%AE%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D)  
 
+## 2018.2.2 更新
+
+本次更新版本：v20180202  
+
+本次更新完成了HR在线聊天功能，页面在 **[Home页->右上角铃铛->好友聊天]**  
+
+#### 相关文档：  
+
+31.[在线聊天功能介绍](https://github.com/lenve/vhr/wiki/30.%E5%91%98%E5%B7%A5%E8%B4%A6%E5%A5%97%E8%AE%BE%E7%BD%AE%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D)  
+32.[在线聊天功能实现](https://github.com/lenve/vhr/wiki/30.%E5%91%98%E5%B7%A5%E8%B4%A6%E5%A5%97%E8%AE%BE%E7%BD%AE%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D)   
+
+## 2018.2.5 更新
+
+本次更新版本：v20180205  
+
+本次更新完成了管理员发送系统通知功能，页面在 **[Home页->右上角铃铛->系统通知]**  
+
+>本次更新也更新了数据库脚本，小伙伴们需要重新下载数据库脚本执行。  
+
+#### 相关文档：  
+
+33.[系统通知功能实现](https://github.com/lenve/vhr/wiki/30.%E5%91%98%E5%B7%A5%E8%B4%A6%E5%A5%97%E8%AE%BE%E7%BD%AE%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D)  
+
 # 其他资料
 
 关注公众号查看更多全栈资料：  
