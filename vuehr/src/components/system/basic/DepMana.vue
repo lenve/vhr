@@ -112,7 +112,6 @@
           if (resp && resp.status == 200) {
             var respData = resp.data;
             _this.depName = '';
-            _this.$message({type: respData.status, message: "添加成功!"});
             _this.setDataToTree(_this.treeData,_this.pDep,respData.msg)
           }
         })
@@ -149,10 +148,7 @@
               _this.treeLoading = false;
               if (resp && resp.status == 200) {
                 var respData = resp.data;
-                _this.$message({
-                  message: respData.msg,
-                  type: respData.status
-                });
+              
                 _this.deleteLocalDep(_this.treeData, data);
               }
             });

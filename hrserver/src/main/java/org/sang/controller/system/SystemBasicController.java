@@ -34,17 +34,17 @@ public class SystemBasicController {
     @RequestMapping(value = "/role/{rid}", method = RequestMethod.DELETE)
     public RespBean deleteRole(@PathVariable Long rid) {
         if (roleService.deleteRoleById(rid) == 1) {
-            return new RespBean("success", "删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return new RespBean("error", "删除失败!");
+        return RespBean.error("删除失败!");
     }
 
     @RequestMapping(value = "/addRole", method = RequestMethod.POST)
     public RespBean addNewRole(String role, String roleZh) {
         if (roleService.addNewRole(role, roleZh) == 1) {
-            return new RespBean("success", "添加成功!");
+            return RespBean.ok("添加成功!");
         }
-        return new RespBean("error", "添加失败!");
+        return RespBean.error("添加失败!");
     }
 
     @RequestMapping(value = "/menuTree/{rid}", method = RequestMethod.GET)
@@ -60,9 +60,9 @@ public class SystemBasicController {
     @RequestMapping(value = "/updateMenuRole", method = RequestMethod.PUT)
     public RespBean updateMenuRole(Long rid, Long[] mids) {
         if (menuRoleService.updateMenuRole(rid, mids) == mids.length) {
-            return new RespBean("success", "更新成功!");
+            return RespBean.ok("更新成功!");
         }
-        return new RespBean("error", "更新失败!");
+        return RespBean.error("更新失败!");
     }
 
     @RequestMapping("/roles")
@@ -86,9 +86,9 @@ public class SystemBasicController {
     @RequestMapping(value = "/dep/{did}", method = RequestMethod.DELETE)
     public RespBean deleteDep(@PathVariable Long did) {
         if (departmentService.deleteDep(did) == 1) {
-            return new RespBean("success", "删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return new RespBean("error", "删除失败!");
+        return RespBean.error("删除失败!");
     }
 
     @RequestMapping(value = "/dep/{pid}", method = RequestMethod.GET)
@@ -105,11 +105,11 @@ public class SystemBasicController {
     public RespBean addPos(Position pos) {
         int result = positionService.addPos(pos);
         if (result == 1) {
-            return new RespBean("success", "添加成功!");
+            return RespBean.ok("添加成功!");
         } else if (result == -1) {
-            return new RespBean("error", "职位名重复，添加失败!");
+            return RespBean.error("职位名重复，添加失败!");
         }
-        return new RespBean("error", "添加失败!");
+        return RespBean.error("添加失败!");
     }
 
     @RequestMapping(value = "/positions", method = RequestMethod.GET)
@@ -120,48 +120,48 @@ public class SystemBasicController {
     @RequestMapping("/position/{pids}")
     public RespBean deletePosById(@PathVariable String pids) {
         if (positionService.deletePosById(pids)) {
-            return new RespBean("success", "删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return new RespBean("error", "删除失败!");
+        return RespBean.error("删除失败!");
     }
 
     @RequestMapping(value = "/position", method = RequestMethod.PUT)
     public RespBean updatePosById(Position position) {
         if (positionService.updatePosById(position) == 1) {
-            return new RespBean("success", "修改成功!");
+            return RespBean.ok("修改成功!");
         }
-        return new RespBean("error", "修改失败!");
+        return RespBean.error("修改失败!");
     }
 
-    @RequestMapping(value = "/joblevel",method = RequestMethod.POST)
+    @RequestMapping(value = "/joblevel", method = RequestMethod.POST)
     public RespBean addJobLevel(JobLevel jobLevel) {
         int result = jobLevelService.addJobLevel(jobLevel);
         if (result == 1) {
-            return new RespBean("success", "添加成功!");
+            return RespBean.ok("添加成功!");
         } else if (result == -1) {
-            return new RespBean("error", "职称名重复，添加失败!");
+            return RespBean.error("职称名重复，添加失败!");
         }
-        return new RespBean("error", "添加失败!");
+        return RespBean.error("添加失败!");
     }
 
-    @RequestMapping(value = "/joblevels",method = RequestMethod.GET)
+    @RequestMapping(value = "/joblevels", method = RequestMethod.GET)
     public List<JobLevel> getAllJobLevels() {
         return jobLevelService.getAllJobLevels();
     }
 
-    @RequestMapping(value = "/joblevel/{ids}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/joblevel/{ids}", method = RequestMethod.DELETE)
     public RespBean deleteJobLevelById(@PathVariable String ids) {
         if (jobLevelService.deleteJobLevelById(ids)) {
-            return new RespBean("success", "删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return new RespBean("error", "删除失败!");
+        return RespBean.error("删除失败!");
     }
 
-    @RequestMapping(value = "/joblevel",method = RequestMethod.PUT)
+    @RequestMapping(value = "/joblevel", method = RequestMethod.PUT)
     public RespBean updateJobLevel(JobLevel jobLevel) {
         if (jobLevelService.updateJobLevel(jobLevel) == 1) {
-            return new RespBean("success", "修改成功!");
+            return RespBean.ok("修改成功!");
         }
-        return new RespBean("error", "修改失败!");
+        return RespBean.error("修改失败!");
     }
 }

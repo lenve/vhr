@@ -720,13 +720,6 @@
         this.fileUploadBtnText = '正在导入';
       },
       exportEmps(){
-//        var iframe = document.createElement("iframe");
-//        iframe.style.display = 'none';
-//        iframe.src = "/employee/basic/exportEmp";
-//        iframe.onload=function () {
-//          document.body.removeChild(iframe);
-//        }
-//        document.body.appendChild(iframe);
         window.open("/employee/basic/exportEmp", "_parent");
       },
       cancelSearch(){
@@ -778,7 +771,7 @@
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             _this.loadEmps();
           }
         })
@@ -819,7 +812,6 @@
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
-                  _this.$message({type: data.status, message: data.msg});
                   _this.dialogVisible = false;
                   _this.emptyEmpData();
                   _this.loadEmps();
@@ -832,7 +824,7 @@
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
-                  _this.$message({type: data.status, message: data.msg});
+                  _
                   _this.dialogVisible = false;
                   _this.emptyEmpData();
                   _this.loadEmps();

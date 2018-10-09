@@ -128,7 +128,7 @@
           _this.eploading.splice(index, 1, false);
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             if (data.status == 'success') {
               _this.refreshHr(hrId, index);
             }
@@ -171,7 +171,7 @@
           _this.cardLoading.splice(index, 1, false)
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             if (data.status == 'error') {
               _this.refreshHr(hrId, index);
             }
@@ -209,7 +209,7 @@
           _this.fullloading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             if (data.status == 'success') {
               _this.initCards();
               _this.loadAllRoles();

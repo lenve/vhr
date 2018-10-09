@@ -338,7 +338,7 @@
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             _this.loadSalaryCfg();
           }
         });
@@ -353,7 +353,7 @@
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
-                _this.$message({type: data.status, message: data.msg});
+                _
                 _this.dialogVisible = false;
                 _this.index = 0;
                 _this.loadSalaryCfg();
@@ -368,7 +368,7 @@
               this.postRequest("/salary/sob/salary", this.salary).then(resp=> {
                 if (resp && resp.status == 200) {
                   var data = resp.data;
-                  _this.$message({type: data.status, message: data.msg});
+                  _
                   _this.dialogVisible = false;
                   _this.index = 0;
                   _this.loadSalaryCfg();

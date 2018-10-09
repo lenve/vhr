@@ -129,7 +129,6 @@
         var _this = this;
         this.putRequest("/chat/markread", {flag: -1}).then(resp=> {
           if (resp && resp.status == 200) {
-            _this.$message({type: 'success', message: '标记成功!'});
             _this.$store.commit('toggleNFDot', false);
             _this.initSysMsgs();
           }
@@ -142,7 +141,7 @@
           _this.dialogLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            
             if (data.status == 'success') {
               _this.$store.state.stomp.send("/ws/nf", {}, '');
               _this.initSysMsgs();

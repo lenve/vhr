@@ -24,6 +24,43 @@ public class Hr implements UserDetails {
     private String remark;
     private List<Role> roles;
     private String userface;
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+    @Override
+    public String getUsername() {
+        return username;
+    }
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+    @JsonIgnore
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
     public String getUserface() {
         return userface;
@@ -81,56 +118,13 @@ public class Hr implements UserDetails {
         this.address = address;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @JsonIgnore
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
-    }
-
-    @JsonIgnore
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {

@@ -19,13 +19,9 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse response, Object o, Exception e) {
         ModelAndView mv = new ModelAndView(new MappingJackson2JsonView());
-        Map<String, String> map = new HashMap<>();
-        map.put("status", "error");
-        if (e instanceof DataIntegrityViolationException) {
-            map.put("msg", "该角色尚有关联的资源或用户，删除失败!");
-        }else{
-            map.put("msg", "操作失败!");
-        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", 500);
+        map.put("msg", "操作失败!");
         mv.addAllObjects(map);
         return mv;
     }

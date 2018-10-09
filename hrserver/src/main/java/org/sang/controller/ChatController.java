@@ -34,9 +34,9 @@ public class ChatController {
     @RequestMapping(value = "/nf", method = RequestMethod.POST)
     public RespBean sendNf(MsgContent msg) {
         if (sysMsgService.sendMsg(msg)) {
-            return new RespBean("success", "发送成功!");
+            return RespBean.ok("发送成功!");
         }
-        return new RespBean("error", "发送失败!");
+        return RespBean.error("发送失败!");
     }
 
     @RequestMapping("/sysmsgs")
@@ -48,15 +48,15 @@ public class ChatController {
     public RespBean markRead(Long flag) {
         if (sysMsgService.markRead(flag)) {
             if (flag == -1) {
-                return new RespBean("success", "multiple");
+                return RespBean.ok("multiple");
             } else {
-                return new RespBean("success", "single");
+                return RespBean.ok("single");
             }
         } else {
             if (flag == -1) {
-                return new RespBean("error", "multiple");
+                return RespBean.error("multiple");
             } else {
-                return new RespBean("error", "single");
+                return RespBean.error("single");
             }
         }
     }

@@ -26,9 +26,9 @@ public class SalaryController {
     @RequestMapping(value = "/salary", method = RequestMethod.POST)
     public RespBean addSalaryCfg(Salary salary) {
         if (salaryService.addSalary(salary) == 1) {
-            return new RespBean("success", "添加成功!");
+            return RespBean.ok("添加成功!");
         }
-        return new RespBean("error", "添加失败!");
+        return RespBean.error("添加失败!");
     }
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET)
@@ -39,17 +39,17 @@ public class SalaryController {
     @RequestMapping(value = "/salary", method = RequestMethod.PUT)
     public RespBean updateSalary(Salary salary) {
         if (salaryService.updateSalary(salary) == 1) {
-            return new RespBean("success", "更新成功!");
+            return RespBean.ok("更新成功!");
         }
-        return new RespBean("error", "更新失败!");
+        return RespBean.error("更新失败!");
     }
 
     @RequestMapping(value = "/salary/{ids}", method = RequestMethod.DELETE)
     public RespBean deleteSalary(@PathVariable String ids) {
         if (salaryService.deleteSalary(ids) == 1) {
-            return new RespBean("success", "删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return new RespBean("success", "删除失败!");
+        return RespBean.error("删除失败!");
     }
 
 }

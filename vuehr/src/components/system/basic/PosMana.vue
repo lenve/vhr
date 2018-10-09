@@ -118,7 +118,7 @@
           if (resp && resp.status == 200) {
             this.dialogVisible = false;
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             _this.loadTableData();
           }
         })
@@ -163,7 +163,7 @@
           _this.loading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$message({type: data.status, message: data.msg});
+            _
             _this.loadTableData();
             _this.positionName = '';
             _this.titleLevel = '';

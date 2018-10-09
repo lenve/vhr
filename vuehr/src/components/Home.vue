@@ -42,7 +42,6 @@
             </el-menu>
           </div>
         </el-aside>
-        <el-container>
           <el-main>
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
@@ -53,7 +52,6 @@
             </keep-alive>
             <router-view v-if="!this.$route.meta.keepAlive"></router-view>
           </el-main>
-        </el-container>
       </el-container>
     </el-container>
   </div>

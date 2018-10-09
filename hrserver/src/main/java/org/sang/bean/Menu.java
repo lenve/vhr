@@ -3,12 +3,13 @@ package org.sang.bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by sang on 2017/12/28.
  */
-public class Menu {
+public class Menu implements Serializable {
     private Long id;
     private String url;
     private String path;

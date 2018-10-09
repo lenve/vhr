@@ -65,8 +65,6 @@
           _this.loading = true;
           _this.deleteRequest("/system/basic/role/" + rid).then(resp=> {
             if (resp && resp.status == 200) {
-              var data = resp.data;
-              _this.$message({type: data.status, message: data.msg})
               _this.initRoles();
             } else {
               _this.loading = false;
@@ -89,7 +87,7 @@
           }).then(resp=> {
             if (resp && resp.status == 200) {
               var data = resp.data;
-              _this.$message({type: data.status, message: data.msg});
+              _
               _this.initRoles();
               _this.newRole = '';
               _this.newRoleZh = '';
@@ -108,8 +106,6 @@
           mids: checkedKeys
         }).then(resp=> {
           if (resp && resp.status == 200) {
-            var data = resp.data;
-            _this.$message({type: data.status, message: data.msg})
             _this.activeColItem = -1;
           }
         })
