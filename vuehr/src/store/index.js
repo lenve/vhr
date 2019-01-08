@@ -17,7 +17,7 @@ export default new Vuex.Store({
     msgList: [],
     isDotMap: new Map(),
     currentFriend: {},
-    stomp: Stomp.over(new SockJS("/ws/endpointChat")),
+    stomp: null,
     nfDot: false
   },
   mutations: {

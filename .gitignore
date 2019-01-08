@@ -1,0 +1,10 @@
+node_modules/
+/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.idea
+target/
+!.mvn/wrapper/maven-wrapper.jar
+vhr.wiki
+人事管理系统需求规格说明书.doc

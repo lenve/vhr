@@ -17,7 +17,6 @@ import java.io.PrintWriter;
 @RestController
 public class RegLoginController {
     @RequestMapping("/login_p")
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public RespBean login() {
         return RespBean.error("尚未登录，请登录!");
     }
