@@ -894,6 +894,9 @@
 //        delete this.emp.politicsStatus;
         delete this.emp.workAge;
         delete this.emp.notWorkDate;
+		// 删除后台传过来的salary对象 不然更新会提示无法将字符串salary转为对象salary
+		// 一个更新问题 从早上八点半解决到现在 下午四点 就多个字段
+		delete this.emp.salary;
         this.dialogVisible = true;
       },
       showAddEmpView(){
