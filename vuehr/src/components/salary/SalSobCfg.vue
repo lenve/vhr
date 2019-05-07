@@ -171,7 +171,7 @@
         this.putRequest("/salary/sobcfg/", {eid: eid, sid: this.sid}).then(resp=> {
           if(resp&&resp.status==200) {
             var data = resp.data;
-            _
+           
             _this.loadEmps();
           }
         })

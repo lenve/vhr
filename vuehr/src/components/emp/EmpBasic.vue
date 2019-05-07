@@ -771,7 +771,7 @@
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _
+            
             _this.loadEmps();
           }
         })
@@ -824,7 +824,7 @@
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
-                  _
+                  
                   _this.dialogVisible = false;
                   _this.emptyEmpData();
                   _this.loadEmps();
