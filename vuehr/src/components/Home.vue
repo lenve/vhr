@@ -25,8 +25,8 @@
         <el-aside width="180px" class="home-aside">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
             <el-menu style="background: #ececec;width: 180px;" unique-opened router>
-              <template v-for="(item,index) in this.routes" v-if="!item.hidden">
-                <el-submenu :key="index" :index="index+''">
+              <template v-for="(item,index) in this.routes" >
+                <el-submenu :key="index" v-if="!item.hidden" :index="index+''">
                   <template slot="title">
                     <i :class="item.iconCls" style="color: #20a0ff;width: 14px;"></i>
                     <span slot="title">{{item.name}}</span>

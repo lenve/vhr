@@ -163,7 +163,6 @@
           _this.loading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _
             _this.loadTableData();
             _this.positionName = '';
             _this.titleLevel = '';

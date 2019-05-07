@@ -12,6 +12,7 @@ import org.sang.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
@@ -42,6 +43,10 @@ public class EmpBasicController {
     @Autowired
     JavaMailSender javaMailSender;
 
+    /**
+     * 所有下拉框的基础数据
+     * @return 下拉框的基础数据
+     */
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
         Map<String, Object> map = new HashMap<>();
@@ -60,11 +65,12 @@ public class EmpBasicController {
     }
 
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
-    public RespBean addEmp(Employee employee) {
+    public RespBean addEmp(Employee employee, BindingResult bindingResult) {
+        System.out.println(employee);
         if (empService.addEmp(employee) == 1) {
             List<Position> allPos = positionService.getAllPos();
             for (Position allPo : allPos) {
-                if (allPo.getId() == employee.getPosId()) {
+                if (allPo.getId().equals(employee.getPosId())) {
                     employee.setPosName(allPo.getName());
                 }
             }
@@ -77,6 +83,8 @@ public class EmpBasicController {
 
     @RequestMapping(value = "/emp", method = RequestMethod.PUT)
     public RespBean updateEmp(Employee employee) {
+        System.out.println(employee);
+
         if (empService.updateEmp(employee) == 1) {
             return RespBean.ok("更新成功!");
         }

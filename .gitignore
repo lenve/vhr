@@ -1,9 +1,9 @@
-node_modules/
-/dist/
+vuehr/node_modules/
+vuehr/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.idea
+hrserver/.idea
 target/
 !.mvn/wrapper/maven-wrapper.jar
 vhr.wiki

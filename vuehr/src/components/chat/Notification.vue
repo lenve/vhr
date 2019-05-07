@@ -141,8 +141,8 @@
           _this.dialogLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            
-            if (data.status == 'success') {
+            console.log(data)
+            if (data.status === 200) {
               _this.$store.state.stomp.send("/ws/nf", {}, '');
               _this.initSysMsgs();
               _this.cancelSend();

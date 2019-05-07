@@ -309,6 +309,7 @@
     </el-container>
     <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
+        <!-- 添加/编辑框 -->
         <el-dialog
           :title="dialogTitle"
           style="padding: 0px;"
@@ -588,9 +589,9 @@
             </el-col>
           </el-row>
           <span slot="footer" class="dialog-footer">
-    <el-button size="mini" @click="cancelEidt">取 消</el-button>
-    <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
-  </span>
+            <el-button size="mini" @click="cancelEidt">取 消</el-button>
+            <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+          </span>
         </el-dialog>
       </div>
     </el-form>
@@ -658,7 +659,8 @@
           notWorkDate: '',
           beginContract: '',
           endContract: '',
-          workAge: ''
+          workAge: '',
+          salary: null
         },
         rules: {
           name: [{required: true, message: '必填:姓名', trigger: 'blur'}],
@@ -771,7 +773,6 @@
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _
             _this.loadEmps();
           }
         })
@@ -824,7 +825,6 @@
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
-                  _
                   _this.dialogVisible = false;
                   _this.emptyEmpData();
                   _this.loadEmps();
@@ -873,30 +873,22 @@
         })
       },
       showEditEmpView(row){
-        console.log(row)
         this.dialogTitle = "编辑员工";
         this.emp = row;
-        this.emp.birthday = this.formatDate(row.birthday);
-        this.emp.conversionTime = this.formatDate(row.conversionTime);
-        this.emp.beginContract = this.formatDate(row.beginContract);
-        this.emp.endContract = this.formatDate(row.endContract);
-        this.emp.beginDate = this.formatDate(row.beginDate);
         this.emp.nationId = row.nation.id;
         this.emp.politicId = row.politicsStatus.id;
         this.emp.departmentId = row.department.id;
         this.emp.departmentName = row.department.name;
         this.emp.jobLevelId = row.jobLevel.id;
         this.emp.posId = row.position.id;
-//        delete this.emp.department;
-//        delete this.emp.jobLevel;
-//        delete this.emp.position;
-//        delete this.emp.nation;
-//        delete this.emp.politicsStatus;
+        delete this.emp.department;
+        delete this.emp.jobLevel;
+        delete this.emp.position;
+        delete this.emp.nation;
+        delete this.emp.politicsStatus;
         delete this.emp.workAge;
         delete this.emp.notWorkDate;
-		// 删除后台传过来的salary对象 不然更新会提示无法将字符串salary转为对象salary
-		// 一个更新问题 从早上八点半解决到现在 下午四点 就多个字段
-		delete this.emp.salary;
+        delete this.emp.salary;
         this.dialogVisible = true;
       },
       showAddEmpView(){
@@ -944,7 +936,7 @@
     }
   };
 </script>
-<style>
+<style scope="this api replaced by slot-scope in 2.5.0+">
   .el-dialog__body {
     padding-top: 0px;
     padding-bottom: 0px;

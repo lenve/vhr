@@ -46,8 +46,7 @@
             var data = resp.data;
             _this.$store.commit('login', data.obj);
             var path = _this.$route.query.redirect;
-            _this.$router
-              .replace({path: path == '/' || path == undefined ? '/home' : path});
+            _this.$router.replace({path: path == '/' || path == undefined ? '/home' : path});
           }
         });
       }

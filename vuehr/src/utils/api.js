@@ -1,11 +1,13 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
+import router from '@/router'
 axios.interceptors.request.use(config => {
   return config;
 }, err => {
   Message.error({message: '请求超时!'});
   // return Promise.resolve(err);
 })
+
 axios.interceptors.response.use(data => {
   if (data.status && data.status == 200 && data.data.status == 500) {
     Message.error({message: data.data.msg});
@@ -31,6 +33,7 @@ axios.interceptors.response.use(data => {
   }
   // return Promise.resolve(err);
 })
+
 let base = '';
 export const postRequest = (url, params) => {
   return axios({
@@ -49,6 +52,7 @@ export const postRequest = (url, params) => {
     }
   });
 }
+
 export const uploadFileRequest = (url, params) => {
   return axios({
     method: 'post',
@@ -59,6 +63,7 @@ export const uploadFileRequest = (url, params) => {
     }
   });
 }
+
 export const putRequest = (url, params) => {
   return axios({
     method: 'put',
@@ -76,12 +81,14 @@ export const putRequest = (url, params) => {
     }
   });
 }
+
 export const deleteRequest = (url) => {
   return axios({
     method: 'delete',
     url: `${base}${url}`
   });
 }
+
 export const getRequest = (url) => {
   return axios({
     method: 'get',

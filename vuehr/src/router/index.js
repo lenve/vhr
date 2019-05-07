@@ -34,15 +34,15 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login,
+      // hidden: true 在侧边栏隐藏  默认为false
       hidden: true
-    }, {
+    },
+    {
       path: '/home',
       name: '主页',
       component: Home,
       hidden: true,
-      meta: {
-        requireAuth: true
-      },
+      meta: { requireAuth: true },
       children: [
         {
           path: '/chat',
