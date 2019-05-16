@@ -232,9 +232,9 @@ npm run build
 
 # 其他资料
 
-关注公众号查看更多全栈资料：  
+关注公众号**牧码小子**，专注于 Spring Boot+微服务，定期视频教程分享，关注后回复 Java ，领取松哥为你精心准备的 Java 干货！
 
-![公众号二维码](https://mmbiz.qpic.cn/mmbiz_jpg/GvtDGKK4uYkO6VEW6XfkovAic6oA5LegzZKeRj0OwOZZQ8ic1tEoBOVBBOreAB9Dz32CN9MU19slrjn5qvxbR7pQ/0?wx_fmt=jpeg)  
+![公众号二维码](http://www.javaboy.org/images/sb/javaboy.jpg)  
 
 # License
 
