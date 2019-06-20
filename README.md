@@ -232,7 +232,7 @@ npm run build
 
 # 其他资料
 
-关注公众号**牧码小子**，专注于 Spring Boot+微服务，定期视频教程分享，关注后回复 Java ，领取松哥为你精心准备的 Java 干货！
+关注公众号**江南一点雨**，专注于 Spring Boot+微服务，定期视频教程分享，关注后回复 Java ，领取松哥为你精心准备的 Java 干货！
 
 ![公众号二维码](http://www.javaboy.org/images/sb/javaboy.jpg)  
 
