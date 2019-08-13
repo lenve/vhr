@@ -238,6 +238,9 @@ public class PoiUtils {
         employee = new Employee();
         for (int k = 0; k < physicalNumberOfCells; k++) {
         HSSFCell cell = row.getCell(k);
+        if(cell == null){
+           continue;
+        }
         switch (cell.getCellTypeEnum()) {
         case STRING: {
             String cellValue = cell.getStringCellValue();
