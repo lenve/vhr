@@ -129,7 +129,7 @@
           if (resp && resp.status == 200) {
             var data = resp.data;
             
-            if (data.status == 'success') {
+            if (data.status == 200) {
               _this.refreshHr(hrId, index);
             }
           }
