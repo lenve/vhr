@@ -10,6 +10,7 @@ import org.sang.service.EmpService;
 import org.sang.service.JobLevelService;
 import org.sang.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,8 @@ public class EmpBasicController {
     TemplateEngine templateEngine;
     @Autowired
     JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}")
+    String emailAddress;
 
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
@@ -69,7 +72,7 @@ public class EmpBasicController {
                 }
             }
             executorService.execute(new EmailRunnable(employee,
-                    javaMailSender, templateEngine));
+                    javaMailSender, templateEngine,emailAddress));
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");
