@@ -128,7 +128,7 @@
           _this.eploading.splice(index, 1, false);
           if (resp && resp.status == 200) {
             var data = resp.data;
-            
+
             if (data.status == 200) {
               _this.refreshHr(hrId, index);
             }
@@ -154,7 +154,7 @@
       },
       loadAllRoles(){
         var _this = this;
-        this.getRequest("/system/basic/roles").then(resp=> {
+        this.getRequest("/system/hr/roles").then(resp=> {
           _this.fullloading = false;
           if (resp && resp.status == 200) {
             _this.allRoles = resp.data;
@@ -171,7 +171,7 @@
           _this.cardLoading.splice(index, 1, false)
           if (resp && resp.status == 200) {
             var data = resp.data;
-            
+
             if (data.status == 'error') {
               _this.refreshHr(hrId, index);
             }
@@ -209,7 +209,7 @@
           _this.fullloading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-           
+
             if (data.status == 'success') {
               _this.initCards();
               _this.loadAllRoles();
