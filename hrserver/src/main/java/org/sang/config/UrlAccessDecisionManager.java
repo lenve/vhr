@@ -18,35 +18,38 @@ import java.util.Iterator;
  */
 @Component
 public class UrlAccessDecisionManager implements AccessDecisionManager {
-    @Override
-    public void decide(Authentication auth, Object o, Collection<ConfigAttribute> cas){
-        Iterator<ConfigAttribute> iterator = cas.iterator();
-        while (iterator.hasNext()) {
-            ConfigAttribute ca = iterator.next();
-            //当前请求需要的权限
-            String needRole = ca.getAttribute();
-            if ("ROLE_LOGIN".equals(needRole)) {
-                if (auth instanceof AnonymousAuthenticationToken) {
-                    throw new BadCredentialsException("未登录");
-                } else
-                    return;
-            }
-            //当前用户所具有的权限
-            Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-            for (GrantedAuthority authority : authorities) {
-                if (authority.getAuthority().equals(needRole)) {
-                    return;
-                }
-            }
-        }
-        throw new AccessDeniedException("权限不足!");
-    }
-    @Override
-    public boolean supports(ConfigAttribute configAttribute) {
-        return true;
-    }
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return true;
-    }
+	@Override
+	public void decide(Authentication auth, Object o, Collection<ConfigAttribute> cas) { //
+		Iterator<ConfigAttribute> iterator = cas.iterator();
+		while (iterator.hasNext()) {
+			ConfigAttribute ca = iterator.next();
+			
+			String needRole = ca.getAttribute();
+			if ("ROLE_LOGIN".equals(needRole)) { //角色是登陆，就说明是未登录，跳转到登陆页面
+				if (auth instanceof AnonymousAuthenticationToken) { //如果当前请求未登录
+					throw new BadCredentialsException("未登录"); //跳转到登陆页面。即会请求/login_p。
+				} else //如果当前请求已经登录，但是菜单集合里没有。比如/config/sysmenu，/chat/sysmsgs，这些是登陆之后立马请求的几个请求。
+					return;
+			}
+			
+			// 当前用户所具有的权限
+			Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+			for (GrantedAuthority authority : authorities) {
+				if (authority.getAuthority().equals(needRole)) { //用户所属的角色是否和菜单所属的角色一样，一样就是有这个菜单权限，不一样就没有这个菜单的权限
+					return;
+				}
+			}
+		}
+		throw new AccessDeniedException("权限不足!"); //用户没有这个菜单的权限
+	}
+
+	@Override
+	public boolean supports(ConfigAttribute configAttribute) {
+		return true;
+	}
+
+	@Override
+	public boolean supports(Class<?> aClass) {
+		return true;
+	}
 }
