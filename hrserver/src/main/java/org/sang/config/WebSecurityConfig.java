@@ -36,10 +36,12 @@ import java.io.PrintWriter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	HrService hrService;
+	
 	@Autowired
-	CustomMetadataSource metadataSource;
+	CustomMetadataSource metadataSource; //元数据
 	@Autowired
-	UrlAccessDecisionManager urlAccessDecisionManager;
+	UrlAccessDecisionManager urlAccessDecisionManager; //路径访问
+	
 	@Autowired
 	AuthenticationAccessDeniedHandler deniedHandler;
 

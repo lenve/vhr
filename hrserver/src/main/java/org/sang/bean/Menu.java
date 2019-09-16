@@ -17,7 +17,7 @@ public class Menu implements Serializable {
     private String name;
     private String iconCls;
     private Long parentId;
-    private List<Role> roles; //角色集合
+    private List<Role> roles; //菜单属于多个角色
     private List<Menu> children;
     private MenuMeta meta;
 

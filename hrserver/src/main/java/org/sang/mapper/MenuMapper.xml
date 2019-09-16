@@ -45,6 +45,7 @@
         from menu m1,menu m2 
         where m1.`id`=m2.`parentId` and m1.`id`!=1 and m2.`id` in(select mr.`mid` from hr_role h_r,menu_role mr where h_r.`rid`=mr.`rid` and h_r.`hrid`=#{hrId}) and m2.`enabled`=true order by m1.`id`,m2.`id`
     </select>
+    
     <select id="menuTree" resultMap="BaseResultMap">
             select m1.`id`,m1.`name`,m2.`id` as id2,m2.`name` as name2,m3.`id` as id3,m3.`name` as name3 from menu m1,menu m2,menu m3 where m1.`id`=m2.`parentId` and m2.`id`=m3.`parentId` and m3.`enabled`=true
         </select>
