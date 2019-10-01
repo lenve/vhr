@@ -43,7 +43,7 @@
 
 ## 后端技术栈
 
-1.SpringBoot  
+1.Spring Boot  
 2.SpringSecurity  
 3.MyBatis  
 4.MySQL  
