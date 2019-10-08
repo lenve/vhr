@@ -16,10 +16,12 @@ public class MenuRoleService {
     MenuRoleMapper menuRoleMapper;
 
     public int updateMenuRole(Long rid, Long[] mids) {
-        menuRoleMapper.deleteMenuByRid(rid);
+    	//删除
+        menuRoleMapper.deleteMenuByRid(rid); //总结，每次都先全部删除，然后再新增所有数据
         if (mids.length == 0) {
             return 0;
         }
+        //新增
         return menuRoleMapper.addMenu(rid, mids);
     }
 }
