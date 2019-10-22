@@ -1,4 +1,4 @@
-扫码加微信，备注微人事，进群讨论。
+﻿扫码加微信，备注微人事，进群讨论。
 
 ![](http://www.javaboy.org/images/weixin.png)
 
@@ -257,4 +257,4 @@ npm run build
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
- # java_code
+ # java_code 啊
