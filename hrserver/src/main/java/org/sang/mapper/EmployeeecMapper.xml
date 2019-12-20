@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.EmployeeecMapper">
+  <resultMap id="BaseResultMap" type="org.sang.bean.Employeeec">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="ecDate" jdbcType="DATE" property="ecdate" />
+    <result column="ecReason" jdbcType="VARCHAR" property="ecreason" />
+    <result column="ecPoint" jdbcType="INTEGER" property="ecpoint" />
+    <result column="ecType" jdbcType="INTEGER" property="ectype" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, eid, ecDate, ecReason, ecPoint, ecType, remark
+  </sql>
+  <select id="selectByExample" parameterType="org.sang.example.EmployeeecExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from employeeec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employeeec
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from employeeec
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sang.example.EmployeeecExample">
+    delete from employeeec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sang.bean.Employeeec">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into employeeec (eid, ecDate, ecReason,
+    ecPoint, ecType, remark
+    )
+    values (#{eid,jdbcType=INTEGER}, #{ecdate,jdbcType=DATE}, #{ecreason,jdbcType=VARCHAR},
+    #{ecpoint,jdbcType=INTEGER}, #{ectype,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sang.bean.Employeeec">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into employeeec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="ecdate != null">
+        ecDate,
+      </if>
+      <if test="ecreason != null">
+        ecReason,
+      </if>
+      <if test="ecpoint != null">
+        ecPoint,
+      </if>
+      <if test="ectype != null">
+        ecType,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ecdate != null">
+        #{ecdate,jdbcType=DATE},
+      </if>
+      <if test="ecreason != null">
+        #{ecreason,jdbcType=VARCHAR},
+      </if>
+      <if test="ecpoint != null">
+        #{ecpoint,jdbcType=INTEGER},
+      </if>
+      <if test="ectype != null">
+        #{ectype,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sang.example.EmployeeecExample" resultType="java.lang.Long">
+    select count(*) from employeeec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update employeeec
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.eid != null">
+        eid = #{record.eid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ecdate != null">
+        ecDate = #{record.ecdate,jdbcType=DATE},
+      </if>
+      <if test="record.ecreason != null">
+        ecReason = #{record.ecreason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ecpoint != null">
+        ecPoint = #{record.ecpoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.ectype != null">
+        ecType = #{record.ectype,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update employeeec
+    set id = #{record.id,jdbcType=INTEGER},
+    eid = #{record.eid,jdbcType=INTEGER},
+    ecDate = #{record.ecdate,jdbcType=DATE},
+    ecReason = #{record.ecreason,jdbcType=VARCHAR},
+    ecPoint = #{record.ecpoint,jdbcType=INTEGER},
+    ecType = #{record.ectype,jdbcType=INTEGER},
+    remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.Employeeec">
+    update employeeec
+    <set>
+      <if test="eid != null">
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ecdate != null">
+        ecDate = #{ecdate,jdbcType=DATE},
+      </if>
+      <if test="ecreason != null">
+        ecReason = #{ecreason,jdbcType=VARCHAR},
+      </if>
+      <if test="ecpoint != null">
+        ecPoint = #{ecpoint,jdbcType=INTEGER},
+      </if>
+      <if test="ectype != null">
+        ecType = #{ectype,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sang.bean.Employeeec">
+    update employeeec
+    set eid = #{eid,jdbcType=INTEGER},
+      ecDate = #{ecdate,jdbcType=DATE},
+      ecReason = #{ecreason,jdbcType=VARCHAR},
+      ecPoint = #{ecpoint,jdbcType=INTEGER},
+      ecType = #{ectype,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
