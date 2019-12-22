@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@EnableCaching
 @MapperScan(basePackages = "org.javaboy.vhr.mapper")
 public class VhrApplication {
 
