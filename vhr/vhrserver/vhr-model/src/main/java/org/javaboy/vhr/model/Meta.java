@@ -1,5 +1,7 @@
 package org.javaboy.vhr.model;
 
+import java.io.Serializable;
+
 /**
  * @作者 江南一点雨
  * @公众号 江南一点雨

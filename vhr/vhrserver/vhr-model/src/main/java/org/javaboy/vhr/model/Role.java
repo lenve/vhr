@@ -1,5 +1,6 @@
 package org.javaboy.vhr.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class Role implements Serializable {
