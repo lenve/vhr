@@ -62,7 +62,7 @@
 5. 在 IntelliJ IDEA 中打开 vhr 项目，启动 mailserver 模块
 6. 运行 vhrserver 中的 vhr-web 模块
 
-**OK，至此，服务端就启动成功了，此时我们直接在地址栏输入 `http://localhost:8081/index.html` 即可访问我们的项目，如果要做二次开发，请继续看第五、六步。**
+**OK，至此，服务端就启动成功了，此时我们直接在地址栏输入 `http://localhost:8081/index.html` 即可访问我们的项目，如果要做二次开发，请继续看第七、八步。**
 
 7. 进入到vuehr目录中，在命令行依次输入如下命令：
 
