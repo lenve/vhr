@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.sang.mapper.EmployeeecMapper">
-  <resultMap id="BaseResultMap" type="org.sang.bean.Employeeec">
+<mapper namespace="org.sang.mapper.HrDictMapper">
+  <resultMap id="BaseResultMap" type="org.sang.bean.HrDict">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="eid" jdbcType="INTEGER" property="eid" />
-    <result column="ecDate" jdbcType="DATE" property="ecDate" />
-    <result column="ecReason" jdbcType="VARCHAR" property="ecReason" />
-    <result column="ecPoint" jdbcType="INTEGER" property="ecPoint" />
-    <result column="ecType" jdbcType="INTEGER" property="ecType" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="dictName" jdbcType="VARCHAR" property="dictName" />
+    <result column="dictValue" jdbcType="INTEGER" property="dictValue" />
+    <result column="isfixed" jdbcType="INTEGER" property="isfixed" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,16 +67,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, eid, ecDate, ecReason, ecPoint, ecType, remark
+    id, `desc`, dictName, dictValue, isfixed
   </sql>
-  <select id="selectByExample" parameterType="org.sang.example.EmployeeecExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.sang.example.HrDictExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from employeeec
+    from hr_dict
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,105 +87,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from employeeec
+    from hr_dict
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from employeeec
+    delete from hr_dict
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.sang.example.EmployeeecExample">
-    delete from employeeec
+  <delete id="deleteByExample" parameterType="org.sang.example.HrDictExample">
+    delete from hr_dict
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.sang.bean.Employeeec">
+  <insert id="insert" parameterType="org.sang.bean.HrDict">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into employeeec (eid, ecDate, ecReason, 
-      ecPoint, ecType, remark
-      )
-    values (#{eid,jdbcType=INTEGER}, #{ecDate,jdbcType=DATE}, #{ecReason,jdbcType=VARCHAR}, 
-      #{ecPoint,jdbcType=INTEGER}, #{ecType,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into hr_dict (`desc`, dictName, dictValue, 
+      isfixed)
+    values (#{desc,jdbcType=VARCHAR}, #{dictName,jdbcType=VARCHAR}, #{dictValue,jdbcType=INTEGER}, 
+      #{isfixed,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.sang.bean.Employeeec">
+  <insert id="insertSelective" parameterType="org.sang.bean.HrDict">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into employeeec
+    insert into hr_dict
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="eid != null">
-        eid,
+      <if test="desc != null">
+        `desc`,
       </if>
-      <if test="ecDate != null">
-        ecDate,
+      <if test="dictName != null">
+        dictName,
       </if>
-      <if test="ecReason != null">
-        ecReason,
+      <if test="dictValue != null">
+        dictValue,
       </if>
-      <if test="ecPoint != null">
-        ecPoint,
-      </if>
-      <if test="ecType != null">
-        ecType,
-      </if>
-      <if test="remark != null">
-        remark,
+      <if test="isfixed != null">
+        isfixed,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="eid != null">
-        #{eid,jdbcType=INTEGER},
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
       </if>
-      <if test="ecDate != null">
-        #{ecDate,jdbcType=DATE},
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
       </if>
-      <if test="ecReason != null">
-        #{ecReason,jdbcType=VARCHAR},
+      <if test="dictValue != null">
+        #{dictValue,jdbcType=INTEGER},
       </if>
-      <if test="ecPoint != null">
-        #{ecPoint,jdbcType=INTEGER},
-      </if>
-      <if test="ecType != null">
-        #{ecType,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
+      <if test="isfixed != null">
+        #{isfixed,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sang.example.EmployeeecExample" resultType="java.lang.Long">
-    select count(*) from employeeec
+  <select id="countByExample" parameterType="org.sang.example.HrDictExample" resultType="java.lang.Long">
+    select count(*) from hr_dict
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update employeeec
+    update hr_dict
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.eid != null">
-        eid = #{record.eid,jdbcType=INTEGER},
+      <if test="record.desc != null">
+        `desc` = #{record.desc,jdbcType=VARCHAR},
       </if>
-      <if test="record.ecDate != null">
-        ecDate = #{record.ecDate,jdbcType=DATE},
+      <if test="record.dictName != null">
+        dictName = #{record.dictName,jdbcType=VARCHAR},
       </if>
-      <if test="record.ecReason != null">
-        ecReason = #{record.ecReason,jdbcType=VARCHAR},
+      <if test="record.dictValue != null">
+        dictValue = #{record.dictValue,jdbcType=INTEGER},
       </if>
-      <if test="record.ecPoint != null">
-        ecPoint = #{record.ecPoint,jdbcType=INTEGER},
-      </if>
-      <if test="record.ecType != null">
-        ecType = #{record.ecType,jdbcType=INTEGER},
-      </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
+      <if test="record.isfixed != null">
+        isfixed = #{record.isfixed,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -195,51 +173,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update employeeec
+    update hr_dict
     set id = #{record.id,jdbcType=INTEGER},
-      eid = #{record.eid,jdbcType=INTEGER},
-      ecDate = #{record.ecDate,jdbcType=DATE},
-      ecReason = #{record.ecReason,jdbcType=VARCHAR},
-      ecPoint = #{record.ecPoint,jdbcType=INTEGER},
-      ecType = #{record.ecType,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      `desc` = #{record.desc,jdbcType=VARCHAR},
+      dictName = #{record.dictName,jdbcType=VARCHAR},
+      dictValue = #{record.dictValue,jdbcType=INTEGER},
+      isfixed = #{record.isfixed,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.Employeeec">
-    update employeeec
+  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.HrDict">
+    update hr_dict
     <set>
-      <if test="eid != null">
-        eid = #{eid,jdbcType=INTEGER},
+      <if test="desc != null">
+        `desc` = #{desc,jdbcType=VARCHAR},
       </if>
-      <if test="ecDate != null">
-        ecDate = #{ecDate,jdbcType=DATE},
+      <if test="dictName != null">
+        dictName = #{dictName,jdbcType=VARCHAR},
       </if>
-      <if test="ecReason != null">
-        ecReason = #{ecReason,jdbcType=VARCHAR},
+      <if test="dictValue != null">
+        dictValue = #{dictValue,jdbcType=INTEGER},
       </if>
-      <if test="ecPoint != null">
-        ecPoint = #{ecPoint,jdbcType=INTEGER},
-      </if>
-      <if test="ecType != null">
-        ecType = #{ecType,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="isfixed != null">
+        isfixed = #{isfixed,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.sang.bean.Employeeec">
-    update employeeec
-    set eid = #{eid,jdbcType=INTEGER},
-      ecDate = #{ecDate,jdbcType=DATE},
-      ecReason = #{ecReason,jdbcType=VARCHAR},
-      ecPoint = #{ecPoint,jdbcType=INTEGER},
-      ecType = #{ecType,jdbcType=INTEGER},
-      remark = #{remark,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="org.sang.bean.HrDict">
+    update hr_dict
+    set `desc` = #{desc,jdbcType=VARCHAR},
+      dictName = #{dictName,jdbcType=VARCHAR},
+      dictValue = #{dictValue,jdbcType=INTEGER},
+      isfixed = #{isfixed,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
 </mapper>

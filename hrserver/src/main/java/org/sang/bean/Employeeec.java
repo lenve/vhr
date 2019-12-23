@@ -8,13 +8,13 @@ public class Employeeec implements Serializable {
 
     private Integer eid;
 
-    private Date ecdate;
+    private Date ecDate;
 
-    private String ecreason;
+    private String ecReason;
 
-    private Integer ecpoint;
+    private Integer ecPoint;
 
-    private Integer ectype;
+    private Integer ecType;
 
     private String remark;
 
@@ -36,36 +36,36 @@ public class Employeeec implements Serializable {
         this.eid = eid;
     }
 
-    public Date getEcdate() {
-        return ecdate;
+    public Date getEcDate() {
+        return ecDate;
     }
 
-    public void setEcdate(Date ecdate) {
-        this.ecdate = ecdate;
+    public void setEcDate(Date ecDate) {
+        this.ecDate = ecDate;
     }
 
-    public String getEcreason() {
-        return ecreason;
+    public String getEcReason() {
+        return ecReason;
     }
 
-    public void setEcreason(String ecreason) {
-        this.ecreason = ecreason == null ? null : ecreason.trim();
+    public void setEcReason(String ecReason) {
+        this.ecReason = ecReason == null ? null : ecReason.trim();
     }
 
-    public Integer getEcpoint() {
-        return ecpoint;
+    public Integer getEcPoint() {
+        return ecPoint;
     }
 
-    public void setEcpoint(Integer ecpoint) {
-        this.ecpoint = ecpoint;
+    public void setEcPoint(Integer ecPoint) {
+        this.ecPoint = ecPoint;
     }
 
-    public Integer getEctype() {
-        return ectype;
+    public Integer getEcType() {
+        return ecType;
     }
 
-    public void setEctype(Integer ectype) {
-        this.ectype = ectype;
+    public void setEcType(Integer ecType) {
+        this.ecType = ecType;
     }
 
     public String getRemark() {
@@ -84,10 +84,10 @@ public class Employeeec implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", eid=").append(eid);
-        sb.append(", ecdate=").append(ecdate);
-        sb.append(", ecreason=").append(ecreason);
-        sb.append(", ecpoint=").append(ecpoint);
-        sb.append(", ectype=").append(ectype);
+        sb.append(", ecDate=").append(ecDate);
+        sb.append(", ecReason=").append(ecReason);
+        sb.append(", ecPoint=").append(ecPoint);
+        sb.append(", ecType=").append(ecType);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

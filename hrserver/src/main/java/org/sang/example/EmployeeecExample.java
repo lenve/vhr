@@ -252,253 +252,253 @@ public class EmployeeecExample {
             return (Criteria) this;
         }
 
-        public Criteria andEcdateIsNull() {
+        public Criteria andEcDateIsNull() {
             addCriterion("ecDate is null");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateIsNotNull() {
+        public Criteria andEcDateIsNotNull() {
             addCriterion("ecDate is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateEqualTo(Date value) {
-            addCriterionForJDBCDate("ecDate =", value, "ecdate");
+        public Criteria andEcDateEqualTo(Date value) {
+            addCriterionForJDBCDate("ecDate =", value, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("ecDate <>", value, "ecdate");
+        public Criteria andEcDateNotEqualTo(Date value) {
+            addCriterionForJDBCDate("ecDate <>", value, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateGreaterThan(Date value) {
-            addCriterionForJDBCDate("ecDate >", value, "ecdate");
+        public Criteria andEcDateGreaterThan(Date value) {
+            addCriterionForJDBCDate("ecDate >", value, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("ecDate >=", value, "ecdate");
+        public Criteria andEcDateGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("ecDate >=", value, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateLessThan(Date value) {
-            addCriterionForJDBCDate("ecDate <", value, "ecdate");
+        public Criteria andEcDateLessThan(Date value) {
+            addCriterionForJDBCDate("ecDate <", value, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("ecDate <=", value, "ecdate");
+        public Criteria andEcDateLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("ecDate <=", value, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateIn(List<Date> values) {
-            addCriterionForJDBCDate("ecDate in", values, "ecdate");
+        public Criteria andEcDateIn(List<Date> values) {
+            addCriterionForJDBCDate("ecDate in", values, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("ecDate not in", values, "ecdate");
+        public Criteria andEcDateNotIn(List<Date> values) {
+            addCriterionForJDBCDate("ecDate not in", values, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("ecDate between", value1, value2, "ecdate");
+        public Criteria andEcDateBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("ecDate between", value1, value2, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcdateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("ecDate not between", value1, value2, "ecdate");
+        public Criteria andEcDateNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("ecDate not between", value1, value2, "ecDate");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonIsNull() {
+        public Criteria andEcReasonIsNull() {
             addCriterion("ecReason is null");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonIsNotNull() {
+        public Criteria andEcReasonIsNotNull() {
             addCriterion("ecReason is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonEqualTo(String value) {
-            addCriterion("ecReason =", value, "ecreason");
+        public Criteria andEcReasonEqualTo(String value) {
+            addCriterion("ecReason =", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonNotEqualTo(String value) {
-            addCriterion("ecReason <>", value, "ecreason");
+        public Criteria andEcReasonNotEqualTo(String value) {
+            addCriterion("ecReason <>", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonGreaterThan(String value) {
-            addCriterion("ecReason >", value, "ecreason");
+        public Criteria andEcReasonGreaterThan(String value) {
+            addCriterion("ecReason >", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonGreaterThanOrEqualTo(String value) {
-            addCriterion("ecReason >=", value, "ecreason");
+        public Criteria andEcReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("ecReason >=", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonLessThan(String value) {
-            addCriterion("ecReason <", value, "ecreason");
+        public Criteria andEcReasonLessThan(String value) {
+            addCriterion("ecReason <", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonLessThanOrEqualTo(String value) {
-            addCriterion("ecReason <=", value, "ecreason");
+        public Criteria andEcReasonLessThanOrEqualTo(String value) {
+            addCriterion("ecReason <=", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonLike(String value) {
-            addCriterion("ecReason like", value, "ecreason");
+        public Criteria andEcReasonLike(String value) {
+            addCriterion("ecReason like", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonNotLike(String value) {
-            addCriterion("ecReason not like", value, "ecreason");
+        public Criteria andEcReasonNotLike(String value) {
+            addCriterion("ecReason not like", value, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonIn(List<String> values) {
-            addCriterion("ecReason in", values, "ecreason");
+        public Criteria andEcReasonIn(List<String> values) {
+            addCriterion("ecReason in", values, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonNotIn(List<String> values) {
-            addCriterion("ecReason not in", values, "ecreason");
+        public Criteria andEcReasonNotIn(List<String> values) {
+            addCriterion("ecReason not in", values, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonBetween(String value1, String value2) {
-            addCriterion("ecReason between", value1, value2, "ecreason");
+        public Criteria andEcReasonBetween(String value1, String value2) {
+            addCriterion("ecReason between", value1, value2, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcreasonNotBetween(String value1, String value2) {
-            addCriterion("ecReason not between", value1, value2, "ecreason");
+        public Criteria andEcReasonNotBetween(String value1, String value2) {
+            addCriterion("ecReason not between", value1, value2, "ecReason");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointIsNull() {
+        public Criteria andEcPointIsNull() {
             addCriterion("ecPoint is null");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointIsNotNull() {
+        public Criteria andEcPointIsNotNull() {
             addCriterion("ecPoint is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointEqualTo(Integer value) {
-            addCriterion("ecPoint =", value, "ecpoint");
+        public Criteria andEcPointEqualTo(Integer value) {
+            addCriterion("ecPoint =", value, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointNotEqualTo(Integer value) {
-            addCriterion("ecPoint <>", value, "ecpoint");
+        public Criteria andEcPointNotEqualTo(Integer value) {
+            addCriterion("ecPoint <>", value, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointGreaterThan(Integer value) {
-            addCriterion("ecPoint >", value, "ecpoint");
+        public Criteria andEcPointGreaterThan(Integer value) {
+            addCriterion("ecPoint >", value, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ecPoint >=", value, "ecpoint");
+        public Criteria andEcPointGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ecPoint >=", value, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointLessThan(Integer value) {
-            addCriterion("ecPoint <", value, "ecpoint");
+        public Criteria andEcPointLessThan(Integer value) {
+            addCriterion("ecPoint <", value, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointLessThanOrEqualTo(Integer value) {
-            addCriterion("ecPoint <=", value, "ecpoint");
+        public Criteria andEcPointLessThanOrEqualTo(Integer value) {
+            addCriterion("ecPoint <=", value, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointIn(List<Integer> values) {
-            addCriterion("ecPoint in", values, "ecpoint");
+        public Criteria andEcPointIn(List<Integer> values) {
+            addCriterion("ecPoint in", values, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointNotIn(List<Integer> values) {
-            addCriterion("ecPoint not in", values, "ecpoint");
+        public Criteria andEcPointNotIn(List<Integer> values) {
+            addCriterion("ecPoint not in", values, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointBetween(Integer value1, Integer value2) {
-            addCriterion("ecPoint between", value1, value2, "ecpoint");
+        public Criteria andEcPointBetween(Integer value1, Integer value2) {
+            addCriterion("ecPoint between", value1, value2, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEcpointNotBetween(Integer value1, Integer value2) {
-            addCriterion("ecPoint not between", value1, value2, "ecpoint");
+        public Criteria andEcPointNotBetween(Integer value1, Integer value2) {
+            addCriterion("ecPoint not between", value1, value2, "ecPoint");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeIsNull() {
+        public Criteria andEcTypeIsNull() {
             addCriterion("ecType is null");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeIsNotNull() {
+        public Criteria andEcTypeIsNotNull() {
             addCriterion("ecType is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeEqualTo(Integer value) {
-            addCriterion("ecType =", value, "ectype");
+        public Criteria andEcTypeEqualTo(Integer value) {
+            addCriterion("ecType =", value, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeNotEqualTo(Integer value) {
-            addCriterion("ecType <>", value, "ectype");
+        public Criteria andEcTypeNotEqualTo(Integer value) {
+            addCriterion("ecType <>", value, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeGreaterThan(Integer value) {
-            addCriterion("ecType >", value, "ectype");
+        public Criteria andEcTypeGreaterThan(Integer value) {
+            addCriterion("ecType >", value, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ecType >=", value, "ectype");
+        public Criteria andEcTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ecType >=", value, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeLessThan(Integer value) {
-            addCriterion("ecType <", value, "ectype");
+        public Criteria andEcTypeLessThan(Integer value) {
+            addCriterion("ecType <", value, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeLessThanOrEqualTo(Integer value) {
-            addCriterion("ecType <=", value, "ectype");
+        public Criteria andEcTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("ecType <=", value, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeIn(List<Integer> values) {
-            addCriterion("ecType in", values, "ectype");
+        public Criteria andEcTypeIn(List<Integer> values) {
+            addCriterion("ecType in", values, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeNotIn(List<Integer> values) {
-            addCriterion("ecType not in", values, "ectype");
+        public Criteria andEcTypeNotIn(List<Integer> values) {
+            addCriterion("ecType not in", values, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeBetween(Integer value1, Integer value2) {
-            addCriterion("ecType between", value1, value2, "ectype");
+        public Criteria andEcTypeBetween(Integer value1, Integer value2) {
+            addCriterion("ecType between", value1, value2, "ecType");
             return (Criteria) this;
         }
 
-        public Criteria andEctypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("ecType not between", value1, value2, "ectype");
+        public Criteria andEcTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("ecType not between", value1, value2, "ecType");
             return (Criteria) this;
         }
 

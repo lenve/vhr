@@ -934,3 +934,24 @@ end
 ;;
 DELIMITER ;
 SET FOREIGN_KEY_CHECKS=1;
+
+
+-- auto-generated definition
+create table hr_dict
+(
+  id        int auto_increment
+  comment '主键'
+    primary key,
+  `desc`    varchar(100)    null
+  comment '描述',
+  dictName  varchar(50)     null
+  comment '字典名称',
+  dictValue int             not null
+  comment '字典值',
+  isfixed   int default '0' not null
+  comment '0:不固定可修改，1：固定不修改'
+)
+  comment '字典表';
+
+INSERT INTO vhr.hr_dict (id, `desc`, dictName, dictValue, isfixed) VALUES (1, '奖罚类型', '奖', 0, 0);
+INSERT INTO vhr.hr_dict (id, `desc`, dictName, dictValue, isfixed) VALUES (2, '奖罚类型', '罚', 1, 0);
