@@ -2,7 +2,7 @@ package org.javaboy.vhr.model;
 
 import java.util.List;
 
-public class Menu {
+public class Menu implements Serializable {
     private Integer id;
 
     private String url;

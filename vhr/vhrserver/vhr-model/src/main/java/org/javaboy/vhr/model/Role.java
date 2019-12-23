@@ -2,7 +2,7 @@ package org.javaboy.vhr.model;
 
 import java.util.List;
 
-public class Role {
+public class Role implements Serializable {
     private Integer id;
 
     private String name;
