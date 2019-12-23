@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import '../lib/sockjs'
 import '../lib/stomp'
+import {getRequest} from '../utils/api'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     isDotMap: new Map(),
     currentFriend: {},
     stomp: null,
-    nfDot: false
+    nfDot: false,
+    dict:[]
   },
   mutations: {
     initMenu(state, menus){
@@ -46,6 +48,16 @@ export default new Vuex.Store({
     },
     removeValueDotMap(state, key){
       state.isDotMap.delete(key);
+    },
+    initDict(state,dict){
+      if (!dict) {
+        getRequest("/dict/getAllDict").then(resp=>{
+          state.dict = resp.data;
+          window.localStorage.setItem("dict", JSON.stringify(state.dict))
+        })
+      }else {
+        state.dict = dict;
+      }
     }
   },
   actions: {
@@ -81,6 +93,17 @@ export default new Vuex.Store({
       }, failedMsg=> {
 
       });
+    }
+  },
+  getters:{
+    getDictByDesc:(state)=>(desc)=>{
+      var descToDict = [];
+      state.dict.forEach(item=>{
+        if (desc == item.desc){
+          descToDict.push(item);
+        }
+      })
+      return descToDict
     }
   }
 });

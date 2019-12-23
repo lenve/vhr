@@ -45,6 +45,8 @@ router.beforeEach((to, from, next)=> {
   }
 )
 
+store.commit("initDict");
+
 new Vue({
   el: '#app',
   router,
