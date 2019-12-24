@@ -239,7 +239,7 @@ npm run build
 
 #### 相关文档
 
-- [两年了，微人事项目迎来了一次重大更新](https://mp.weixin.qq.com/s/Eo2RRB6zKQuPDMWlnCHDrw)
+34. [两年了，微人事项目迎来了一次重大更新](https://mp.weixin.qq.com/s/Eo2RRB6zKQuPDMWlnCHDrw)
 
 ## 其他资料
 
