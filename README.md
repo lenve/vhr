@@ -8,7 +8,8 @@
 
 
 - 项目地址：[https://github.com/lenve/vhr](https://github.com/lenve/vhr) 
-- [项目部署视频教程](https://mp.weixin.qq.com/s/qN01Le434FWom0c3jqiQmA)
+- [项目部署视频教程（旧版）](https://mp.weixin.qq.com/s/qN01Le434FWom0c3jqiQmA)
+- [项目部署视频教程（新版）](https://mp.weixin.qq.com/s/FoNVyAR1BkYfutFq9sjJNQ)
 
 ### 项目技术栈
 
