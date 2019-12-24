@@ -231,7 +231,7 @@ npm run build
 
 33. [系统通知功能实现](https://github.com/lenve/vhr/wiki/33.%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%9F%A5%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0)
 
-### 2018.12.22 更新
+### 2019.12.22 更新
 
 本次更新版本：v20191222
 
