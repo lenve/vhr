@@ -72,7 +72,7 @@
 npm install
 
 # 在 localhost:8080 启动项目
-npm run dev
+npm run serve
 ```
 
 由于我在 vuehr 项目中已经配置了端口转发，将数据转发到 Spring Boot 上，因此项目启动之后，在浏览器中输入 `http://localhost:8080` 就可以访问我们的前端项目了，所有的请求通过端口转发将数据传到 Spring Boot 中（注意此时不要关闭 Sprin gBoot 项目）。
