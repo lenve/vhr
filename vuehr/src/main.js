@@ -1,54 +1,43 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
-import {getRequest} from './utils/api'
-import {postRequest} from './utils/api'
-import {deleteRequest} from './utils/api'
-import {putRequest} from './utils/api'
-import {initMenu} from './utils/utils'
-import {isNotNullORBlank} from './utils/utils'
-import './utils/filter_utils'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+import {postRequest} from "./utils/api";
+import {postKeyValueRequest} from "./utils/api";
+import {putRequest} from "./utils/api";
+import {deleteRequest} from "./utils/api";
+import {getRequest} from "./utils/api";
+import {initMenu} from "./utils/menus";
 import 'font-awesome/css/font-awesome.min.css'
 
-Vue.config.productionTip = false
-Vue.use(ElementUI)
-
-Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
-Vue.prototype.deleteRequest = deleteRequest;
+Vue.prototype.postKeyValueRequest = postKeyValueRequest;
 Vue.prototype.putRequest = putRequest;
-Vue.prototype.isNotNullORBlank = isNotNullORBlank;
+Vue.prototype.deleteRequest = deleteRequest;
+Vue.prototype.getRequest = getRequest;
 
-router.beforeEach((to, from, next)=> {
-    if (to.name == 'Login') {
-      next();
-      return;
-    }
-    var name = store.state.user.name;
-    if (name == '未登录') {
-      if (to.meta.requireAuth || to.name == null) {
-        next({path: '/', query: {redirect: to.path}})
-      } else {
+Vue.config.productionTip = false
+
+Vue.use(ElementUI,{size:'small'});
+
+router.beforeEach((to, from, next) => {
+    if (to.path == '/') {
         next();
-      }
-    } else {
-      initMenu(router, store);
-      if(to.path=='/chat')
-        store.commit("updateMsgList", []);
-      next();
+    }else {
+        if (window.sessionStorage.getItem("user")) {
+            initMenu(router, store);
+            next();
+        }else{
+            next('/?redirect='+to.path);
+        }
     }
-  }
-)
+})
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: {App}
-})
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app')
