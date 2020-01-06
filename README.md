@@ -8,7 +8,8 @@
 
 
 - 项目地址：[https://github.com/lenve/vhr](https://github.com/lenve/vhr) 
-- [项目部署视频教程](https://mp.weixin.qq.com/s/qN01Le434FWom0c3jqiQmA)
+- [项目部署视频教程（旧版）](https://mp.weixin.qq.com/s/qN01Le434FWom0c3jqiQmA)
+- [项目部署视频教程（新版）](https://mp.weixin.qq.com/s/FoNVyAR1BkYfutFq9sjJNQ)
 
 ### 项目技术栈
 
@@ -71,7 +72,7 @@
 npm install
 
 # 在 localhost:8080 启动项目
-npm run dev
+npm run serve
 ```
 
 由于我在 vuehr 项目中已经配置了端口转发，将数据转发到 Spring Boot 上，因此项目启动之后，在浏览器中输入 `http://localhost:8080` 就可以访问我们的前端项目了，所有的请求通过端口转发将数据传到 Spring Boot 中（注意此时不要关闭 Sprin gBoot 项目）。
@@ -230,7 +231,7 @@ npm run build
 
 33. [系统通知功能实现](https://github.com/lenve/vhr/wiki/33.%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%9F%A5%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0)
 
-### 2018.12.22 更新
+### 2019.12.22 更新
 
 本次更新版本：v20191222
 
@@ -238,7 +239,7 @@ npm run build
 
 #### 相关文档
 
-- [两年了，微人事项目迎来了一次重大更新](https://mp.weixin.qq.com/s/Eo2RRB6zKQuPDMWlnCHDrw)
+34. [两年了，微人事项目迎来了一次重大更新](https://mp.weixin.qq.com/s/Eo2RRB6zKQuPDMWlnCHDrw)
 
 ## 其他资料
 

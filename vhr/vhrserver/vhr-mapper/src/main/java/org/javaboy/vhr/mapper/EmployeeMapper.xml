@@ -111,7 +111,7 @@
         n,politicsstatus p,department d,joblevel j,position pos where e.`nationId`=n.`id` and e.`politicId`=p.`id` and
         e.`departmentId`=d.`id` and e.`jobLevelId`=j.`id` and e.`posId`=pos.`id`
         <if test="emp.name !=null and emp.name!=''">
-            and e.name like concat('%',#{keyword},'%')
+            and e.name like concat('%',#{emp.keyword},'%')
         </if>
         <if test="emp.politicId !=null">
             and e.politicId =#{emp.politicId}
