@@ -105,12 +105,12 @@
                                     title="请选择部门"
                                     width="200"
                                     trigger="manual"
-                                    v-model="popVisible">
+                                    v-model="popVisible2">
                                 <el-tree default-expand-all :data="allDeps" :props="defaultProps"
                                          @node-click="searvhViewHandleNodeClick"></el-tree>
                                 <div slot="reference"
                                      style="width: 130px;display: inline-flex;font-size: 13px;border: 1px solid #dedede;height: 26px;border-radius: 5px;cursor: pointer;align-items: center;padding-left: 8px;box-sizing: border-box;margin-left: 3px"
-                                     @click="showDepView">{{inputDepName}}
+                                     @click="showDepView2">{{inputDepName}}
                                 </div>
                             </el-popover>
                         </el-col>
@@ -580,6 +580,7 @@
                 emps: [],
                 loading: false,
                 popVisible: false,
+                popVisible2: false,
                 dialogVisible: false,
                 total: 0,
                 page: 1,
@@ -688,7 +689,7 @@
             searvhViewHandleNodeClick(data) {
                 this.inputDepName = data.name;
                 this.searchValue.departmentId = data.id;
-                this.popVisible = !this.popVisible
+                this.popVisible2 = !this.popVisible2
             },
             onError(err, file, fileList) {
                 this.importDataBtnText = '导入数据';
@@ -797,6 +798,9 @@
             },
             showDepView() {
                 this.popVisible = !this.popVisible
+            },
+            showDepView2() {
+                this.popVisible2 = !this.popVisible2
             },
             initPositions() {
                 this.getRequest('/employee/basic/positions').then(resp => {
