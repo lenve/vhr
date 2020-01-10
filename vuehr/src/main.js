@@ -38,6 +38,7 @@ router.beforeEach((to, from, next)=> {
       }
     } else {
       initMenu(router, store);
+      store.commit("initDict");
       if(to.path=='/chat')
         store.commit("updateMsgList", []);
       next();
@@ -45,7 +46,7 @@ router.beforeEach((to, from, next)=> {
   }
 )
 
-store.commit("initDict");
+
 
 new Vue({
   el: '#app',

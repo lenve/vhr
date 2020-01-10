@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header style="display: flex;justify-content: space-between;align-items: center;padding-left: 0px">
-        <el-button @click="dialogVisible = true" icon="el-icon-plus" type="primary" size="mini">添加账套</el-button>
+        <el-button @click="dialogVisible = true" icon="el-icon-plus" type="primary" size="mini">添加奖惩</el-button>
         <el-button size="mini" type="success" @click="loadAwardsCfg" icon="el-icon-refresh"></el-button>
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -73,155 +73,97 @@
       </el-main>
     </el-container>
     <div style="text-align: left">
-      <el-dialog
-        title="添加工资账套"
-        :visible.sync="dialogVisible"
-        width="50%"
-        @close="emptySalary"
-        :close-on-click-modal="false">
-        <div style="display: flex;justify-content: flex-start;">
-          <el-steps :active="index" direction="vertical">
-            <el-step title="基本工资" size="mini"></el-step>
-            <el-step title="交通补助"></el-step>
-            <el-step title="午餐补助"></el-step>
-            <el-step title="奖金"></el-step>
-            <el-step title="养老金"></el-step>
-            <el-step title="医疗保险"></el-step>
-            <el-step title="公积金"></el-step>
-            <el-step title="启用时间"></el-step>
-          </el-steps>
-          <!--<div style="margin-left: 30px;display: flex;justify-content: center;align-items: center;width: 80%;">-->
-            <!--<div v-show="index==0">-->
-              <!--基本工资：-->
-              <!--<el-input-->
-                <!--placeholder="请输入基本工资..."-->
-                <!--size="mini"-->
-                <!--style="width: 200px"-->
-                <!--type="number"-->
-                <!--@keyup.enter.native="next"-->
-                <!--v-model="salary.basicSalary">-->
-              <!--</el-input>-->
-            <!--</div>-->
-            <!--<div v-show="index==1">-->
-              <!--交通补助：-->
-              <!--<el-input-->
-                <!--placeholder="请输入交通补助..."-->
-                <!--@keyup.enter.native="next"-->
-                <!--size="mini"-->
-                <!--style="width: 200px"-->
-                <!--type="number"-->
-                <!--v-model="salary.trafficSalary">-->
-              <!--</el-input>-->
-            <!--</div>-->
-            <!--<div v-show="index==2">-->
-              <!--午餐补助：-->
-              <!--<el-input-->
-                <!--placeholder="请输入午餐补助..."-->
-                <!--@keyup.enter.native="next"-->
-                <!--size="mini"-->
-                <!--style="width: 200px"-->
-                <!--type="number"-->
-                <!--v-model="salary.lunchSalary">-->
-              <!--</el-input>-->
-            <!--</div>-->
-            <!--<div v-show="index==3">-->
-              <!--奖金：-->
-              <!--<el-input-->
-                <!--placeholder="请输入奖金..."-->
-                <!--size="mini"-->
-                <!--@keyup.enter.native="next"-->
-                <!--style="width: 200px"-->
-                <!--type="number"-->
-                <!--v-model="salary.bonus">-->
-              <!--</el-input>-->
-            <!--</div>-->
-            <!--<div v-show="index==4">-->
-              <!--<div>-->
-                <!--养老金比率：-->
-                <!--<el-input-->
-                  <!--placeholder="请输入养老金比率..."-->
-                  <!--size="mini"-->
-                  <!--style="width: 200px"-->
-                  <!--type="number"-->
-                  <!--v-model="salary.pensionPer">-->
-                <!--</el-input>-->
-              <!--</div>-->
-              <!--<div style="margin-top: 10px">-->
-                <!--养老金基数：-->
-                <!--<el-input-->
-                  <!--placeholder="请输入养老金基数..."-->
-                  <!--size="mini"-->
-                  <!--@keyup.enter.native="next"-->
-                  <!--style="width: 200px"-->
-                  <!--type="number"-->
-                  <!--v-model="salary.pensionBase">-->
-                <!--</el-input>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div v-show="index==5">-->
-              <!--<div>-->
-                <!--医疗保险比率：-->
-                <!--<el-input-->
-                  <!--placeholder="请输入医疗保险比率..."-->
-                  <!--size="mini"-->
-                  <!--style="width: 200px"-->
-                  <!--type="number"-->
-                  <!--v-model="salary.medicalPer">-->
-                <!--</el-input>-->
-              <!--</div>-->
-              <!--<div style="margin-top: 10px">-->
-                <!--医疗保险基数：-->
-                <!--<el-input-->
-                  <!--placeholder="请输入医疗保险基数..."-->
-                  <!--size="mini"-->
-                  <!--@keyup.enter.native="next"-->
-                  <!--style="width: 200px"-->
-                  <!--type="number"-->
-                  <!--v-model="salary.medicalBase">-->
-                <!--</el-input>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div v-show="index==6">-->
-              <!--<div>-->
-                <!--公积金比率：-->
-                <!--<el-input-->
-                  <!--placeholder="请输入公积金比率..."-->
-                  <!--size="mini"-->
-                  <!--style="width: 200px"-->
-                  <!--type="number"-->
-                  <!--v-model="salary.accumulationFundPer">-->
-                <!--</el-input>-->
-              <!--</div>-->
-              <!--<div style="margin-top: 10px">-->
-                <!--公积金基数：-->
-                <!--<el-input-->
-                  <!--placeholder="请输入公积金基数..."-->
-                  <!--@keyup.enter.native="next"-->
-                  <!--size="mini"-->
-                  <!--style="width: 200px"-->
-                  <!--type="number"-->
-                  <!--v-model="salary.accumulationFundBase">-->
-                <!--</el-input>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div v-show="index==7">-->
-              <!--启用时间：-->
-              <!--<el-date-picker-->
-                <!--v-model="salary.createDate"-->
-                <!--type="date"-->
-                <!--size="mini"-->
-                <!--value-format="yyyy-MM-dd"-->
-                <!--style="width: 200px;"-->
-                <!--placeholder="选择日期">-->
-              <!--</el-date-picker>-->
-            <!--</div>-->
-          <!--</div>-->
+      <el-form :model="award" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
+        <div style="text-align: left">
+          <el-dialog
+            :title="dialogTitle"
+            style="padding: 0px;"
+            :close-on-click-modal="false"
+            :visible.sync="dialogVisible"
+            width="77%">
+            <!--第一行-->
+            <el-row>
+              <el-col :span="7">
+
+                <div>
+                  <el-form-item label="姓名:" prop="eid">
+                    <el-select v-model="award.eid" style="width: 200px" size="mini" placeholder="请输入员工姓名">
+                      <el-option
+                        v-for="item in emps"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div>
+                  <el-form-item label="奖罚日期:" prop="ecDate">
+                    <el-date-picker
+                      v-model="award.ecDate"
+                      value-format="yyyy-MM-dd HH:mm:ss"
+                      size="mini"
+                      style="width: 135px"
+                      type="date"
+                      placeholder="请输入奖罚日期">
+                    </el-date-picker>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div>
+                  <el-form-item label="奖罚原因:" prop="ecReason">
+                    <el-input prefix-icon="el-icon-edit" v-model="award.ecReason" size="mini" style="width: 150px"
+                              placeholder="请输入奖罚原因"></el-input>
+                  </el-form-item>
+                </div>
+              </el-col>
+            </el-row>
+            <!--第二行-->
+            <el-row>
+              <el-col :span="7">
+                <div>
+                  <el-form-item label="奖罚类型:" prop="ecType">
+                    <el-select v-model="award.ecType" style="width: 200px" size="mini" placeholder="请输入奖罚类型">
+                      <el-option
+                        v-for="item in awardType"
+                        :key="item.id"
+                        :label="item.dictName"
+                        :value="item.dictValue">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div>
+                  <el-form-item label="奖罚分:" prop="ecPoint">
+                    <el-input prefix-icon="el-icon-edit" v-model="award.ecPoint" size="mini" style="width: 150px"
+                              placeholder="请输入奖罚分"></el-input>
+                  </el-form-item>
+                </div>
+              </el-col>
+
+              <el-col :span="6">
+                <div>
+                  <el-form-item label="备注:" prop="remark">
+                    <el-input prefix-icon="el-icon-edit" v-model="award.remark" size="mini" style="width: 150px"
+                              placeholder="请输入备注"></el-input>
+                  </el-form-item>
+                </div>
+              </el-col>
+            </el-row>
+
+
+            <span slot="footer" class="dialog-footer">
+    <el-button size="mini" @click="cancelEidt">取 消</el-button>
+    <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+  </span>
+          </el-dialog>
         </div>
-        <div style="display: flex;align-items: center;justify-content: center;padding: 0px;margin: 0px;">
-          <el-button round size="mini" v-if="index!=0" @click="index--">上一步</el-button>
-          <el-button type="primary" round size="mini" @click="next" v-text="index==7?'完成':'下一步'"></el-button>
-        </div>
-      </el-dialog>
+      </el-form>
     </div>
   </div>
 </template>
@@ -230,9 +172,11 @@
     data() {
       return {
         dialogVisible: false,
+        dialogTitle: '新增惩罚',
         tableLoading: false,
         index: 0,
         awards: [],
+        emps:[],
         multipleSelection: [],
         award: {
           id: '',
@@ -243,7 +187,32 @@
           ecType: '',
           remark: ''
         },
-        awardType:[]
+        awardType:[],
+        rules: {
+          eid: [{required: true, message: '必填:姓名', trigger: 'blur'}],
+          ecDate: [{required: true, message: '必填:日期', trigger: 'blur'}],
+          ecPoint: [{required: true, message: '必填:分数', trigger: 'blur'}],
+          ecType: [{required: true, message: '必填:类型', trigger: 'blur'}],
+          ecReason: [{required: true, message: '必填:原因', trigger: 'blur'}],
+          // birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
+          // idCard: [{
+          //   required: true,
+          //   message: '必填:身份证号码',
+          //   trigger: 'blur'
+          // }, {
+          //   pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
+          //   message: '身份证号码格式不正确',
+          //   trigger: 'blur'
+          // }],
+          // wedlock: [{required: true, message: '必填:婚姻状况', trigger: 'blur'}],
+          // nationId: [{required: true, message: '必填:民族', trigger: 'change'}],
+          // nativePlace: [{required: true, message: '必填:籍贯', trigger: 'blur'}],
+          // email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
+          //   type: 'email',
+          //   message: '邮箱格式不正确',
+          //   trigger: 'blur'
+          // }]
+        }
       };
     },
     methods: {
@@ -270,12 +239,10 @@
       },
       handleEdit(index, row) {
         this.dialogVisible = true;
-        row.createDate = new Date(row.createDate);
-        delete row.allSalary;
-        this.salary = row;
+        this.award = row;
       },
       handleDelete(index, row) {
-        this.$confirm('删除[' + row.name + ']账套, 是否继续?', '提示', {
+        this.$confirm('删除[' + row.eid + ']账套, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -291,12 +258,12 @@
       doDelete(id){
         var _this = this;
         _this.tableLoading = true;
-        this.deleteRequest("/salary/sob/salary/" + id).then(resp=>{
+        this.deleteRequest("/employee/award/ec/" + id).then(resp=>{
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
 
-            _this.loadSalaryCfg();
+            _this.loadAwardsCfg();
           }
         });
       },
@@ -313,7 +280,7 @@
                   _
                   _this.dialogVisible = false;
                   _this.index = 0;
-                  _this.loadSalaryCfg();
+                  _this.loadAwardsCfg();
                 }
               });
             } else {//添加
@@ -328,7 +295,7 @@
 
                     _this.dialogVisible = false;
                     _this.index = 0;
-                    _this.loadSalaryCfg();
+                    _this.loadAwardsCfg();
                   }
                 });
               }).catch(() => {
@@ -352,38 +319,82 @@
         })
       },
       emptySalary(){
-        this.salary = {
+        this.award = {
           id: '',
-          createDate: '',
-          basicSalary: '',
-          trafficSalary: '',
-          lunchSalary: '',
-          bonus: '',
-          pensionBase: '',
-          pensionPer: '',
-          medicalBase: '',
-          medicalPer: '',
-          accumulationFundBase: '',
-          accumulationFundPer: ''
+          eid: '',
+          ecDate: '',
+          ecReason: '',
+          ecPoint: '',
+          ecType: '',
+          remark: ''
         };
         this.index = 0;
-      }
-      // ,
-      // getDictByDesc(desc){
-      //   var _this = this;
-      //   this.getRequest("/dict/getDictByDesc?desc="+desc).then(resp=> {
-      //     if (resp ) {
-      //       _this.awardType = resp.data;
-      //       console.log(_this.awardType);
-      //     }
-      //   })
-      // }
+      },
+      cancelEidt() {
+        this.dialogVisible = false;
+        this.emptySalary();
+      },
+      addEmp(formName) {
+        var _this = this;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.award.id) {
+              //更新
+              this.tableLoading = true;
+              this.putRequest("/employee/award/ec", this.award).then(resp => {
+                _this.tableLoading = false;
+                if (resp && resp.status == 200) {
+                  var data = resp.data;
+                  _this.dialogVisible = false;
+                  _this.emptySalary();
+                  _this.loadAwardsCfg();
+                }
+              })
+            } else {
+              //添加
+              this.tableLoading = true;
+              this.postRequest("/employee/award/ec", this.award).then(resp => {
+                _this.tableLoading = false;
+                if (resp && resp.status == 200) {
+                  var data = resp.data;
+
+                  _this.dialogVisible = false;
+                  _this.emptySalary();
+                  _this.loadAwardsCfg();
+                }
+              })
+            }
+          } else {
+            return false;
+          }
+        });
+      },
+      initData() {
+        var _this = this;
+        var joinList = [];
+        var list = JSON.parse(window.localStorage.getItem("dict"));
+        list.forEach(row=>{
+          if (row.desc=="奖罚类型") {
+            joinList.push(row);
+          }
+        })
+        console.log(joinList);
+        this.awardType = joinList;
+
+
+        this.getRequest("/employee/award/emps").then(resp => {
+          if (resp && resp.status == 200) {
+            var data = resp.data;
+            _this.emps = data.emps;
+          }
+        })
+      },
     },
     mounted: function () {
       this.loadAwardsCfg();
-      //获取字典奖罚类别
-     // this.getDictByDesc("奖罚类型");
-     // console.log(this.$store.getters.getDictByDesc("奖罚类型"));
+
+
+      this.initData();
     },
     filters: {
       awardFilter: function (dataValue) {
