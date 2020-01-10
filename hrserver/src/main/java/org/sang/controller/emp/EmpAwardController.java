@@ -1,10 +1,11 @@
 package org.sang.controller.emp;
 
 
-import org.sang.bean.Employeeec;
-import org.sang.bean.Salary;
+import org.sang.bean.*;
+import org.sang.common.EmailRunnable;
 import org.sang.service.EmpAwardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +27,38 @@ public class EmpAwardController {
     public List<Employeeec> Awards() {
         List<Employeeec> list = empAwardService.getAllAward();
         return list;
+    }
+
+    @RequestMapping(value = "/ec", method = RequestMethod.PUT)
+    public RespBean updateEc(Employeeec employeeec) {
+        if (empAwardService.updateEc(employeeec) == 1) {
+            return RespBean.ok("更新成功!");
+        }
+        return RespBean.error("更新失败!");
+    }
+
+    @RequestMapping(value = "/ec", method = RequestMethod.POST)
+    public RespBean addEc(Employeeec employeeec) {
+        if (empAwardService.addEc(employeeec) == 1) {
+            return RespBean.ok("添加成功!");
+        }
+        return RespBean.error("添加失败!");
+    }
+
+    @RequestMapping(value = "/ec/{ids}", method = RequestMethod.DELETE)
+    public RespBean deleteEc(@PathVariable Integer ids) {
+        if (empAwardService.deleteEc(ids) == 1) {
+            return RespBean.ok("删除成功!");
+        }
+        return RespBean.error("删除失败!");
+    }
+
+
+    @RequestMapping(value = "/emps", method = RequestMethod.GET)
+    public Map<String, Object> getAllEmps() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("emps", empAwardService.getAllEmps());
+
+        return map;
     }
 }

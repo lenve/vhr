@@ -1,6 +1,7 @@
 package org.sang.service;
 
 
+import org.sang.bean.Employee;
 import org.sang.bean.Employeeec;
 import org.sang.bean.Salary;
 import org.sang.example.EmployeeecExample;
@@ -28,9 +29,28 @@ public class EmpAwardService {
     public List<Employeeec> getAllAward() {
 
         EmployeeecExample example = new EmployeeecExample();
-
-        //todo
         List<Employeeec> employeeecList = employeeecMapper.selectByExample(example);
         return employeeecList;
+    }
+
+    public int updateEc(Employeeec employeeec) {
+
+
+        return employeeecMapper.updateByPrimaryKeySelective(employeeec);
+    }
+
+    public int addEc(Employeeec employeeec) {
+        return employeeecMapper.insert(employeeec);
+    }
+
+    public List<Employee> getAllEmps() {
+
+
+        return employeeecMapper.getAllEmps();
+    }
+
+    public int deleteEc(Integer ids) {
+
+        return employeeecMapper.deleteByPrimaryKey(ids);
     }
 }

@@ -241,5 +241,9 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAllEmps" resultType="org.sang.bean.Employee">
+        select * from employee;
+    </select>
+
   
 </mapper>
