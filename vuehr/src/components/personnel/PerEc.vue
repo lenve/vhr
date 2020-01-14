@@ -19,8 +19,8 @@
               width="30">
             </el-table-column>
             <el-table-column
-              prop="eid"
-              label="员工编号">
+              prop="name"
+              label="员工姓名">
             </el-table-column>
             <el-table-column
               label="奖罚日期">
@@ -66,10 +66,10 @@
             </el-table-column>
           </el-table>
         </div>
-        <!--<div style="text-align: left;margin-top: 10px" v-if="salaries!=0">-->
-          <!--<el-button type="danger" round size="mini" :disabled="multipleSelection.length==0" @click="deleteAll">批量删除-->
-          <!--</el-button>-->
-        <!--</div>-->
+        <div style="text-align: left;margin-top: 10px" v-if="awards!=0">
+          <el-button type="danger" round size="mini" :disabled="multipleSelection.length==0" @click="deleteAll">批量删除
+          </el-button>
+        </div>
       </el-main>
     </el-container>
     <div style="text-align: left">
@@ -185,7 +185,8 @@
           ecReason: '',
           ecPoint: '',
           ecType: '',
-          remark: ''
+          remark: '',
+          name:''
         },
         awardType:[],
         rules: {
@@ -242,7 +243,7 @@
         this.award = row;
       },
       handleDelete(index, row) {
-        this.$confirm('删除[' + row.eid + ']账套, 是否继续?', '提示', {
+        this.$confirm('删除[' + this.multipleSelection.length + ']条奖惩数据, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -258,7 +259,7 @@
       doDelete(id){
         var _this = this;
         _this.tableLoading = true;
-        this.deleteRequest("/employee/award/ec/" + id).then(resp=>{
+        this.deleteRequest("/personnel/award/ec/" + id).then(resp=>{
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
@@ -267,56 +268,36 @@
           }
         });
       },
-      next(){
-        var _this = this;
-        if (this.index == 7) {
-          if(this.salary.createDate&&this.salary.basicSalary&&this.salary.trafficSalary&&this.salary.lunchSalary&&this.salary.bonus&&this.salary.pensionBase&&this.salary.pensionPer&&this.salary.medicalBase&&this.salary.medicalPer&&this.salary.accumulationFundBase&&this.salary.accumulationFundPer){
-            if (this.salary.id) {//更新
-              _this.tableLoading = true;
-              this.putRequest("/salary/sob/salary", this.salary).then(resp=> {
-                _this.tableLoading = false;
-                if (resp && resp.status == 200) {
-                  var data = resp.data;
-                  _
-                  _this.dialogVisible = false;
-                  _this.index = 0;
-                  _this.loadAwardsCfg();
-                }
-              });
-            } else {//添加
-              this.$prompt('请输入账套名称', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消'
-              }).then(({value}) => {
-                this.salary.name = value;
-                this.postRequest("/salary/sob/salary", this.salary).then(resp=> {
-                  if (resp && resp.status == 200) {
-                    var data = resp.data;
-
-                    _this.dialogVisible = false;
-                    _this.index = 0;
-                    _this.loadAwardsCfg();
-                  }
-                });
-              }).catch(() => {
-              });
-            }
-          }else{
-            this.$message({type: 'error', message: '字段不能为空!'});
-          }
-        } else {
-          this.index++;
-        }
-      },
       loadAwardsCfg(){
         this.tableLoading = true;
         var _this = this;
-        this.getRequest("/employee/award/ec").then(resp=> {
+        this.getRequest("/personnel/award/ec").then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             _this.awards = resp.data;
           }
+          var old = _this.awards;
+          old.forEach(item => {
+            _this.emps.forEach(itemE => {
+              if (item.eid == itemE.id) {
+                item.name = itemE.name;
+              }
+            })
+          })
+          _this.awards = old;
         })
+        //   .then(()=>{
+        //   var old = _this.awards;
+        //   old.forEach(item => {
+        //     _this.emps.forEach(itemE => {
+        //       if (item.eid == itemE.id) {
+        //         item.name = itemE.name;
+        //       }
+        //     })
+        //   })
+        //   _this.awards = old;
+        //   console.log(old);
+        // })
       },
       emptySalary(){
         this.award = {
@@ -326,7 +307,8 @@
           ecReason: '',
           ecPoint: '',
           ecType: '',
-          remark: ''
+          remark: '',
+          name:''
         };
         this.index = 0;
       },
@@ -341,7 +323,7 @@
             if (this.award.id) {
               //更新
               this.tableLoading = true;
-              this.putRequest("/employee/award/ec", this.award).then(resp => {
+              this.putRequest("/personnel/award/ec", this.award).then(resp => {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
@@ -353,7 +335,7 @@
             } else {
               //添加
               this.tableLoading = true;
-              this.postRequest("/employee/award/ec", this.award).then(resp => {
+              this.postRequest("/personnel/award/ec", this.award).then(resp => {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
@@ -373,28 +355,35 @@
         var _this = this;
         var joinList = [];
         var list = JSON.parse(window.localStorage.getItem("dict"));
-        list.forEach(row=>{
-          if (row.desc=="奖罚类型") {
+        list.forEach(row => {
+          if (row.desc == "奖罚类型") {
+
             joinList.push(row);
           }
         })
-        console.log(joinList);
         this.awardType = joinList;
 
-
-        this.getRequest("/employee/award/emps").then(resp => {
+        this.getRequest("/personnel/award/emps").then(resp => {
           if (resp && resp.status == 200) {
             var data = resp.data;
             _this.emps = data.emps;
           }
+        }).then(() =>{
+          _this.loadAwardsCfg();
         })
-      },
+      }
     },
     mounted: function () {
-      this.loadAwardsCfg();
-
-
       this.initData();
+      // this.loadAwardsCfg();
+
+      // var _this = this;
+      // setTimeout(function () {
+      //   console.log(_this.awards);
+      //
+      // },2000);
+
+
     },
     filters: {
       awardFilter: function (dataValue) {
