@@ -31,4 +31,6 @@ public interface EmployeeecMapper {
     int updateByPrimaryKey(Employeeec record);
 
     List<Employee> getAllEmps();
+
+    int deleteEC(@Param("ids") String[] ids);
 }

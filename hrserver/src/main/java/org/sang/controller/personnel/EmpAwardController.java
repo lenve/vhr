@@ -1,9 +1,8 @@
-package org.sang.controller.emp;
+package org.sang.controller.personnel;
 
 
 import org.sang.bean.*;
-import org.sang.common.EmailRunnable;
-import org.sang.service.EmpAwardService;
+import org.sang.service.personnel.EmpAwardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,7 @@ import java.util.Map;
  * Created by xianfuhao on 2019/12/20.
  */
 @RestController
-@RequestMapping("/employee/award")
+@RequestMapping("/personnel/award")
 public class EmpAwardController {
     @Autowired
     EmpAwardService empAwardService;
@@ -46,8 +45,8 @@ public class EmpAwardController {
     }
 
     @RequestMapping(value = "/ec/{ids}", method = RequestMethod.DELETE)
-    public RespBean deleteEc(@PathVariable Integer ids) {
-        if (empAwardService.deleteEc(ids) == 1) {
+    public RespBean deleteEc(@PathVariable String ids) throws Exception{
+        if (empAwardService.deleteEc(ids) > 0) {
             return RespBean.ok("删除成功!");
         }
         return RespBean.error("删除失败!");

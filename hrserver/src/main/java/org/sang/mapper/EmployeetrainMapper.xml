@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.sang.mapper.EmployeeecMapper">
-  <resultMap id="BaseResultMap" type="org.sang.bean.Employeeec">
+<mapper namespace="org.sang.mapper.EmployeetrainMapper">
+  <resultMap id="BaseResultMap" type="org.sang.bean.Employeetrain">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="eid" jdbcType="INTEGER" property="eid" />
-    <result column="ecDate" jdbcType="DATE" property="ecDate" />
-    <result column="ecReason" jdbcType="VARCHAR" property="ecReason" />
-    <result column="ecPoint" jdbcType="INTEGER" property="ecPoint" />
-    <result column="ecType" jdbcType="INTEGER" property="ecType" />
+    <result column="trainDate" jdbcType="DATE" property="trainDate" />
+    <result column="trainContent" jdbcType="VARCHAR" property="trainContent" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,16 +67,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, eid, ecDate, ecReason, ecPoint, ecType, remark
+    id, eid, trainDate, trainContent, remark
   </sql>
-  <select id="selectByExample" parameterType="org.sang.example.EmployeeecExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.sang.example.EmployeetrainExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from employeeec
+    from employeetrain
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,50 +87,42 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from employeeec
+    from employeetrain
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from employeeec
+    delete from employeetrain
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.sang.example.EmployeeecExample">
-    delete from employeeec
+  <delete id="deleteByExample" parameterType="org.sang.example.EmployeetrainExample">
+    delete from employeetrain
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.sang.bean.Employeeec">
+  <insert id="insert" parameterType="org.sang.bean.Employeetrain">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into employeeec (eid, ecDate, ecReason, 
-      ecPoint, ecType, remark
-      )
-    values (#{eid,jdbcType=INTEGER}, #{ecDate,jdbcType=DATE}, #{ecReason,jdbcType=VARCHAR}, 
-      #{ecPoint,jdbcType=INTEGER}, #{ecType,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into employeetrain (eid, trainDate, trainContent, 
+      remark)
+    values (#{eid,jdbcType=INTEGER}, #{trainDate,jdbcType=DATE}, #{trainContent,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.sang.bean.Employeeec">
+  <insert id="insertSelective" parameterType="org.sang.bean.Employeetrain">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into employeeec
+    insert into employeetrain
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="eid != null">
         eid,
       </if>
-      <if test="ecDate != null">
-        ecDate,
+      <if test="trainDate != null">
+        trainDate,
       </if>
-      <if test="ecReason != null">
-        ecReason,
-      </if>
-      <if test="ecPoint != null">
-        ecPoint,
-      </if>
-      <if test="ecType != null">
-        ecType,
+      <if test="trainContent != null">
+        trainContent,
       </if>
       <if test="remark != null">
         remark,
@@ -142,31 +132,25 @@
       <if test="eid != null">
         #{eid,jdbcType=INTEGER},
       </if>
-      <if test="ecDate != null">
-        #{ecDate,jdbcType=DATE},
+      <if test="trainDate != null">
+        #{trainDate,jdbcType=DATE},
       </if>
-      <if test="ecReason != null">
-        #{ecReason,jdbcType=VARCHAR},
-      </if>
-      <if test="ecPoint != null">
-        #{ecPoint,jdbcType=INTEGER},
-      </if>
-      <if test="ecType != null">
-        #{ecType,jdbcType=INTEGER},
+      <if test="trainContent != null">
+        #{trainContent,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sang.example.EmployeeecExample" resultType="java.lang.Long">
-    select count(*) from employeeec
+  <select id="countByExample" parameterType="org.sang.example.EmployeetrainExample" resultType="java.lang.Long">
+    select count(*) from employeetrain
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update employeeec
+    update employeetrain
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -174,17 +158,11 @@
       <if test="record.eid != null">
         eid = #{record.eid,jdbcType=INTEGER},
       </if>
-      <if test="record.ecDate != null">
-        ecDate = #{record.ecDate,jdbcType=DATE},
+      <if test="record.trainDate != null">
+        trainDate = #{record.trainDate,jdbcType=DATE},
       </if>
-      <if test="record.ecReason != null">
-        ecReason = #{record.ecReason,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ecPoint != null">
-        ecPoint = #{record.ecPoint,jdbcType=INTEGER},
-      </if>
-      <if test="record.ecType != null">
-        ecType = #{record.ecType,jdbcType=INTEGER},
+      <if test="record.trainContent != null">
+        trainContent = #{record.trainContent,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -195,35 +173,27 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update employeeec
+    update employeetrain
     set id = #{record.id,jdbcType=INTEGER},
       eid = #{record.eid,jdbcType=INTEGER},
-      ecDate = #{record.ecDate,jdbcType=DATE},
-      ecReason = #{record.ecReason,jdbcType=VARCHAR},
-      ecPoint = #{record.ecPoint,jdbcType=INTEGER},
-      ecType = #{record.ecType,jdbcType=INTEGER},
+      trainDate = #{record.trainDate,jdbcType=DATE},
+      trainContent = #{record.trainContent,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.Employeeec">
-    update employeeec
+  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.Employeetrain">
+    update employeetrain
     <set>
       <if test="eid != null">
         eid = #{eid,jdbcType=INTEGER},
       </if>
-      <if test="ecDate != null">
-        ecDate = #{ecDate,jdbcType=DATE},
+      <if test="trainDate != null">
+        trainDate = #{trainDate,jdbcType=DATE},
       </if>
-      <if test="ecReason != null">
-        ecReason = #{ecReason,jdbcType=VARCHAR},
-      </if>
-      <if test="ecPoint != null">
-        ecPoint = #{ecPoint,jdbcType=INTEGER},
-      </if>
-      <if test="ecType != null">
-        ecType = #{ecType,jdbcType=INTEGER},
+      <if test="trainContent != null">
+        trainContent = #{trainContent,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
@@ -231,25 +201,20 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.sang.bean.Employeeec">
-    update employeeec
+  <update id="updateByPrimaryKey" parameterType="org.sang.bean.Employeetrain">
+    update employeetrain
     set eid = #{eid,jdbcType=INTEGER},
-      ecDate = #{ecDate,jdbcType=DATE},
-      ecReason = #{ecReason,jdbcType=VARCHAR},
-      ecPoint = #{ecPoint,jdbcType=INTEGER},
-      ecType = #{ecType,jdbcType=INTEGER},
+      trainDate = #{trainDate,jdbcType=DATE},
+      trainContent = #{trainContent,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getAllEmps" resultType="org.sang.bean.Employee">
-        select * from employee;
-    </select>
 
-  <delete id="deleteEC">
-    DELETE FROM employeeec WHERE id IN
+
+  <delete id="deleteTrain">
+    DELETE FROM employeetrain WHERE id IN
     <foreach collection="ids" separator="," item="id" open="(" close=")">
       #{id}
     </foreach>
   </delete>
-  
 </mapper>

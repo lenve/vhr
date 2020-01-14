@@ -1,4 +1,4 @@
-package org.sang.service;
+package org.sang.service.personnel;
 
 
 import org.sang.bean.Employee;
@@ -49,8 +49,9 @@ public class EmpAwardService {
         return employeeecMapper.getAllEmps();
     }
 
-    public int deleteEc(Integer ids) {
+    public int deleteEc(String ids) {
+        String[] split = ids.split(",");
+        return employeeecMapper.deleteEC(split);
 
-        return employeeecMapper.deleteByPrimaryKey(ids);
     }
 }
