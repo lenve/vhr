@@ -15,6 +15,16 @@ public class HrDict implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
+    public HrDict(){
+
+    }
+    public HrDict (String dictName){
+        this.dictName = dictName;
+
+    }
+
+
     public Integer getId() {
         return id;
     }
@@ -69,5 +79,16 @@ public class HrDict implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HrDict hrDict = (HrDict) o;
+
+        return dictName != null ? dictName.equals(hrDict.dictName) : hrDict.dictName == null;
     }
 }

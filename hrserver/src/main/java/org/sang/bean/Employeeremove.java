@@ -3,18 +3,18 @@ package org.sang.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Employeeec implements Serializable {
+public class Employeeremove implements Serializable {
     private Integer id;
 
     private Integer eid;
 
-    private Date ecDate;
+    private Integer afterDepId;
 
-    private String ecReason;
+    private Integer afterJobId;
 
-    private Integer ecPoint;
+    private Date removeDate;
 
-    private Integer ecType;
+    private String reason;
 
     private String remark;
 
@@ -36,36 +36,36 @@ public class Employeeec implements Serializable {
         this.eid = eid;
     }
 
-    public Date getEcDate() {
-        return ecDate;
+    public Integer getAfterDepId() {
+        return afterDepId;
     }
 
-    public void setEcDate(Date ecDate) {
-        this.ecDate = ecDate;
+    public void setAfterDepId(Integer afterDepId) {
+        this.afterDepId = afterDepId;
     }
 
-    public String getEcReason() {
-        return ecReason;
+    public Integer getAfterJobId() {
+        return afterJobId;
     }
 
-    public void setEcReason(String ecReason) {
-        this.ecReason = ecReason == null ? null : ecReason.trim();
+    public void setAfterJobId(Integer afterJobId) {
+        this.afterJobId = afterJobId;
     }
 
-    public Integer getEcPoint() {
-        return ecPoint;
+    public Date getRemoveDate() {
+        return removeDate;
     }
 
-    public void setEcPoint(Integer ecPoint) {
-        this.ecPoint = ecPoint;
+    public void setRemoveDate(Date removeDate) {
+        this.removeDate = removeDate;
     }
 
-    public Integer getEcType() {
-        return ecType;
+    public String getReason() {
+        return reason;
     }
 
-    public void setEcType(Integer ecType) {
-        this.ecType = ecType;
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
     }
 
     public String getRemark() {
@@ -84,14 +84,13 @@ public class Employeeec implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", eid=").append(eid);
-        sb.append(", ecDate=").append(ecDate);
-        sb.append(", ecReason=").append(ecReason);
-        sb.append(", ecPoint=").append(ecPoint);
-        sb.append(", ecType=").append(ecType);
+        sb.append(", afterDepId=").append(afterDepId);
+        sb.append(", afterJobId=").append(afterJobId);
+        sb.append(", removeDate=").append(removeDate);
+        sb.append(", reason=").append(reason);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
-
 }

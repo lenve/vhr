@@ -952,6 +952,70 @@ create table hr_dict
   comment '0:不固定可修改，1：固定不修改'
 )
   comment '字典表';
-
+-- 字典表数据
 INSERT INTO vhr.hr_dict (id, `desc`, dictName, dictValue, isfixed) VALUES (1, '奖罚类型', '奖', 0, 0);
 INSERT INTO vhr.hr_dict (id, `desc`, dictName, dictValue, isfixed) VALUES (2, '奖罚类型', '罚', 1, 0);
+-- 人事奖罚数据
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (17, 4, '2020-01-13', '2', 4, 1, '我爱死多久哦');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (18, 2, '2020-01-15', '1', 22, 1, '33');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (19, 5, '2020-01-01', '款', 11, 1, '11');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (20, 10, '2020-01-08', '12', 12, 1, '12');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (21, 9, '2020-01-22', '13', 13, 1, '13');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (22, 8, '2020-01-15', '14', 14, 1, '14');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (23, 7, '2020-01-15', '15', 15, 0, '15');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (24, 6, '2020-01-22', '16', 16, 1, '16');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (25, 5, '2020-01-14', '17', 17, 0, '17');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (26, 3, '2020-01-15', '18', 18, 0, '18');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (27, 11, '2020-01-23', '19', 19, 1, '19');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (28, 27, null, '1', 1, 1, '1');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (29, 27, '2020-01-15', '15', 15, 0, '15');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (30, 25, '2020-01-14', '17', 16, 0, '17');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (31, 13, '2020-01-15', '18', 17, 0, '18');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (32, 24, '2020-01-13', '2', 18, 1, '我爱死多久哦');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (33, 22, '2020-01-15', '1', 19, 1, '33');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (34, 25, '2020-01-01', '款', 20, 1, '11');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (35, 10, '2020-01-08', '12', 21, 1, '12');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (36, 9, '2020-01-22', '13', 22, 1, '13');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (37, 8, '2020-01-15', '14', 23, 1, '14');
+INSERT INTO vhr.employeeec (id, eid, ecDate, ecReason, ecPoint, ecType, remark) VALUES (38, 6, '2020-01-22', '16', 24, 1, '16');
+-- 人事调薪数据
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (1, 5, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (3, 5, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (4, 6, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (5, 7, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (6, 8, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (7, 9, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (8, 10, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (9, 11, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (10, 12, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (11, 13, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (12, 14, '2020-01-21', 12221, 22221, '11', '41');
+INSERT INTO vhr.adjustsalary (id, eid, asDate, beforeSalary, afterSalary, reason, remark) VALUES (13, 15, '2020-01-21', 12221, 22221, '11', '41');
+-- 人事调动的数据
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (1, 1, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (4, 1, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (5, 2, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (6, 3, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (7, 4, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (8, 6, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (9, 5, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (10, 7, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (11, 8, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (12, 9, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (13, 10, 1, 29, '2020-01-09', '1', '1');
+INSERT INTO vhr.employeeremove (id, eid, afterDepId, afterJobId, removeDate, reason, remark) VALUES (14, 11, 1, 29, '2020-01-09', '1', '1');
+--人事培训的数据
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (1, 1, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (5, 2, '2020-02-11', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (6, 1, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (7, 2, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (8, 3, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (9, 4, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (10, 5, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (11, 6, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (12, 7, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (13, 8, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (14, 9, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (15, 10, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (16, 11, '2020-01-22', '2', '2');
+INSERT INTO vhr.employeetrain (id, eid, trainDate, trainContent, remark) VALUES (17, 22, '2020-02-12', '1111请问请问', '1111企位');

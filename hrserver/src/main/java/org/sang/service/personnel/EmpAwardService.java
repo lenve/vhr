@@ -3,6 +3,7 @@ package org.sang.service.personnel;
 
 import org.sang.bean.Employee;
 import org.sang.bean.Employeeec;
+import org.sang.bean.EmployeeecExcelVo;
 import org.sang.bean.Salary;
 import org.sang.example.EmployeeecExample;
 import org.sang.mapper.EmployeeecMapper;
@@ -26,10 +27,11 @@ public class EmpAwardService {
      * 获取所有惩戒数据
      * @return
      */
-    public List<Employeeec> getAllAward() {
-
-        EmployeeecExample example = new EmployeeecExample();
-        List<Employeeec> employeeecList = employeeecMapper.selectByExample(example);
+    public List<Employeeec> getAllAward(String keywords,Integer page,Integer size) {
+        int start = (page - 1) * size;
+//        EmployeeecExample example = new EmployeeecExample();
+//        List<Employeeec> employeeecList = employeeecMapper.selectByExample(example);
+        List<Employeeec> employeeecList = employeeecMapper.selectByKey(start,size,keywords);
         return employeeecList;
     }
 
@@ -53,5 +55,20 @@ public class EmpAwardService {
         String[] split = ids.split(",");
         return employeeecMapper.deleteEC(split);
 
+    }
+
+    public Long getCountByKeywords(String keywords, Integer start, Integer size) {
+
+        return employeeecMapper.getCountByKeywords(start,size,keywords);
+    }
+
+    public List<EmployeeecExcelVo> getAllEc() {
+
+       return employeeecMapper.selectByKeyForExcel(null,null,"");
+    }
+
+
+    public int addAwards(List<Employeeec> awards) {
+        return employeeecMapper.addAwards(awards);
     }
 }

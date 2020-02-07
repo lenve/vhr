@@ -3,7 +3,7 @@ package org.sang.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Employeeec implements Serializable {
+public class EmployeeecExcelVo implements Serializable {
     private Integer id;
 
     private Integer eid;
@@ -17,6 +17,28 @@ public class Employeeec implements Serializable {
     private Integer ecType;
 
     private String remark;
+
+    //员工姓名
+    private String name;
+
+    //奖罚类别
+    private String  ecTypeText;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEcTypeText() {
+        return ecTypeText;
+    }
+
+    public void setEcTypeText(String ecTypeText) {
+        this.ecTypeText = ecTypeText;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -93,5 +115,4 @@ public class Employeeec implements Serializable {
         sb.append("]");
         return sb.toString();
     }
-
 }

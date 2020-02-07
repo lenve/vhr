@@ -10,6 +10,17 @@
     <result column="ecType" jdbcType="INTEGER" property="ecType" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+  <resultMap id="EcExcelMap" type="org.sang.bean.EmployeeecExcelVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="ecDate" jdbcType="DATE" property="ecDate" />
+    <result column="ecReason" jdbcType="VARCHAR" property="ecReason" />
+    <result column="ecPoint" jdbcType="INTEGER" property="ecPoint" />
+    <result column="ecType" jdbcType="INTEGER" property="ecType" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ecTypeText" jdbcType="VARCHAR" property="ecTypeText" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -251,5 +262,44 @@
       #{id}
     </foreach>
   </delete>
-  
+
+  <select id="selectByKeyForExcel" resultType="org.sang.bean.EmployeeecExcelVo">
+       select ec.*,e.name,hd.dictName as ecTypeText from employeeec ec left join employee e on ec.eid = e.id
+
+    left join hr_dict hd on hd.`desc` ='奖罚类型' and ec.ecType = hd.dictValue
+        where e.name like concat('%',#{keywords},'%')
+    <if test="start!=null and size!=null">
+      order by ec.id limit #{start},#{size}
+    </if>
+    </select>
+
+  <select id="selectByKey" resultMap="EcExcelMap">
+    select * from employeeec ec left join employee e on ec.eid = e.id
+    where e.name like concat('%',#{keywords},'%')
+    <if test="start!=null and size!=null">
+      order by ec.id limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="getCountByKeywords" resultType="Long">
+    select  count(*) from employeeec ec left join employee e on ec.eid = e.id
+    where e.name like concat('%',#{keywords},'%')
+
+  </select>
+    <insert id="addAwards">
+        insert into employeeec (eid, ecDate,
+        ecReason, ecPoint, ecType, remark
+
+        )
+        values
+        <foreach collection="awards" item="award" separator=",">
+            (#{award.eid,jdbcType=INTEGER},
+            #{award.ecDate,jdbcType=DATE},
+            #{award.ecReason,jdbcType=CHAR},
+            #{award.ecPoint,jdbcType=INTEGER},
+            #{award.ecType,jdbcType=INTEGER},
+            #{award.remark,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
 </mapper>

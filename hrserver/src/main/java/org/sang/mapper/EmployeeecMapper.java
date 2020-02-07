@@ -3,6 +3,7 @@ package org.sang.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sang.bean.Employee;
 import org.sang.bean.Employeeec;
+import org.sang.bean.EmployeeecExcelVo;
 import org.sang.example.EmployeeecExample;
 
 import java.util.List;
@@ -33,4 +34,14 @@ public interface EmployeeecMapper {
     List<Employee> getAllEmps();
 
     int deleteEC(@Param("ids") String[] ids);
+
+    List<Employeeec> selectByKey(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords);
+    List<EmployeeecExcelVo> selectByKeyForExcel(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords);
+
+
+
+
+    Long getCountByKeywords(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords);
+
+    int addAwards(@Param("awards") List<Employeeec> awards);
 }

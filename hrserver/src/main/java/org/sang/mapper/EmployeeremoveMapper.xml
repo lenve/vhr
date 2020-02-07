@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.sang.mapper.EmployeetrainMapper">
-  <resultMap id="BaseResultMap" type="org.sang.bean.Employeetrain">
+<mapper namespace="org.sang.mapper.EmployeeremoveMapper">
+  <resultMap id="BaseResultMap" type="org.sang.bean.Employeeremove">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="eid" jdbcType="INTEGER" property="eid" />
-    <result column="trainDate" jdbcType="DATE" property="trainDate" />
-    <result column="trainContent" jdbcType="VARCHAR" property="trainContent" />
+    <result column="afterDepId" jdbcType="INTEGER" property="afterDepId" />
+    <result column="afterJobId" jdbcType="INTEGER" property="afterJobId" />
+    <result column="removeDate" jdbcType="DATE" property="removeDate" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,16 +69,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, eid, trainDate, trainContent, remark
+    id, eid, afterDepId, afterJobId, removeDate, reason, remark
   </sql>
-  <select id="selectByExample" parameterType="org.sang.example.EmployeetrainExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.sang.example.EmployeeremoveExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from employeetrain
+    from employeeremove
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,42 +89,50 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from employeetrain
+    from employeeremove
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from employeetrain
+    delete from employeeremove
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.sang.example.EmployeetrainExample">
-    delete from employeetrain
+  <delete id="deleteByExample" parameterType="org.sang.example.EmployeeremoveExample">
+    delete from employeeremove
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.sang.bean.Employeetrain">
+  <insert id="insert" parameterType="org.sang.bean.Employeeremove">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into employeetrain (eid, trainDate, trainContent, 
-      remark)
-    values (#{eid,jdbcType=INTEGER}, #{trainDate,jdbcType=DATE}, #{trainContent,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+    insert into employeeremove (eid, afterDepId, afterJobId, 
+      removeDate, reason, remark
+      )
+    values (#{eid,jdbcType=INTEGER}, #{afterDepId,jdbcType=INTEGER}, #{afterJobId,jdbcType=INTEGER}, 
+      #{removeDate,jdbcType=DATE}, #{reason,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="org.sang.bean.Employeetrain">
+  <insert id="insertSelective" parameterType="org.sang.bean.Employeeremove">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into employeetrain
+    insert into employeeremove
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="eid != null">
         eid,
       </if>
-      <if test="trainDate != null">
-        trainDate,
+      <if test="afterDepId != null">
+        afterDepId,
       </if>
-      <if test="trainContent != null">
-        trainContent,
+      <if test="afterJobId != null">
+        afterJobId,
+      </if>
+      <if test="removeDate != null">
+        removeDate,
+      </if>
+      <if test="reason != null">
+        reason,
       </if>
       <if test="remark != null">
         remark,
@@ -132,25 +142,31 @@
       <if test="eid != null">
         #{eid,jdbcType=INTEGER},
       </if>
-      <if test="trainDate != null">
-        #{trainDate,jdbcType=DATE},
+      <if test="afterDepId != null">
+        #{afterDepId,jdbcType=INTEGER},
       </if>
-      <if test="trainContent != null">
-        #{trainContent,jdbcType=VARCHAR},
+      <if test="afterJobId != null">
+        #{afterJobId,jdbcType=INTEGER},
+      </if>
+      <if test="removeDate != null">
+        #{removeDate,jdbcType=DATE},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sang.example.EmployeetrainExample" resultType="java.lang.Long">
-    select count(*) from employeetrain
+  <select id="countByExample" parameterType="org.sang.example.EmployeeremoveExample" resultType="java.lang.Long">
+    select count(*) from employeeremove
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update employeetrain
+    update employeeremove
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -158,11 +174,17 @@
       <if test="record.eid != null">
         eid = #{record.eid,jdbcType=INTEGER},
       </if>
-      <if test="record.trainDate != null">
-        trainDate = #{record.trainDate,jdbcType=DATE},
+      <if test="record.afterDepId != null">
+        afterDepId = #{record.afterDepId,jdbcType=INTEGER},
       </if>
-      <if test="record.trainContent != null">
-        trainContent = #{record.trainContent,jdbcType=VARCHAR},
+      <if test="record.afterJobId != null">
+        afterJobId = #{record.afterJobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.removeDate != null">
+        removeDate = #{record.removeDate,jdbcType=DATE},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -173,27 +195,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update employeetrain
+    update employeeremove
     set id = #{record.id,jdbcType=INTEGER},
       eid = #{record.eid,jdbcType=INTEGER},
-      trainDate = #{record.trainDate,jdbcType=DATE},
-      trainContent = #{record.trainContent,jdbcType=VARCHAR},
+      afterDepId = #{record.afterDepId,jdbcType=INTEGER},
+      afterJobId = #{record.afterJobId,jdbcType=INTEGER},
+      removeDate = #{record.removeDate,jdbcType=DATE},
+      reason = #{record.reason,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.Employeetrain">
-    update employeetrain
+  <update id="updateByPrimaryKeySelective" parameterType="org.sang.bean.Employeeremove">
+    update employeeremove
     <set>
       <if test="eid != null">
         eid = #{eid,jdbcType=INTEGER},
       </if>
-      <if test="trainDate != null">
-        trainDate = #{trainDate,jdbcType=DATE},
+      <if test="afterDepId != null">
+        afterDepId = #{afterDepId,jdbcType=INTEGER},
       </if>
-      <if test="trainContent != null">
-        trainContent = #{trainContent,jdbcType=VARCHAR},
+      <if test="afterJobId != null">
+        afterJobId = #{afterJobId,jdbcType=INTEGER},
+      </if>
+      <if test="removeDate != null">
+        removeDate = #{removeDate,jdbcType=DATE},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
@@ -201,25 +231,59 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.sang.bean.Employeetrain">
-    update employeetrain
+  <update id="updateByPrimaryKey" parameterType="org.sang.bean.Employeeremove">
+    update employeeremove
     set eid = #{eid,jdbcType=INTEGER},
-      trainDate = #{trainDate,jdbcType=DATE},
-      trainContent = #{trainContent,jdbcType=VARCHAR},
+      afterDepId = #{afterDepId,jdbcType=INTEGER},
+      afterJobId = #{afterJobId,jdbcType=INTEGER},
+      removeDate = #{removeDate,jdbcType=DATE},
+      reason = #{reason,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-
-  <delete id="deleteTrain">
-    DELETE FROM employeetrain WHERE id IN
+  <delete id="deleteMove">
+    DELETE FROM employeeremove WHERE id IN
     <foreach collection="ids" separator="," item="id" open="(" close=")">
       #{id}
     </foreach>
   </delete>
 
-  <select id="selectByKey" resultMap="BaseResultMap">
-    select et.* from employeetrain et left join employee e on et.eid = e.id
+  <resultMap id="getAllResultMap" type="org.sang.bean.EmployeeremoveVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="afterDepId" jdbcType="INTEGER" property="afterDepId" />
+    <result column="afterJobId" jdbcType="INTEGER" property="afterJobId" />
+    <result column="removeDate" jdbcType="DATE" property="removeDate" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association property="department" javaType="org.sang.bean.Department">
+      <id property="id" column="did"/>
+      <result property="name" column="dname"/>
+    </association>
+    <association property="position" javaType="org.sang.bean.Position">
+      <id property="id" column="pid"/>
+      <result property="name" column="pname"/>
+    </association>
+  </resultMap>
+  <select id="getAllMove" resultMap="getAllResultMap">
+    select et.* from (select e.*,
+    d.`id` as did,d.`name` as dname ,
+    p.`id` as pid,p.`name` as pname
+    from employeeremove e,department d ,position p
+    where e.`afterDepId` = d.`id` and e.`afterJobId` = p.`id`) et left join employee e on et.eid = e.id
+    where e.name like concat('%',#{keywords},'%')
+    <if test="start!=null and size!=null">
+      order by et.id limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="selectByKey" resultMap="getAllResultMap">
+    select et.* from (select e.*,
+    d.`id` as did,d.`name` as dname ,
+    p.`id` as pid,p.`name` as pname
+    from employeeremove e,department d ,position p
+    where e.`afterDepId` = d.`id` and e.`afterJobId` = p.`id`) et left join employee e on et.eid = e.id
     where e.name like concat('%',#{keywords},'%')
     <if test="start!=null and size!=null">
       order by et.id limit #{start},#{size}
@@ -227,7 +291,7 @@
   </select>
 
   <select id="getCountByKeywords" resultType="Long">
-    select  count(*) from employeetrain et left join employee e on et.eid = e.id
+    select  count(*) from employeeremove et left join employee e on et.eid = e.id
     where e.name like concat('%',#{keywords},'%')
 
   </select>

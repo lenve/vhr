@@ -30,4 +30,8 @@ public interface EmployeetrainMapper {
     int updateByPrimaryKey(Employeetrain record);
 
     int deleteTrain(@Param("ids") String[] ids);
+
+    List<Employeetrain> selectByKey(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords);
+
+    Long getCountByKeywords(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords);
 }

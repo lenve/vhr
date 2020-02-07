@@ -3,18 +3,18 @@ package org.sang.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Employeeec implements Serializable {
+public class Adjustsalary implements Serializable {
     private Integer id;
 
     private Integer eid;
 
-    private Date ecDate;
+    private Date asDate;
 
-    private String ecReason;
+    private Integer beforeSalary;
 
-    private Integer ecPoint;
+    private Integer afterSalary;
 
-    private Integer ecType;
+    private String reason;
 
     private String remark;
 
@@ -36,36 +36,36 @@ public class Employeeec implements Serializable {
         this.eid = eid;
     }
 
-    public Date getEcDate() {
-        return ecDate;
+    public Date getAsDate() {
+        return asDate;
     }
 
-    public void setEcDate(Date ecDate) {
-        this.ecDate = ecDate;
+    public void setAsDate(Date asDate) {
+        this.asDate = asDate;
     }
 
-    public String getEcReason() {
-        return ecReason;
+    public Integer getBeforeSalary() {
+        return beforeSalary;
     }
 
-    public void setEcReason(String ecReason) {
-        this.ecReason = ecReason == null ? null : ecReason.trim();
+    public void setBeforeSalary(Integer beforeSalary) {
+        this.beforeSalary = beforeSalary;
     }
 
-    public Integer getEcPoint() {
-        return ecPoint;
+    public Integer getAfterSalary() {
+        return afterSalary;
     }
 
-    public void setEcPoint(Integer ecPoint) {
-        this.ecPoint = ecPoint;
+    public void setAfterSalary(Integer afterSalary) {
+        this.afterSalary = afterSalary;
     }
 
-    public Integer getEcType() {
-        return ecType;
+    public String getReason() {
+        return reason;
     }
 
-    public void setEcType(Integer ecType) {
-        this.ecType = ecType;
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
     }
 
     public String getRemark() {
@@ -84,14 +84,13 @@ public class Employeeec implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", eid=").append(eid);
-        sb.append(", ecDate=").append(ecDate);
-        sb.append(", ecReason=").append(ecReason);
-        sb.append(", ecPoint=").append(ecPoint);
-        sb.append(", ecType=").append(ecType);
+        sb.append(", asDate=").append(asDate);
+        sb.append(", beforeSalary=").append(beforeSalary);
+        sb.append(", afterSalary=").append(afterSalary);
+        sb.append(", reason=").append(reason);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
-
 }

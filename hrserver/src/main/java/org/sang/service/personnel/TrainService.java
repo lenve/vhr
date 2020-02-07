@@ -25,13 +25,13 @@ public class TrainService {
     EmployeetrainMapper employeetrainMapper;
 
     /**
-     * 获取所有惩戒数据
+     * 获取所有培训数据
      * @return
      */
-    public List<Employeetrain> getAllTrain() {
+    public List<Employeetrain> getAllTrain(String keywords,Integer page,Integer size) {
+        int start = (page - 1) * size;
 
-        EmployeetrainExample example = new EmployeetrainExample();
-        List<Employeetrain> employeetrainList = employeetrainMapper.selectByExample(example);
+        List<Employeetrain> employeetrainList = employeetrainMapper.selectByKey(start,size,keywords);
         return employeetrainList;
     }
 
@@ -51,5 +51,9 @@ public class TrainService {
         String[] split = ids.split(",");
         return employeetrainMapper.deleteTrain(split);
 
+    }
+
+    public Long getCountByKeywords(String keywords, Integer start, Integer size) {
+        return employeetrainMapper.getCountByKeywords(start,size,keywords);
     }
 }

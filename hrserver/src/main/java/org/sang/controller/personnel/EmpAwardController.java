@@ -2,12 +2,13 @@ package org.sang.controller.personnel;
 
 
 import org.sang.bean.*;
+import org.sang.common.poi.PoiUtils;
+import org.sang.service.dict.DictService;
 import org.sang.service.personnel.EmpAwardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,11 +22,21 @@ import java.util.Map;
 public class EmpAwardController {
     @Autowired
     EmpAwardService empAwardService;
+    @Autowired
+    DictService dictService;
 
     @RequestMapping(value = "/ec", method = RequestMethod.GET)
-    public List<Employeeec> Awards() {
-        List<Employeeec> list = empAwardService.getAllAward();
-        return list;
+    public Map<String, Object> Awards(@RequestParam(defaultValue = "1") Integer page,
+                                   @RequestParam(defaultValue = "") String keywords,
+                                   @RequestParam(defaultValue = "10") Integer size) {
+
+        Map<String, Object> map = new HashMap<>();
+
+            List<Employeeec> list = empAwardService.getAllAward(keywords,page,size);
+            Long count = empAwardService.getCountByKeywords(keywords,page,size);
+            map.put("awardsList", list);
+            map.put("count", count);
+        return map;
     }
 
     @RequestMapping(value = "/ec", method = RequestMethod.PUT)
@@ -60,4 +71,28 @@ public class EmpAwardController {
 
         return map;
     }
+
+    /**
+     * 导出奖惩数据
+     * @return
+     */
+    @RequestMapping(value = "/exportAward", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> exportEmp() {
+        return PoiUtils.exportEmpEc2Excel(empAwardService.getAllEc());
+    }
+
+    /**
+     * 导入奖惩数据
+     */
+    @RequestMapping(value = "/importAward", method = RequestMethod.POST)
+    public RespBean importEmp(MultipartFile file) {
+        List<Employeeec> awards = PoiUtils.importAward2List(file,
+                    empAwardService.getAllEmps(),
+                    dictService.getDictByDesc("奖罚类型"));
+        if (empAwardService.addAwards(awards) == awards.size()) {
+            return RespBean.ok("导入成功!");
+        }
+        return RespBean.error("导入失败!");
+    }
+
 }

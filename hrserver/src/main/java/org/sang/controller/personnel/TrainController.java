@@ -6,10 +6,7 @@ import org.sang.bean.Employeetrain;
 import org.sang.bean.RespBean;
 import org.sang.service.personnel.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +22,16 @@ public class TrainController {
     TrainService trainService;
 
     @RequestMapping(value = "/train", method = RequestMethod.GET)
-    public List<Employeetrain> Trains() {
-        List<Employeetrain> list = trainService.getAllTrain();
-        return list;
+    public Map<String, Object> Trains(@RequestParam(defaultValue = "1") Integer page,
+                                      @RequestParam(defaultValue = "") String keywords,
+                                      @RequestParam(defaultValue = "10") Integer size) {
+
+        Map<String, Object> map = new HashMap<>();
+        List<Employeetrain> list = trainService.getAllTrain(keywords,page,size);
+        Long count = trainService.getCountByKeywords(keywords,page,size);
+        map.put("trainsList", list);
+        map.put("count", count);
+        return map;
     }
 
     @RequestMapping(value = "/train", method = RequestMethod.PUT)
