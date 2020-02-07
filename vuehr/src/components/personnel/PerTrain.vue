@@ -2,7 +2,25 @@
   <div>
     <el-container>
       <el-header style="display: flex;justify-content: space-between;align-items: center;padding-left: 0px">
-        <el-button @click="dialogVisible = true" icon="el-icon-plus" type="primary" size="mini">添加奖惩</el-button>
+        <el-button @click="dialogVisible = true" icon="el-icon-plus" type="primary" size="mini">添加培训</el-button>
+
+        <div style="display: inline">
+          <el-input
+            placeholder="通过员工名搜索员工,记得回车哦..."
+            clearable
+            @change="keywordsChange"
+            style="width: 300px;margin: 0px;padding: 0px;"
+            size="mini"
+            :disabled="advanceSearchViewVisible"
+            @keyup.enter.native="searchEmp"
+            prefix-icon="el-icon-search"
+            v-model="keywords">
+          </el-input>
+          <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" @click="searchEmp">搜索
+          </el-button>
+
+        </div>
+
         <el-button size="mini" type="success" @click="loadTrainsCfg" icon="el-icon-refresh"></el-button>
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -66,9 +84,17 @@
             </el-table-column>
           </el-table>
         </div>
-        <div style="text-align: left;margin-top: 10px" v-if="trains!=0">
+        <div style="display: flex;justify-content: space-between;margin: 2px" v-if="trains!=0">
           <el-button type="danger" round size="mini" :disabled="multipleSelection.length==0" @click="deleteAll">批量删除
           </el-button>
+          <el-pagination
+            background
+            :page-size="10"
+            :current-page="currentPage"
+            @current-change="currentChange"
+            layout="prev, pager, next"
+            :total="totalCount">
+          </el-pagination>
         </div>
       </el-main>
     </el-container>
@@ -174,7 +200,11 @@
         dialogVisible: false,
         dialogTitle: '新增培训',
         tableLoading: false,
+        keywords:'',
+        advanceSearchViewVisible: false,
         index: 0,
+        totalCount: -1,
+        currentPage: 1,
         trains: [],
         emps:[],
         multipleSelection: [],
@@ -186,34 +216,26 @@
           remark: '',
           name:''
         },
-        awardType:[],
         rules: {
           eid: [{required: true, message: '必填:姓名', trigger: 'blur'}],
           trainDate: [{required: true, message: '必填:培训日期', trigger: 'blur'}],
           trainContent: [{required: true, message: '必填:培训内容', trigger: 'blur'}],
-
-          // birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
-          // idCard: [{
-          //   required: true,
-          //   message: '必填:身份证号码',
-          //   trigger: 'blur'
-          // }, {
-          //   pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-          //   message: '身份证号码格式不正确',
-          //   trigger: 'blur'
-          // }],
-          // wedlock: [{required: true, message: '必填:婚姻状况', trigger: 'blur'}],
-          // nationId: [{required: true, message: '必填:民族', trigger: 'change'}],
-          // nativePlace: [{required: true, message: '必填:籍贯', trigger: 'blur'}],
-          // email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
-          //   type: 'email',
-          //   message: '邮箱格式不正确',
-          //   trigger: 'blur'
-          // }]
         }
       };
     },
     methods: {
+      keywordsChange(val) {
+        if (val == '') {
+          this.loadTrainsCfg();
+        }
+      },
+      searchEmp() {
+        this.loadTrainsCfg();
+      },
+      currentChange(currentChange) {
+        this.currentPage = currentChange;
+        this.loadTrainsCfg();
+      },
       deleteAll(){
         this.$confirm('删除[' + this.multipleSelection.length + ']条记录, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -240,7 +262,7 @@
         this.train = row;
       },
       handleDelete(index, row) {
-        this.$confirm('删除[' + this.multipleSelection.length + ']条奖惩数据, 是否继续?', '提示', {
+        this.$confirm('删除[' + 1 + ']条记录, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -268,10 +290,11 @@
       loadTrainsCfg(){
         this.tableLoading = true;
         var _this = this;
-        this.getRequest("/personnel/train/").then(resp=> {
+        this.getRequest("/personnel/train?keywords="+_this.keywords+"&page=" + this.currentPage).then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
-            _this.trains = resp.data;
+            _this.trains = resp.data.trainsList;
+            _this.totalCount = resp.data.count;
           }
           var old = _this.trains;
           old.forEach(item => {

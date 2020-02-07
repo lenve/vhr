@@ -3,6 +3,42 @@
     <el-container>
       <el-header style="display: flex;justify-content: space-between;align-items: center;padding-left: 0px">
         <el-button @click="dialogVisible = true" icon="el-icon-plus" type="primary" size="mini">添加奖惩</el-button>
+
+        <div style="display: inline">
+          <el-input
+            placeholder="通过员工名搜索员工,记得回车哦..."
+            clearable
+            @change="keywordsChange"
+            style="width: 300px;margin: 0px;padding: 0px;"
+            size="mini"
+            :disabled="advanceSearchViewVisible"
+            @keyup.enter.native="searchEmp"
+            prefix-icon="el-icon-search"
+            v-model="keywords">
+          </el-input>
+          <el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search" @click="searchEmp">搜索
+          </el-button>
+
+        </div>
+
+        <div style="margin-left: 5px;margin-right: 20px;display: inline">
+          <el-upload
+            :show-file-list="false"
+            accept="application/vnd.ms-excel"
+            action="/personnel/award/importAward"
+            :on-success="fileUploadSuccess"
+            :on-error="fileUploadError" :disabled="fileUploadBtnText=='正在导入'"
+            :before-upload="beforeFileUpload" style="display: inline">
+            <el-button size="mini" type="success" :loading="fileUploadBtnText=='正在导入'"><i class="fa fa-lg fa-level-up"
+                                                                                          style="margin-right: 5px"></i>{{fileUploadBtnText}}
+            </el-button>
+          </el-upload>
+          <el-button type="success" size="mini" @click="exportEmps"><i class="fa fa-lg fa-level-down"
+                                                                       style="margin-right: 5px"></i>导出数据
+          </el-button>
+
+        </div>
+
         <el-button size="mini" type="success" @click="loadAwardsCfg" icon="el-icon-refresh"></el-button>
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -66,9 +102,18 @@
             </el-table-column>
           </el-table>
         </div>
-        <div style="text-align: left;margin-top: 10px" v-if="awards!=0">
+        <!--分页 start   style="text-align: left;margin-top: 10px"-->
+        <div style="display: flex;justify-content: space-between;margin: 2px" v-if="awards!=0">
           <el-button type="danger" round size="mini" :disabled="multipleSelection.length==0" @click="deleteAll">批量删除
           </el-button>
+          <el-pagination
+            background
+            :page-size="10"
+            :current-page="currentPage"
+            @current-change="currentChange"
+            layout="prev, pager, next"
+            :total="totalCount">
+          </el-pagination>
         </div>
       </el-main>
     </el-container>
@@ -171,12 +216,16 @@
   export default {
     data() {
       return {
+        fileUploadBtnText: '导入数据',
         dialogVisible: false,
         dialogTitle: '新增惩罚',
         tableLoading: false,
         index: 0,
         awards: [],
         emps:[],
+        jobs:[],
+        keywords:'',
+        advanceSearchViewVisible: false,
         multipleSelection: [],
         award: {
           id: '',
@@ -195,25 +244,9 @@
           ecPoint: [{required: true, message: '必填:分数', trigger: 'blur'}],
           ecType: [{required: true, message: '必填:类型', trigger: 'blur'}],
           ecReason: [{required: true, message: '必填:原因', trigger: 'blur'}],
-          // birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
-          // idCard: [{
-          //   required: true,
-          //   message: '必填:身份证号码',
-          //   trigger: 'blur'
-          // }, {
-          //   pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-          //   message: '身份证号码格式不正确',
-          //   trigger: 'blur'
-          // }],
-          // wedlock: [{required: true, message: '必填:婚姻状况', trigger: 'blur'}],
-          // nationId: [{required: true, message: '必填:民族', trigger: 'change'}],
-          // nativePlace: [{required: true, message: '必填:籍贯', trigger: 'blur'}],
-          // email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
-          //   type: 'email',
-          //   message: '邮箱格式不正确',
-          //   trigger: 'blur'
-          // }]
-        }
+        },
+        totalCount: -1,
+        currentPage: 1,
       };
     },
     methods: {
@@ -243,7 +276,7 @@
         this.award = row;
       },
       handleDelete(index, row) {
-        this.$confirm('删除[' + this.multipleSelection.length + ']条奖惩数据, 是否继续?', '提示', {
+        this.$confirm('删除[' + 1 + ']条奖惩数据, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -271,10 +304,11 @@
       loadAwardsCfg(){
         this.tableLoading = true;
         var _this = this;
-        this.getRequest("/personnel/award/ec").then(resp=> {
+        this.getRequest("/personnel/award/ec?keywords="+_this.keywords+"&page=" + this.currentPage).then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
-            _this.awards = resp.data;
+            _this.awards = resp.data.awardsList;
+            _this.totalCount = resp.data.count;
           }
           var old = _this.awards;
           old.forEach(item => {
@@ -350,6 +384,35 @@
             return false;
           }
         });
+      },
+      keywordsChange(val) {
+        if (val == '') {
+          this.loadAwardsCfg();
+        }
+      },
+      searchEmp() {
+        this.loadAwardsCfg();
+      },
+      fileUploadSuccess(response, file, fileList) {
+        if (response) {
+          this.$message({type: response.status, message: response.msg});
+        }
+        this.loadAwardsCfg();
+        this.fileUploadBtnText = '导入数据';
+      },
+      fileUploadError(err, file, fileList) {
+        this.$message({type: 'error', message: "导入失败!"});
+        this.fileUploadBtnText = '导入数据';
+      },
+      beforeFileUpload(file) {
+        this.fileUploadBtnText = '正在导入';
+      },
+      exportEmps() {
+        window.open("/personnel/award/exportAward", "_parent");
+      },
+      currentChange(currentChange) {
+        this.currentPage = currentChange;
+        this.loadAwardsCfg();
       },
       initData() {
         var _this = this;
