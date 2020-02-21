@@ -1,13 +1,11 @@
 package org.javaboy.mailserver.receiver;
 
-import org.apache.commons.logging.LogFactory;
 import org.javaboy.vhr.model.Employee;
-import org.javaboy.vhr.model.Hr;
+import org.javaboy.vhr.model.MailConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -40,7 +38,7 @@ public class MailReceiver {
     @Autowired
     TemplateEngine templateEngine;
 
-    @RabbitListener(queues = "javaboy.mail.welcome")
+    @RabbitListener(queues = MailConstants.MAIL_QUEUE_NAME)
     public void handler(Employee employee) {
         logger.info(employee.toString());
         //收到消息，发送邮件
