@@ -1,4 +1,4 @@
-扫码加微信，备注微人事，进群讨论。
+扫码加微信(微信ID：a_java_boy2)，备注微人事，进群讨论。
 
 ![](http://www.javaboy.org/images/weixin.png)
 
