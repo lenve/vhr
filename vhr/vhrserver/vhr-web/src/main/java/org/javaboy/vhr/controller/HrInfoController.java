@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * @作者 江南一点雨
  * @公众号 江南一点雨
@@ -37,4 +39,16 @@ public class HrInfoController {
         }
         return RespBean.error("更新失败!");
     }
+
+    @PutMapping("/hr/pass")
+    public RespBean updateHrPasswd(@RequestBody Map<String, Object> info) {
+        String oldpass = (String) info.get("oldpass");
+        String pass = (String) info.get("pass");
+        Integer hrid = (Integer) info.get("hrid");
+        if (hrService.updateHrPasswd(oldpass, pass, hrid)) {
+            return RespBean.ok("更新成功!");
+        }
+        return RespBean.error("更新失败!");
+    }
+
 }

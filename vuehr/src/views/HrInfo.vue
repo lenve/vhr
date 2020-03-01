@@ -25,10 +25,32 @@
                 </div>
                 <div style="display: flex;justify-content: space-around;margin-top: 10px">
                     <el-button type="primary" @click="showUpdateHrInfoView">修改信息</el-button>
-                    <el-button type="danger">修改密码</el-button>
+                    <el-button type="danger" @click="showUpdatePasswdView">修改密码</el-button>
                 </div>
             </div>
         </el-card>
+        <el-dialog
+                title="修改密码"
+                :visible.sync="passwdDialogVisible"
+                width="30%">
+            <div>
+                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="请输入旧密码" prop="oldpass">
+                        <el-input type="password" v-model="ruleForm.oldpass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="请输入新密码" prop="pass">
+                        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新确认密码" prop="checkPass">
+                        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </el-dialog>
         <el-dialog
                 title="修改用户信息"
                 :visible.sync="dialogVisible"
@@ -65,9 +87,45 @@
     export default {
         name: "HrInfo",
         data() {
+            var validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                } else {
+                    if (this.ruleForm.checkPass !== '') {
+                        this.$refs.ruleForm.validateField('checkPass');
+                    }
+                    callback();
+                }
+            };
+            var validatePass2 = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'));
+                } else if (value !== this.ruleForm.pass) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
             return {
+                ruleForm: {
+                    oldpass:'',
+                    pass: '',
+                    checkPass: ''
+                },
+                rules: {
+                    oldpass: [
+                        { validator: validatePass, trigger: 'blur' }
+                    ],
+                    pass: [
+                        { validator: validatePass, trigger: 'blur' }
+                    ],
+                    checkPass: [
+                        { validator: validatePass2, trigger: 'blur' }
+                    ]
+                },
                 hr: null,
                 hr2: null,
+                passwdDialogVisible:false,
                 dialogVisible:false
             }
         },
@@ -75,6 +133,29 @@
             this.initHr();
         },
         methods: {
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.ruleForm.hrid = this.hr.id;
+                        this.putRequest("/hr/pass",this.ruleForm).then(resp=>{
+                            if (resp) {
+                                this.getRequest("/logout");
+                                window.sessionStorage.removeItem("user")
+                                this.$store.commit('initRoutes', []);
+                                this.$router.replace("/");
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            },
+            showUpdatePasswdView() {
+                this.passwdDialogVisible = true;
+            },
             updateHrInfo() {
                 this.putRequest("/hr/info",this.hr2).then(resp=>{
                     if (resp) {
