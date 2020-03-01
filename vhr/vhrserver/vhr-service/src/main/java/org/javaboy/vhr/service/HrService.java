@@ -60,4 +60,8 @@ public class HrService implements UserDetailsService {
     public List<Hr> getAllHrsExceptCurrentHr() {
         return hrMapper.getAllHrsExceptCurrentHr(HrUtils.getCurrentHr().getId());
     }
+
+    public Integer updateHyById(Hr hr) {
+        return hrMapper.updateByPrimaryKeySelective(hr);
+    }
 }
