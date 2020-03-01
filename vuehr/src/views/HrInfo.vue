@@ -37,8 +37,7 @@
         name: "HrInfo",
         data() {
             return {
-                hr: null,
-                dialogVisible: false
+                hr: null
             }
         },
         mounted() {
@@ -49,7 +48,6 @@
                 this.getRequest('/hr/info').then(resp => {
                     if (resp) {
                         this.hr = resp;
-                        this.hr2 = Object.assign({}, this.hr);
                     }
                 })
             }
