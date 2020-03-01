@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="hr">
         <el-card class="box-card" style="width: 400px">
             <div slot="header" class="clearfix">
                 <span>{{hr.name}}</span>
