@@ -1,14 +1,14 @@
 package org.javaboy.vhr.controller;
 
+import org.javaboy.vhr.config.FastDFSUtils;
 import org.javaboy.vhr.model.Hr;
 import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.service.HrService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -26,6 +26,9 @@ public class HrInfoController {
 
     @Autowired
     HrService hrService;
+
+    @Value("${javaboy.nginx.host}")
+    String nginxHost;
 
     @GetMapping("/hr/info")
     public Hr getCurrentHr(Authentication authentication) {
@@ -47,6 +50,16 @@ public class HrInfoController {
         Integer hrid = (Integer) info.get("hrid");
         if (hrService.updateHrPasswd(oldpass, pass, hrid)) {
             return RespBean.ok("更新成功!");
+        }
+        return RespBean.error("更新失败!");
+    }
+
+    @PostMapping("/hr/userface")
+    public RespBean updateUserface(MultipartFile file, Integer id) {
+        String upload = FastDFSUtils.upload(file);
+        String url = nginxHost + upload;
+        if (hrService.updateUserface(url, id) == 1) {
+            return RespBean.ok("更新成功!",url);
         }
         return RespBean.error("更新失败!");
     }

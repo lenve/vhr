@@ -6,8 +6,15 @@
             </div>
             <div>
                 <div style="display: flex;justify-content: center">
-                    <img title="点击修改用户图像" :src="hr.userface" style="width: 100px;height: 100px;border-radius: 50px"
-                         alt="">
+                    <el-upload
+                            :data="hr"
+                            :show-file-list="false"
+                            :on-success="onSuccess"
+                            action="/hr/userface">
+                        <img title="点击修改用户图像" :src="hr.userface" style="width: 100px;height: 100px;border-radius: 50px"
+                             alt="">
+                    </el-upload>
+
                 </div>
                 <div>电话号码：
                     <el-tag>{{hr.telephone}}</el-tag>
@@ -34,7 +41,8 @@
                 :visible.sync="passwdDialogVisible"
                 width="30%">
             <div>
-                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
+                         class="demo-ruleForm">
                     <el-form-item label="请输入旧密码" prop="oldpass">
                         <el-input type="password" v-model="ruleForm.oldpass" autocomplete="off"></el-input>
                     </el-form-item>
@@ -58,20 +66,36 @@
             <div>
                 <table>
                     <tr>
-                        <td><el-tag>用户姓名：</el-tag></td>
-                        <td><el-input v-model="hr2.name"></el-input></td>
+                        <td>
+                            <el-tag>用户姓名：</el-tag>
+                        </td>
+                        <td>
+                            <el-input v-model="hr2.name"></el-input>
+                        </td>
                     </tr>
                     <tr>
-                        <td><el-tag>电话号码：</el-tag></td>
-                        <td><el-input v-model="hr2.telephone"></el-input></td>
+                        <td>
+                            <el-tag>电话号码：</el-tag>
+                        </td>
+                        <td>
+                            <el-input v-model="hr2.telephone"></el-input>
+                        </td>
                     </tr>
                     <tr>
-                        <td><el-tag>手机号码：</el-tag></td>
-                        <td><el-input v-model="hr2.phone"></el-input></td>
+                        <td>
+                            <el-tag>手机号码：</el-tag>
+                        </td>
+                        <td>
+                            <el-input v-model="hr2.phone"></el-input>
+                        </td>
                     </tr>
                     <tr>
-                        <td><el-tag>用户地址：</el-tag></td>
-                        <td><el-input v-model="hr2.address"></el-input></td>
+                        <td>
+                            <el-tag>用户地址：</el-tag>
+                        </td>
+                        <td>
+                            <el-input v-model="hr2.address"></el-input>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -108,36 +132,42 @@
             };
             return {
                 ruleForm: {
-                    oldpass:'',
+                    oldpass: '',
                     pass: '',
                     checkPass: ''
                 },
                 rules: {
                     oldpass: [
-                        { validator: validatePass, trigger: 'blur' }
+                        {validator: validatePass, trigger: 'blur'}
                     ],
                     pass: [
-                        { validator: validatePass, trigger: 'blur' }
+                        {validator: validatePass, trigger: 'blur'}
                     ],
                     checkPass: [
-                        { validator: validatePass2, trigger: 'blur' }
+                        {validator: validatePass2, trigger: 'blur'}
                     ]
                 },
                 hr: null,
                 hr2: null,
-                passwdDialogVisible:false,
-                dialogVisible:false
+                passwdDialogVisible: false,
+                dialogVisible: false
             }
         },
         mounted() {
             this.initHr();
         },
         methods: {
+            onSuccess() {
+                this.getRequest("/logout");
+                window.sessionStorage.removeItem("user")
+                this.$store.commit('initRoutes', []);
+                this.$router.replace("/");
+            },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.ruleForm.hrid = this.hr.id;
-                        this.putRequest("/hr/pass",this.ruleForm).then(resp=>{
+                        this.putRequest("/hr/pass", this.ruleForm).then(resp => {
                             if (resp) {
                                 this.getRequest("/logout");
                                 window.sessionStorage.removeItem("user")
@@ -157,7 +187,7 @@
                 this.passwdDialogVisible = true;
             },
             updateHrInfo() {
-                this.putRequest("/hr/info",this.hr2).then(resp=>{
+                this.putRequest("/hr/info", this.hr2).then(resp => {
                     if (resp) {
                         this.getRequest("/logout");
                         window.sessionStorage.removeItem("user")
