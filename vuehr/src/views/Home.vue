@@ -51,12 +51,15 @@
         name: "Home",
         data() {
             return {
-                user: JSON.parse(window.sessionStorage.getItem("user"))
+                // user: JSON.parse(window.sessionStorage.getItem("user"))
             }
         },
         computed: {
             routes() {
                 return this.$store.state.routes;
+            },
+            user() {
+                return this.$store.state.currentHr;
             }
         },
         methods: {

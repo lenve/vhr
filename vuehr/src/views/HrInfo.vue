@@ -7,14 +7,13 @@
             <div>
                 <div style="display: flex;justify-content: center">
                     <el-upload
-                            :data="hr"
                             :show-file-list="false"
                             :on-success="onSuccess"
+                            :data="hr"
                             action="/hr/userface">
                         <img title="点击修改用户图像" :src="hr.userface" style="width: 100px;height: 100px;border-radius: 50px"
                              alt="">
                     </el-upload>
-
                 </div>
                 <div>电话号码：
                     <el-tag>{{hr.telephone}}</el-tag>
@@ -37,29 +36,6 @@
             </div>
         </el-card>
         <el-dialog
-                title="修改密码"
-                :visible.sync="passwdDialogVisible"
-                width="30%">
-            <div>
-                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
-                         class="demo-ruleForm">
-                    <el-form-item label="请输入旧密码" prop="oldpass">
-                        <el-input type="password" v-model="ruleForm.oldpass" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="请输入新密码" prop="pass">
-                        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="新确认密码" prop="checkPass">
-                        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-                        <el-button @click="resetForm('ruleForm')">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </el-dialog>
-        <el-dialog
                 title="修改用户信息"
                 :visible.sync="dialogVisible"
                 width="30%">
@@ -67,7 +43,7 @@
                 <table>
                     <tr>
                         <td>
-                            <el-tag>用户姓名：</el-tag>
+                            <el-tag>用户昵称：</el-tag>
                         </td>
                         <td>
                             <el-input v-model="hr2.name"></el-input>
@@ -103,6 +79,29 @@
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="updateHrInfo">确 定</el-button>
   </span>
+        </el-dialog>
+        <el-dialog
+                title="修改密码"
+                :visible.sync="passwdDialogVisible"
+                width="30%">
+            <div>
+                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
+                         class="demo-ruleForm">
+                    <el-form-item label="请输入旧密码" prop="oldpass">
+                        <el-input type="password" v-model="ruleForm.oldpass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="请输入新密码" prop="pass">
+                        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新确认密码" prop="checkPass">
+                        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -149,8 +148,8 @@
                 },
                 hr: null,
                 hr2: null,
-                passwdDialogVisible: false,
-                dialogVisible: false
+                dialogVisible: false,
+                passwdDialogVisible: false
             }
         },
         mounted() {
@@ -158,10 +157,18 @@
         },
         methods: {
             onSuccess() {
-                this.getRequest("/logout");
-                window.sessionStorage.removeItem("user")
-                this.$store.commit('initRoutes', []);
-                this.$router.replace("/");
+                this.initHr();
+            },
+            updateHrInfo() {
+                this.putRequest("/hr/info", this.hr2).then(resp => {
+                    if (resp) {
+                        this.dialogVisible = false;
+                        this.initHr();
+                    }
+                })
+            },
+            showUpdateHrInfoView() {
+                this.dialogVisible = true;
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -186,24 +193,13 @@
             showUpdatePasswdView() {
                 this.passwdDialogVisible = true;
             },
-            updateHrInfo() {
-                this.putRequest("/hr/info", this.hr2).then(resp => {
-                    if (resp) {
-                        this.getRequest("/logout");
-                        window.sessionStorage.removeItem("user")
-                        this.$store.commit('initRoutes', []);
-                        this.$router.replace("/");
-                    }
-                })
-            },
-            showUpdateHrInfoView() {
-                this.dialogVisible = true;
-            },
             initHr() {
                 this.getRequest('/hr/info').then(resp => {
                     if (resp) {
                         this.hr = resp;
                         this.hr2 = Object.assign({}, this.hr);
+                        window.sessionStorage.setItem("user", JSON.stringify(resp));
+                        this.$store.commit('INIT_CURRENTHR', resp);
                     }
                 })
             }

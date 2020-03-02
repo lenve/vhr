@@ -1,7 +1,10 @@
 package org.javaboy.vhr.config;
 
 import org.csource.common.MyException;
-import org.csource.fastdfs.*;
+import org.csource.fastdfs.ClientGlobal;
+import org.csource.fastdfs.StorageClient1;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerServer;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -13,7 +16,7 @@ import java.io.IOException;
  * @GitHub https://github.com/lenve
  * @博客 http://wangsong.blog.csdn.net
  * @网站 http://www.javaboy.org
- * @时间 2020-03-01 22:49
+ * @时间 2020-03-02 23:26
  */
 public class FastDFSUtils {
     private static StorageClient1 client1;
@@ -23,8 +26,7 @@ public class FastDFSUtils {
             ClientGlobal.initByProperties("fastdfs-client.properties");
             TrackerClient trackerClient = new TrackerClient();
             TrackerServer trackerServer = trackerClient.getConnection();
-            StorageServer storageServer = null;
-            client1 = new StorageClient1(trackerServer, storageServer);
+            client1 = new StorageClient1(trackerServer, null);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (MyException e) {
@@ -33,16 +35,15 @@ public class FastDFSUtils {
     }
 
     public static String upload(MultipartFile file) {
-        String name = file.getOriginalFilename();
-        String s = null;
+        String oldName = file.getOriginalFilename();
         try {
-            s = client1.upload_file1(file.getBytes(), name.substring(name.lastIndexOf(".") + 1), null);
+            return client1.upload_file1(file.getBytes(), oldName.substring(oldName.lastIndexOf(".") + 1), null);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (MyException e) {
             e.printStackTrace();
         }
-        return s;
+        return null;
     }
 
 }
