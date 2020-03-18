@@ -19,6 +19,8 @@ spring:
     cache-names: menus_cache
 server:
   port: 8081
+  compression:
+    enabled: true
 logging:
   level:
     org.javaboy.vhr.mapper: debug
