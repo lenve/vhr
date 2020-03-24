@@ -21,9 +21,6 @@ server:
   port: 8081
   compression:
     enabled: true
-logging:
-  level:
-    org.javaboy.vhr.mapper: debug
 fastdfs:
   nginx:
     host: http://192.168.91.128/
