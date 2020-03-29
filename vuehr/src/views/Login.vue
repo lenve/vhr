@@ -58,7 +58,7 @@
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
                         this.loading = true;
-                        this.postKeyValueRequest('/doLogin', this.loginForm).then(resp => {
+                        this.postRequest('/doLogin', this.loginForm).then(resp => {
                             this.loading = false;
                             if (resp) {
                                 this.$store.commit('INIT_CURRENTHR', resp.obj);
