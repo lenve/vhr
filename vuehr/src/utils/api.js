@@ -66,13 +66,13 @@ export const getRequest = (url, params) => {
     return axios({
         method: 'get',
         url: `${base}${url}`,
-        data: params
+        params: params
     })
 }
 export const deleteRequest = (url, params) => {
     return axios({
         method: 'delete',
         url: `${base}${url}`,
-        data: params
+        params: params
     })
 }

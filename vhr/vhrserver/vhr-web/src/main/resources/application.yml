@@ -7,11 +7,11 @@ spring:
   rabbitmq:
     username: guest
     password: guest
-    host: 192.168.91.128
+    host: 127.0.0.1
     publisher-confirms: true
     publisher-returns: true
   redis:
-    host: 192.168.91.128
+    host: 127.0.0.1
     database: 0
     port: 6379
     password: 123
@@ -19,9 +19,8 @@ spring:
     cache-names: menus_cache
 server:
   port: 8081
-logging:
-  level:
-    org.javaboy.vhr.mapper: debug
+  compression:
+    enabled: true
 fastdfs:
   nginx:
     host: http://192.168.91.128/
