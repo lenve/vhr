@@ -41,6 +41,7 @@ public class PermissController {
     }
 
     @PutMapping("/")
+    @CacheEvict(value = "menuService", allEntries = true)
     public RespBean updateMenuRole(Integer rid, Integer[] mids) {
         if (menuService.updateMenuRole(rid, mids)) {
             return RespBean.ok("更新成功!");
@@ -49,6 +50,7 @@ public class PermissController {
     }
 
     @PostMapping("/role")
+    @CacheEvict(value = "menuService", allEntries = true)
     public RespBean addRole(@RequestBody Role role) {
         if (roleService.addRole(role) == 1) {
             return RespBean.ok("添加成功!");
@@ -57,6 +59,7 @@ public class PermissController {
     }
 
     @DeleteMapping("/role/{rid}")
+    @CacheEvict(value = "menuService", allEntries = true)
     public RespBean deleteRoleById(@PathVariable Integer rid) {
         if (roleService.deleteRoleById(rid) == 1) {
             return RespBean.ok("删除成功!");
