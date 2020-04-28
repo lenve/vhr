@@ -51,16 +51,16 @@ CREATE TABLE `appraise` (
 DROP TABLE IF EXISTS `mail_send_log`;
 
 CREATE TABLE `mail_send_log` (
-  `msgId` varchar(255) DEFAULT NULL,
+  `msgId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `empId` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '0' COMMENT '0发送中，1发送成功，2发送失败',
-  `routeKey` varchar(255) DEFAULT NULL,
-  `exchange` varchar(255) DEFAULT NULL,
-  `count` int(11) DEFAULT '0' COMMENT '重试次数',
-  `tryTime` date DEFAULT NULL COMMENT '第一次重试时间',
-  `createTime` date DEFAULT NULL,
-  `updateTime` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `routeKey` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `exchange` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `count` int(11) DEFAULT NULL COMMENT '重试次数',
+  `tryTime` datetime DEFAULT NULL COMMENT '第一次重试时间',
+  `createTime` datetime DEFAULT NULL,
+  `updateTime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*Data for the table `appraise` */
 
 /*Table structure for table `department` */
