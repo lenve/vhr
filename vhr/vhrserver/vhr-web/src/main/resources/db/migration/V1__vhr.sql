@@ -56,7 +56,7 @@ CREATE TABLE `mail_send_log` (
   `status` int(11) DEFAULT '0' COMMENT '0发送中，1发送成功，2发送失败',
   `routeKey` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `exchange` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `count` int(11) DEFAULT NULL COMMENT '重试次数',
+  `count` int(11) DEFAULT 0 COMMENT '重试次数',
   `tryTime` datetime DEFAULT NULL COMMENT '第一次重试时间',
   `createTime` datetime DEFAULT NULL,
   `updateTime` datetime DEFAULT NULL
