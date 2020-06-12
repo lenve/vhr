@@ -5,10 +5,10 @@
                 <div>
                     <el-input placeholder="请输入员工名进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                               clearable
-                              @clear="initEmps"
+                              @clear="initEmps('ordinary')"
                               style="width: 350px;margin-right: 10px" v-model="keyword"
-                              @keydown.enter.native="initEmps" :disabled="showAdvanceSearchView"></el-input>
-                    <el-button icon="el-icon-search" type="primary" @click="initEmps" :disabled="showAdvanceSearchView">
+                              @keydown.enter.native="initEmps('ordinary')" :disabled="showAdvanceSearchView"></el-input>
+                    <el-button icon="el-icon-search" type="primary" @click="initEmps('ordinary')" :disabled="showAdvanceSearchView">
                         搜索
                     </el-button>
                     <el-button type="primary" @click="showAdvanceSearchView = !showAdvanceSearchView">
@@ -874,6 +874,9 @@
             },
             initEmps(type) {
                 this.loading = true;
+				if (type && type == 'ordinary'){
+					this.page = 1
+				}
                 let url = '/employee/basic/?page=' + this.page + '&size=' + this.size;
                 if (type && type == 'advanced') {
                     if (this.searchValue.politicId) {
