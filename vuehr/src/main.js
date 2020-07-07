@@ -27,6 +27,7 @@ import {
     BreadcrumbItem,
     Dropdown,
     Steps,
+    Step,
     Tooltip,
     Popover,
     Collapse,
@@ -79,6 +80,7 @@ Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
 Vue.use(Dropdown);
 Vue.use(Steps);
+Vue.use(Step);
 Vue.use(Tooltip);
 Vue.use(Tree);
 Vue.use(Pagination);
