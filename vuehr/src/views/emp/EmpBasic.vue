@@ -864,7 +864,7 @@
             },
             currentChange(currentPage) {
                 this.page = currentPage;
-                this.initEmps();
+                this.initEmps('advanced');
             },
             showAddEmpView() {
                 this.emptyEmp();

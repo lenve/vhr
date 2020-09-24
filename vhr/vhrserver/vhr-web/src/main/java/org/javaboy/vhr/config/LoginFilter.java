@@ -1,11 +1,14 @@
 package org.javaboy.vhr.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.javaboy.vhr.model.Hr;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,8 @@ import java.util.Map;
  * @Gitee https://gitee.com/lenve
  */
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
+    @Autowired
+    SessionRegistry sessionRegistry;
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (!request.getMethod().equals("POST")) {
@@ -30,7 +35,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                     "Authentication method not supported: " + request.getMethod());
         }
         String verify_code = (String) request.getSession().getAttribute("verify_code");
-        if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE) || request.getContentType().equals(MediaType.APPLICATION_JSON_UTF8_VALUE)) {
+        if (request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE) || request.getContentType().contains(MediaType.APPLICATION_JSON_UTF8_VALUE)) {
             Map<String, String> loginData = new HashMap<>();
             try {
                 loginData = new ObjectMapper().readValue(request.getInputStream(), Map.class);
@@ -51,6 +56,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                     username, password);
             setDetails(request, authRequest);
+            Hr principal = new Hr();
+            principal.setUsername(username);
+            sessionRegistry.registerNewSession(request.getSession(true).getId(), principal);
             return this.getAuthenticationManager().authenticate(authRequest);
         } else {
             checkCode(response, request.getParameter("code"), verify_code);
