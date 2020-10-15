@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Hr implements UserDetails {
     private Integer id;
@@ -31,6 +30,8 @@ public class Hr implements UserDetails {
 
     private String remark;
     private List<Role> roles;
+
+    private Set<Menu> menus;
 
     @Override
     public boolean equals(Object o) {
@@ -132,6 +133,9 @@ public class Hr implements UserDetails {
         for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
+        if (!CollectionUtils.isEmpty(menus)) {
+            authorities.addAll(menus.stream().map(t -> new SimpleGrantedAuthority(t.getUrl())).collect(Collectors.toSet()));
+        }
         return authorities;
     }
 
@@ -157,5 +161,13 @@ public class Hr implements UserDetails {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
     }
 }
