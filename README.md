@@ -248,6 +248,8 @@ npm run build
 
 ![公众号二维码](http://www.javaboy.org/images/sb/javaboy.jpg)
 
+[Java书单推荐](https://github.com/itwanger/JavaBooks)
+
 ## 参考
 
 - [vue-chat](https://github.com/microzz/vue-chat)
