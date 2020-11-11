@@ -242,6 +242,8 @@ npm run build
 
 ![公众号二维码](http://www.javaboy.org/images/sb/javaboy.jpg)  
 
+[Java书单推荐](https://github.com/itwanger/JavaBooks)
+
 # License
 
     Copyright 2018 王松
