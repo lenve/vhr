@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.javaboy.vhr.mapper.OpLogMapper" >
+  <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.OpLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="addDate" property="adddate" jdbcType="DATE" />
+    <result column="operate" property="operate" jdbcType="VARCHAR" />
+    <result column="hrid" property="hrid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, addDate, operate, hrid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oplog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oplog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.javaboy.vhr.model.OpLog" >
+    insert into oplog (id, addDate, operate, 
+      hrid)
+    values (#{id,jdbcType=INTEGER}, #{adddate,jdbcType=DATE}, #{operate,jdbcType=VARCHAR}, 
+      #{hrid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.javaboy.vhr.model.OpLog" >
+    insert into oplog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adddate != null" >
+        addDate,
+      </if>
+      <if test="operate != null" >
+        operate,
+      </if>
+      <if test="hrid != null" >
+        hrid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adddate != null" >
+        #{adddate,jdbcType=DATE},
+      </if>
+      <if test="operate != null" >
+        #{operate,jdbcType=VARCHAR},
+      </if>
+      <if test="hrid != null" >
+        #{hrid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.OpLog" >
+    update oplog
+    <set >
+      <if test="adddate != null" >
+        addDate = #{adddate,jdbcType=DATE},
+      </if>
+      <if test="operate != null" >
+        operate = #{operate,jdbcType=VARCHAR},
+      </if>
+      <if test="hrid != null" >
+        hrid = #{hrid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.OpLog" >
+    update oplog
+    set addDate = #{adddate,jdbcType=DATE},
+      operate = #{operate,jdbcType=VARCHAR},
+      hrid = #{hrid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
