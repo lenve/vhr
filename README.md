@@ -1,6 +1,6 @@
 扫码加微信（微信ID：**a_java_boy3**），备注微人事，进群讨论。
 
-![微信ID：a_java_boy3](![](http://img.itboyhub.com/2020/ajavaboy3-a.jpeg))
+![微信ID：a_java_boy3](http://img.itboyhub.com/2020/ajavaboy3-a.jpeg)
 
 ## 项目介绍
 
