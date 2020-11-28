@@ -248,6 +248,8 @@ npm run build
 
 ![公众号二维码](http://www.javaboy.org/images/sb/javaboy.jpg)
 
+[50+ 项目需求文档](https://github.com/lenve/javadoc)
+
 [Java书单推荐](https://github.com/itwanger/JavaBooks)
 
 ## 参考
