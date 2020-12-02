@@ -2,6 +2,7 @@ package org.javaboy.vhr.service;
 
 import org.javaboy.vhr.mapper.HrMapper;
 import org.javaboy.vhr.mapper.HrRoleMapper;
+import org.javaboy.vhr.mapper.MenuMapper;
 import org.javaboy.vhr.model.Hr;
 import org.javaboy.vhr.utils.HrUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -30,6 +32,9 @@ public class HrService implements UserDetailsService {
     @Autowired
     HrRoleMapper hrRoleMapper;
 
+    @Autowired
+    private MenuMapper menuMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Hr hr = hrMapper.loadUserByUsername(username);
@@ -37,6 +42,7 @@ public class HrService implements UserDetailsService {
             throw new UsernameNotFoundException("用户名不存在!");
         }
         hr.setRoles(hrMapper.getHrRolesById(hr.getId()));
+        hr.setMenus(new HashSet<>(menuMapper.getMenuByHrId(hr.getId())));
         return hr;
     }
 

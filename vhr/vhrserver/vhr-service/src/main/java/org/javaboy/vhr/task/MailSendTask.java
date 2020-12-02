@@ -22,7 +22,8 @@ public class MailSendTask {
     RabbitTemplate rabbitTemplate;
     @Autowired
     EmployeeService employeeService;
-    @Scheduled(cron = "0/10 * * * * ?")
+    // 每3分钟执行一次
+    @Scheduled(cron = "0 0/3 * * * ?")
     public void mailResendTask() {
         List<MailSendLog> logs = mailSendLogService.getMailSendLogsByStatus();
         if (logs == null || logs.size() == 0) {

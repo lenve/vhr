@@ -62,6 +62,22 @@
   <select id="getMenusByHrId" resultMap="Menus2">
     select distinct m1.*,m2.`id` as id2,m2.`component` as component2,m2.`enabled` as enabled2,m2.`iconCls` as iconCls2,m2.`keepAlive` as keepAlive2,m2.`name` as name2,m2.`parentId` as parentId2,m2.`requireAuth` as requireAuth2,m2.`path` as path2 from menu m1,menu m2,hr_role hrr,menu_role mr where m1.`id`=m2.`parentId` and hrr.`hrid`=#{hrid} and hrr.`rid`=mr.`rid` and mr.`mid`=m2.`id` and m2.`enabled`=true order by m1.`id`,m2.`id`
   </select>
+
+  <select id="getMenuByHrId" resultType="org.javaboy.vhr.model.Menu">
+    SELECT DISTINCT
+	m.*
+FROM
+	menu m,
+	hr_role hrr,
+	menu_role mr
+WHERE
+	 hrr.`hrid` = #{hrId}
+	AND hrr.`rid` = mr.`rid`
+	AND mr.`mid` = m.`id`
+	AND m.`enabled` = 1
+ORDER BY
+	m.`id`
+  </select>
   <sql id="Base_Column_List" >
     id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
   </sql>
