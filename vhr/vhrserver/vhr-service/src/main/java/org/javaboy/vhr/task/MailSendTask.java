@@ -30,7 +30,7 @@ public class MailSendTask {
         }
         logs.forEach(mailSendLog->{
             if (mailSendLog.getCount() >= 3) {
-                mailSendLogService.updateMailSendLogStatus(mailSendLog.getMsgId(), 2);//直接设置该条消息发送失败
+                mailSendLogService.updateMailSendLogStatus(mailSendLog.getMsgId(), MailConstants.FAILURE);//直接设置该条消息发送失败
             }else{
                 mailSendLogService.updateCount(mailSendLog.getMsgId(), new Date());
                 Employee emp = employeeService.getEmployeeById(mailSendLog.getEmpId());
