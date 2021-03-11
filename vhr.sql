@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.08 (32 bit)
 MySQL - 8.0.18 : Database - vhr
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -12,9 +13,6 @@ MySQL - 8.0.18 : Database - vhr
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`vhr` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `vhr`;
 
 /*Table structure for table `adjustsalary` */
 
@@ -50,7 +48,19 @@ CREATE TABLE `appraise` (
   KEY `pid` (`eid`),
   CONSTRAINT `appraise_ibfk_1` FOREIGN KEY (`eid`) REFERENCES `employee` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `mail_send_log`;
 
+CREATE TABLE `mail_send_log` (
+  `msgId` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `empId` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT '0' COMMENT '0发送中，1发送成功，2发送失败',
+  `routeKey` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `exchange` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `count` int(11) DEFAULT NULL COMMENT '重试次数',
+  `tryTime` date DEFAULT NULL COMMENT '第一次重试时间',
+  `createTime` date DEFAULT NULL,
+  `updateTime` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*Data for the table `appraise` */
 
 /*Table structure for table `department` */
@@ -473,7 +483,7 @@ begin
   else
   select count(*) into ecount from employee where departmentId=did;
   if ecount>0 then set result=-1;
-  else 
+  else
   select parentId into pid from department where id=did;
   delete from department where id=did and isParent=false;
   select row_count() into result;

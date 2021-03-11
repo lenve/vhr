@@ -423,7 +423,7 @@
                                         width="200"
                                         trigger="manual"
                                         v-model="popVisible">
-                                    <el-tree default-expand-all :data="allDeps" :props="defaultProps"
+                                    <el-tree default-expand-all :data="allDeps" :props="defaultProps" :expand-on-click-node="false"
                                              @node-click="handleNodeClick"></el-tree>
                                     <div slot="reference"
                                          style="width: 150px;display: inline-flex;font-size: 13px;border: 1px solid #dedede;height: 26px;border-radius: 5px;cursor: pointer;align-items: center;padding-left: 8px;box-sizing: border-box"
@@ -864,7 +864,7 @@
             },
             currentChange(currentPage) {
                 this.page = currentPage;
-                this.initEmps();
+                this.initEmps('advanced');
             },
             showAddEmpView() {
                 this.emptyEmp();

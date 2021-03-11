@@ -1,8 +1,6 @@
-**最新版部署视频教程：[前后端分离项目(微人事)常见部署问题汇总](https://mp.weixin.qq.com/s/dcJv6BIVFPnokI8nBf4IrQ)**
-
 vhr 在发布后，受到了很多小伙伴的关注，因此我也陆陆续续写了很多介绍的文章和相关的视频，但是一直都比较零散，这里将 vhr 相关的视频和文章列一个索引出来，供大家参考。
 
-### 1.相关视频：
+### 相关视频：
 
 1. [Spring Boot 整合 RabbitMQ，消息重复消费怎么办？](https://mp.weixin.qq.com/s/SMPyyZlRvvKM-kSMbOOQAw)
 2. [如何在微人事项目中提高RabbitMQ消息可靠性的？](https://mp.weixin.qq.com/s/aMu1qi46FbzIe0amJ4XJ7w)
@@ -18,7 +16,7 @@ vhr 在发布后，受到了很多小伙伴的关注，因此我也陆陆续续�
 12. [Spring Boot 结合 WebSocket 实现在线聊天](https://mp.weixin.qq.com/s/Rrj7oco3K8kJBsTxEEdz9g)
 13. [说出来你可能不信，Spring Boot 中 Session 共享不超过 5 行代码！](https://mp.weixin.qq.com/s/sgjm09_e8ue5blXqPgeXZA)
 
-### 2.相关文章：
+### 相关文章：
 
 1. [简化微人事部署，Flyway 搞起来](https://mp.weixin.qq.com/s/yabpyA90D1yUtWRNr330yA)
 2. [GitHub 又掉链子，我给微人事 + Spring Boot + Spring Cloud 案例找了新家](https://mp.weixin.qq.com/s/yvJXiX70iNSdd2mbSQbUCQ)
@@ -29,52 +27,3 @@ vhr 在发布后，受到了很多小伙伴的关注，因此我也陆陆续续�
 7. [喜大普奔，两个开源的 Spring Boot + Vue 前后端分离项目可以在线体验了](https://mp.weixin.qq.com/s/GvqLzCZngQiMqVE_ZTafeA)
 8. [前后端分离历险记](https://mp.weixin.qq.com/s/szgfT3tnYMCHSeiE3_QnpA)
 9. [公司倒闭 1 年了，而我当年的项目上了 GitHub 热榜](https://mp.weixin.qq.com/s/qGFo2MKkD0AObBJDPR8veQ)
-
-### 3. 部署问题
-
-#### 3.1 下载问题
-
-有两个地方可以下载到最新版的微人事，如果在 GitHub 上下载失败，也可以从 Gitee 上下载。
-
-- GitHub：[https://github.com/lenve/vhr](https://github.com/lenve/vhr)
-- Gitee：[https://gitee.com/lenve/vhr](https://gitee.com/lenve/vhr)
-
-#### 3.2 提前准备
-
-准备三样东西：
-
-- 空的 vhr 数据库
-- redis
-- rabbitmq
-
-#### 3.3 项目导入
-
-项目的 Maven 依赖下载失败，可以参考这篇文章：
-
-[依赖下载失败解决方案](https://mp.weixin.qq.com/s/6PPYwrNestz-gvmB4ZkAqQ)
-
-#### 3.4 项目配置
-
-vhrserver 的 web  模块 application.properties 中配置三样：
-
-- 数据库连接
-- redis
-- rabbitmq
-
-启动 vhr-web 模块。如果只是看效果，可以不启动 mailserver 模块（如果要启动 mailserver，一定先配置 mailserver 的 redis，rabbitmq 以及 邮件发送配置信息，邮件发送配置，可以参考这篇文章：[Spring Boot 中邮件发送](https://mp.weixin.qq.com/s/FKyQNyPDQY8O25Hk2x7rKg)）。
-
-#### 3.5 二次开发
-
-这个需要部署前端。前端在运行时，需要准备一个 nodejs。
-
-用 webstorm 打开下载的前端项目。
-
-前端项目打开后，需要在项目根目录下，执行 npm install。
-
-默认安装比较慢，可以修改为淘宝的源。[下载源修改为淘宝](https://mp.weixin.qq.com/s/HWRYAR16vLE1XFep6_i1tA)
-
-npm install  执行成功后，再执行 npm run serve 启动前端项目。
-
-二次开发完成后，执行 npm run build 前端编译打包。把打包后的文件拷贝到后端。
-
-上线部署参考这篇文章：[手把手教你部署前后端分离项目，再也不用担心跨域问题了](https://mp.weixin.qq.com/s/KWBtHi_au_1pH70OYptjfA)
