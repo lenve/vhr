@@ -8,7 +8,7 @@ spring:
     username: guest
     password: guest
     host: 127.0.0.1
-    publisher-confirms: true
+    publisher-confirm-type: correlated
     publisher-returns: true
   redis:
     host: 127.0.0.1
