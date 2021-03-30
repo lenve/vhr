@@ -1,6 +1,6 @@
-扫码加微信，备注微人事，进群讨论。
+扫码加微信（微信ID：**a_java_boy3**），备注微人事，进群讨论。
 
-![](http://www.javaboy.org/images/weixin.png)
+![微信ID：a_java_boy3](http://img.itboyhub.com/2020/ajavaboy3-a.jpeg)
 
 ## 项目介绍
 
@@ -9,7 +9,8 @@
 
 - 项目地址：[https://github.com/lenve/vhr](https://github.com/lenve/vhr) 
 - [项目部署视频教程（旧版）](https://mp.weixin.qq.com/s/qN01Le434FWom0c3jqiQmA)
-- [项目部署视频教程（新版）](https://mp.weixin.qq.com/s/FoNVyAR1BkYfutFq9sjJNQ)
+- [项目部署视频教程（新版）](https://mp.weixin.qq.com/s/dcJv6BIVFPnokI8nBf4IrQ)
+- [项目其他相关资料](./README_zh.md)
 
 ### 项目技术栈
 
@@ -57,7 +58,7 @@
 ## 快速部署
 
 1. clone 项目到本地 `git@github.com:lenve/vhr.git`
-2. 数据库脚本放在项目根目录下，在 MySQL 中执行数据库脚本，导入数据库，并修改项目中关于数据的配置（resources 目录下的 application.properties 文件中）
+2. 数据库脚本使用 Flyway 管理，**不需要手动导入数据库脚本**，只需要提前在本地 MySQL 中创建一个空的数据库 vhr，并修改项目中关于数据的配置（resources 目录下的 application.properties 文件中）即可
 3. 提前准备好 Redis，在 项目的 application.properties 文件中，将 Redis 配置改为自己的
 4. 提前准备好 RabbitMQ，在项目的 application.properties 文件中将 RabbitMQ 的配置改为自己的（**注意，RabbitMQ 需要分别修改 mailserver 和 vhrserver 的配置文件**）
 5. 在 IntelliJ IDEA 中打开 vhr 项目，启动 mailserver 模块
@@ -246,6 +247,10 @@ npm run build
 关注公众号**江南一点雨**，专注于 Spring Boot+微服务，定期视频教程分享，关注后回复 2TB ，领取松哥为你精心准备的超 2TB 免费 Java 学习资源。
 
 ![公众号二维码](http://www.javaboy.org/images/sb/javaboy.jpg)
+
+[50+ 项目需求文档](https://github.com/lenve/javadoc)
+
+[Java书单推荐](https://github.com/itwanger/JavaBooks)
 
 ## 参考
 

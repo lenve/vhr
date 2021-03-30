@@ -167,7 +167,8 @@
                     medicalPer: 0,
                     medicalBase: 0,
                     accumulationFundPer: 0,
-                    accumulationFundBase: 0
+                    accumulationFundBase: 0,
+                    name: '默认名称'
                 }
                 this.dialogTitle = '添加工资账套';
                 this.activeItemIndex = 0;

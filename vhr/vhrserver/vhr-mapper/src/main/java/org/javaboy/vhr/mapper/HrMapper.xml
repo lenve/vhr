@@ -161,6 +161,12 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <update id="updateUserface">
+        update hr set userface = #{url} where id=#{id};
+    </update>
+    <update id="updatePasswd">
+        update hr set password = #{encodePass} where id=#{hrid};
+    </update>
     <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.Hr">
     update hr
     set name = #{name,jdbcType=VARCHAR},
