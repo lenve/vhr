@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.javaboy.vhr.mapper.HrRoleMapper" >
+  <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.HrRole" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hrid" property="hrid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hrid, rid
+  </sql>
+  <delete id="deleteByHrid">
+    delete from hr_role where hrid=#{hrid}
+  </delete>
+  <insert id="addRole">
+    insert into hr_role (hrid,rid) values
+    <foreach collection="rids" item="rid" separator=",">
+      (#{hrid},#{rid})
+    </foreach>
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hr_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hr_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.javaboy.vhr.model.HrRole" >
+    insert into hr_role (id, hrid, rid
+      )
+    values (#{id,jdbcType=INTEGER}, #{hrid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.javaboy.vhr.model.HrRole" >
+    insert into hr_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hrid != null" >
+        hrid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hrid != null" >
+        #{hrid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.HrRole" >
+    update hr_role
+    <set >
+      <if test="hrid != null" >
+        hrid = #{hrid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.HrRole" >
+    update hr_role
+    set hrid = #{hrid,jdbcType=INTEGER},
+      rid = #{rid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

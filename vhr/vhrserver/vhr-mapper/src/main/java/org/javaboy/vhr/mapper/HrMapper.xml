@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.javaboy.vhr.mapper.HrMapper">
+    <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.Hr">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="CHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="userface" property="userface" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="HrWithRoles" type="org.javaboy.vhr.model.Hr" extends="BaseResultMap">
+        <collection property="roles" ofType="org.javaboy.vhr.model.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, phone, telephone, address, enabled, username, password, userface, remark
+  </sql>
+    <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
+        select * from hr where id !=#{id};
+    </select>
+    <select id="getAllHrs" resultMap="HrWithRoles">
+        select hr.id, hr.name, hr.phone, hr.telephone, hr.address, hr.enabled, hr.username, hr.userface,
+        hr.remark,r.`id` as rid,r.`name` as rname,r.`nameZh` as rnameZh from hr left join hr_role hrr on
+        hr.`id`=hrr.`hrid` left join role r on hrr.`rid`=r.`id` where hr.`id`!=#{hrid}
+        <if test="keywords!=null">
+            and hr.name like concat('%',#{keywords},'%')
+        </if>
+        order by hr.id
+    </select>
+    <select id="getHrRolesById" resultType="org.javaboy.vhr.model.Role">
+    select r.* from role r,hr_role hrr where hrr.`rid`=r.`id` and hrr.`hrid`=#{id}
+  </select>
+    <select id="loadUserByUsername" resultMap="BaseResultMap">
+    select * from hr where username=#{username}
+  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from hr
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hr
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="org.javaboy.vhr.model.Hr">
+    insert into hr (id, name, phone, 
+      telephone, address, enabled, 
+      username, password, userface, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="org.javaboy.vhr.model.Hr">
+        insert into hr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="userface != null">
+                userface,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=CHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BIT},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userface != null">
+                #{userface,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.Hr">
+        update hr
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=CHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userface != null">
+                userface = #{userface,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateUserface">
+        update hr set userface = #{url} where id=#{id};
+    </update>
+    <update id="updatePasswd">
+        update hr set password = #{encodePass} where id=#{hrid};
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.Hr">
+    update hr
+    set name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=CHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      userface = #{userface,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

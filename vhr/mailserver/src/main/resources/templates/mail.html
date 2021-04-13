@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入职欢迎邮件</title>
+</head>
+<body>
+<!--
+ @作者 江南一点雨
+ @公众号 江南一点雨
+ @微信号 a_java_boy
+ @GitHub https://github.com/lenve
+ @博客 http://wangsong.blog.csdn.net
+ @网站 http://www.javaboy.org 
+ @时间 2019-11-24 7:48
+-->
+欢迎 <span th:text="${name}"></span> 加入 Java达摩院 大家庭，您的入职信息如下：
+<table border="1">
+    <tr>
+        <td>姓名</td>
+        <td th:text="${name}"></td>
+    </tr>
+    <tr>
+        <td>职位</td>
+        <td th:text="${posName}"></td>
+    </tr>
+    <tr>
+        <td>职称</td>
+        <td th:text="${joblevelName}"></td>
+    </tr>
+    <tr>
+        <td>部门</td>
+        <td th:text="${departmentName}"></td>
+    </tr>
+</table>
+
+<p>希望在未来的日子里，携手共进！</p>
+</body>
+</html>

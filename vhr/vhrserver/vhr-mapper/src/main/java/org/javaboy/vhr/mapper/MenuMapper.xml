@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.javaboy.vhr.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="component" property="component" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="iconCls" property="iconCls" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentId" jdbcType="INTEGER" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+    <association property="meta" javaType="org.javaboy.vhr.model.Meta">
+      <result column="keepAlive" property="keepAlive" jdbcType="BIT" />
+      <result column="requireAuth" property="requireAuth" jdbcType="BIT" />
+    </association>
+  </resultMap>
+  <resultMap id="Menus2" type="org.javaboy.vhr.model.Menu" extends="BaseResultMap">
+    <collection property="children" ofType="org.javaboy.vhr.model.Menu">
+      <id column="id2" property="id" jdbcType="INTEGER" />
+      <result column="url2" property="url" jdbcType="VARCHAR" />
+      <result column="path2" property="path" jdbcType="VARCHAR" />
+      <result column="component2" property="component" jdbcType="VARCHAR" />
+      <result column="name2" property="name" jdbcType="VARCHAR" />
+      <result column="iconCls2" property="iconCls" jdbcType="VARCHAR" />
+      <result column="parentId2" property="parentId" jdbcType="INTEGER" />
+      <result column="enabled2" property="enabled" jdbcType="BIT" />
+      <association property="meta" javaType="org.javaboy.vhr.model.Meta">
+        <result column="keepAlive2" property="keepAlive" jdbcType="BIT" />
+        <result column="requireAuth2" property="requireAuth" jdbcType="BIT" />
+      </association>
+    </collection>
+  </resultMap>
+  <resultMap id="MenuWithRole" type="org.javaboy.vhr.model.Menu" extends="BaseResultMap">
+    <collection property="roles" ofType="org.javaboy.vhr.model.Role">
+      <id column="rid" property="id"/>
+      <result column="rname" property="name"/>
+      <result column="rnameZh" property="nameZh"/>
+    </collection>
+  </resultMap>
+  <resultMap id="MenuWithChildren" type="org.javaboy.vhr.model.Menu" extends="BaseResultMap">
+    <id column="id1" property="id"/>
+    <result column="name1" property="name"/>
+    <collection property="children" ofType="org.javaboy.vhr.model.Menu">
+      <id column="id2" property="id"/>
+      <result column="name2" property="name"/>
+      <collection property="children" ofType="org.javaboy.vhr.model.Menu">
+        <id column="id3" property="id"/>
+        <result column="name3" property="name"/>
+      </collection>
+    </collection>
+  </resultMap>
+  <select id="getMidsByRid" resultType="java.lang.Integer">
+    select mid from menu_role where rid=#{rid};
+  </select>
+  <select id="getAllMenus" resultMap="MenuWithChildren">
+    select m1.`id` as id1,m1.`name` as name1,m2.`id` as id2,m2.`name` as name2,m3.`id` as id3,m3.`name` as name3 from menu m1,menu m2,menu m3 where m1.`id`=m2.`parentId` and m2.`id`=m3.`parentId` and m3.`enabled`=true order by m1.`id`,m2.`id`,m3.`id`
+  </select>
+  <select id="getAllMenusWithRole" resultMap="MenuWithRole">
+    select m.*,r.`id` as rid,r.`name` as rname,r.`nameZh` as rnameZh from menu m,menu_role mr,role r where m.`id`=mr.`mid` and mr.`rid`=r.`id` order by m.`id`
+  </select>
+  <select id="getMenusByHrId" resultMap="Menus2">
+    select distinct m1.*,m2.`id` as id2,m2.`component` as component2,m2.`enabled` as enabled2,m2.`iconCls` as iconCls2,m2.`keepAlive` as keepAlive2,m2.`name` as name2,m2.`parentId` as parentId2,m2.`requireAuth` as requireAuth2,m2.`path` as path2 from menu m1,menu m2,hr_role hrr,menu_role mr where m1.`id`=m2.`parentId` and hrr.`hrid`=#{hrid} and hrr.`rid`=mr.`rid` and mr.`mid`=m2.`id` and m2.`enabled`=true order by m1.`id`,m2.`id`
+  </select>
+  <sql id="Base_Column_List" >
+    id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.javaboy.vhr.model.Menu" >
+    insert into menu (id, url, path, 
+      component, name, iconCls, 
+      keepAlive, requireAuth, parentId, 
+      enabled)
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{component,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{iconcls,jdbcType=VARCHAR}, 
+      #{keepalive,jdbcType=BIT}, #{requireauth,jdbcType=BIT}, #{parentid,jdbcType=INTEGER}, 
+      #{enabled,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.javaboy.vhr.model.Menu" >
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="component != null" >
+        component,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="iconcls != null" >
+        iconCls,
+      </if>
+      <if test="keepalive != null" >
+        keepAlive,
+      </if>
+      <if test="requireauth != null" >
+        requireAuth,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null" >
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconcls != null" >
+        #{iconcls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepalive != null" >
+        #{keepalive,jdbcType=BIT},
+      </if>
+      <if test="requireauth != null" >
+        #{requireauth,jdbcType=BIT},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.Menu" >
+    update menu
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null" >
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconcls != null" >
+        iconCls = #{iconcls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepalive != null" >
+        keepAlive = #{keepalive,jdbcType=BIT},
+      </if>
+      <if test="requireauth != null" >
+        requireAuth = #{requireauth,jdbcType=BIT},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.Menu" >
+    update menu
+    set url = #{url,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      iconCls = #{iconcls,jdbcType=VARCHAR},
+      keepAlive = #{keepalive,jdbcType=BIT},
+      requireAuth = #{requireauth,jdbcType=BIT},
+      parentId = #{parentid,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
