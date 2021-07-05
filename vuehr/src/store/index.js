@@ -1,86 +1,99 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import '../lib/sockjs'
-import '../lib/stomp'
+import { Notification } from 'element-ui';
+import {getRequest} from "../utils/api";
+import '../utils/stomp'
+import '../utils/sockjs'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    user: {
-      name: window.localStorage.getItem('user' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).name,
-      userface: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userface,
-      username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username,
-      roles: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).roles
-    },
-    routes: [],
-    msgList: [],
-    isDotMap: new Map(),
-    currentFriend: {},
-    stomp: null,
-    nfDot: false
-  },
-  mutations: {
-    initMenu(state, menus){
-      state.routes = menus;
-    },
-    login(state, user){
-      state.user = user;
-      window.localStorage.setItem('user', JSON.stringify(user));
-    },
-    logout(state){
-      window.localStorage.removeItem('user');
-      state.routes = [];
-    },
-    toggleNFDot(state, newValue){
-      state.nfDot = newValue;
-    },
-    updateMsgList(state, newMsgList){
-      state.msgList = newMsgList;
-    },
-    updateCurrentFriend(state, newFriend){
-      state.currentFriend = newFriend;
-    },
-    addValue2DotMap(state, key){
-      state.isDotMap.set(key, "您有未读消息")
-    },
-    removeValueDotMap(state, key){
-      state.isDotMap.delete(key);
-    }
-  },
-  actions: {
-    connect(context){
-      context.state.stomp = Stomp.over(new SockJS("/ws/endpointChat"));
-      context.state.stomp.connect({}, frame=> {
-        context.state.stomp.subscribe("/user/queue/chat", message=> {
-          var msg = JSON.parse(message.body);
-          var oldMsg = window.localStorage.getItem(context.state.user.username + "#" + msg.from);
-          if (oldMsg == null) {
-            oldMsg = [];
-            oldMsg.push(msg);
-            window.localStorage.setItem(context.state.user.username + "#" + msg.from, JSON.stringify(oldMsg))
-          } else {
-            var oldMsgJson = JSON.parse(oldMsg);
-            oldMsgJson.push(msg);
-            window.localStorage.setItem(context.state.user.username + "#" + msg.from, JSON.stringify(oldMsgJson))
-          }
-          if (msg.from != context.state.currentFriend.username) {
-            context.commit("addValue2DotMap", "isDot#" + context.state.user.username + "#" + msg.from);
-          }
-          //更新msgList
-          var oldMsg2 = window.localStorage.getItem(context.state.user.username + "#" + context.state.currentFriend.username);
-          if (oldMsg2 == null) {
-            context.commit('updateMsgList', []);
-          } else {
-            context.commit('updateMsgList', JSON.parse(oldMsg2));
-          }
-        });
-        context.state.stomp.subscribe("/topic/nf", message=> {
-          context.commit('toggleNFDot', true);
-        });
-      }, failedMsg=> {
+const now = new Date();
 
-      });
+const store = new Vuex.Store({
+    state: {
+        routes: [],
+        sessions: {},
+        hrs: [],
+        currentSession: null,
+        currentHr: JSON.parse(window.sessionStorage.getItem("user")),
+        filterKey: '',
+        stomp: null,
+        isDot: {}
+    },
+    mutations: {
+        INIT_CURRENTHR(state, hr) {
+            state.currentHr = hr;
+        },
+        initRoutes(state, data) {
+            state.routes = data;
+        },
+        changeCurrentSession(state, currentSession) {
+            Vue.set(state.isDot, state.currentHr.username + '#' + currentSession.username, false);
+            state.currentSession = currentSession;
+        },
+        addMessage(state, msg) {
+            let mss = state.sessions[state.currentHr.username + '#' + msg.to];
+            if (!mss) {
+                // state.sessions[state.currentHr.username+'#'+msg.to] = [];
+                Vue.set(state.sessions, state.currentHr.username + '#' + msg.to, []);
+            }
+            state.sessions[state.currentHr.username + '#' + msg.to].push({
+                content: msg.content,
+                date: new Date(),
+                self: !msg.notSelf
+            })
+        },
+        INIT_DATA(state) {
+            //浏览器本地的历史聊天记录可以在这里完成
+            let data = localStorage.getItem('vue-chat-session');
+            if (data) {
+                state.sessions = JSON.parse(data);
+            }
+        },
+        INIT_HR(state, data) {
+            state.hrs = data;
+        }
+    },
+    actions: {
+        connect(context) {
+            context.state.stomp = Stomp.over(new SockJS('/ws/ep'));
+            context.state.stomp.connect({}, success => {
+                context.state.stomp.subscribe('/user/queue/chat', msg => {
+                    let receiveMsg = JSON.parse(msg.body);
+                    if (!context.state.currentSession || receiveMsg.from != context.state.currentSession.username) {
+                        Notification.info({
+                            title: '【' + receiveMsg.fromNickname + '】发来一条消息',
+                            message: receiveMsg.content.length > 10 ? receiveMsg.content.substr(0, 10) : receiveMsg.content,
+                            position: 'bottom-right'
+                        })
+                        Vue.set(context.state.isDot, context.state.currentHr.username + '#' + receiveMsg.from, true);
+                    }
+                    receiveMsg.notSelf = true;
+                    receiveMsg.to = receiveMsg.from;
+                    context.commit('addMessage', receiveMsg);
+                })
+            }, error => {
+
+            })
+        },
+        initData(context) {
+            context.commit('INIT_DATA')
+            getRequest("/chat/hrs").then(resp => {
+                if (resp) {
+                    context.commit('INIT_HR', resp);
+                }
+            })
+        }
     }
-  }
-});
+})
+
+store.watch(function (state) {
+    return state.sessions
+}, function (val) {
+    localStorage.setItem('vue-chat-session', JSON.stringify(val));
+}, {
+    deep: true/*这个貌似是开启watch监测的判断,官方说明也比较模糊*/
+})
+
+
+export default store;

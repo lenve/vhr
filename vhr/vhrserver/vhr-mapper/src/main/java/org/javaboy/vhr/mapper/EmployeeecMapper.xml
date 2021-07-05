@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.javaboy.vhr.mapper.EmployeeecMapper" >
+  <resultMap id="BaseResultMap" type="org.javaboy.vhr.model.Employeeec" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="eid" property="eid" jdbcType="INTEGER" />
+    <result column="ecDate" property="ecdate" jdbcType="DATE" />
+    <result column="ecReason" property="ecreason" jdbcType="VARCHAR" />
+    <result column="ecPoint" property="ecpoint" jdbcType="INTEGER" />
+    <result column="ecType" property="ectype" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, eid, ecDate, ecReason, ecPoint, ecType, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from employeeec
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employeeec
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.javaboy.vhr.model.Employeeec" >
+    insert into employeeec (id, eid, ecDate, 
+      ecReason, ecPoint, ecType, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{ecdate,jdbcType=DATE}, 
+      #{ecreason,jdbcType=VARCHAR}, #{ecpoint,jdbcType=INTEGER}, #{ectype,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.javaboy.vhr.model.Employeeec" >
+    insert into employeeec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="ecdate != null" >
+        ecDate,
+      </if>
+      <if test="ecreason != null" >
+        ecReason,
+      </if>
+      <if test="ecpoint != null" >
+        ecPoint,
+      </if>
+      <if test="ectype != null" >
+        ecType,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ecdate != null" >
+        #{ecdate,jdbcType=DATE},
+      </if>
+      <if test="ecreason != null" >
+        #{ecreason,jdbcType=VARCHAR},
+      </if>
+      <if test="ecpoint != null" >
+        #{ecpoint,jdbcType=INTEGER},
+      </if>
+      <if test="ectype != null" >
+        #{ectype,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javaboy.vhr.model.Employeeec" >
+    update employeeec
+    <set >
+      <if test="eid != null" >
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ecdate != null" >
+        ecDate = #{ecdate,jdbcType=DATE},
+      </if>
+      <if test="ecreason != null" >
+        ecReason = #{ecreason,jdbcType=VARCHAR},
+      </if>
+      <if test="ecpoint != null" >
+        ecPoint = #{ecpoint,jdbcType=INTEGER},
+      </if>
+      <if test="ectype != null" >
+        ecType = #{ectype,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javaboy.vhr.model.Employeeec" >
+    update employeeec
+    set eid = #{eid,jdbcType=INTEGER},
+      ecDate = #{ecdate,jdbcType=DATE},
+      ecReason = #{ecreason,jdbcType=VARCHAR},
+      ecPoint = #{ecpoint,jdbcType=INTEGER},
+      ecType = #{ectype,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
