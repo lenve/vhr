@@ -1,11 +1,14 @@
 package org.javaboy.vhr.controller.system.basic;
 
+import org.apache.catalina.filters.ExpiresFilter;
 import org.javaboy.vhr.model.Department;
 import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -22,6 +25,8 @@ import java.util.List;
 public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
+
+    HttpServletResponse httpServletResponse;
     @GetMapping("/")
     public List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
@@ -41,12 +46,15 @@ public class DepartmentController {
         dep.setId(id);
         departmentService.deleteDepById(dep);
         if (dep.getResult() == -2) {
+            httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
             return RespBean.error("该部门下有子部门，删除失败");
         } else if (dep.getResult() == -1) {
+            httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
             return RespBean.error("该部门下有员工，删除失败");
         } else if (dep.getResult() == 1) {
             return RespBean.ok("删除成功");
         }
+        httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
         return RespBean.error("删除失败");
     }
 }
