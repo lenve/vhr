@@ -4,16 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.javaboy.vhr.mapper.MailSendLogMapper">
     <update id="updateMailSendLogStatus">
-        update mail_send_log set status = #{status} where msgId=#{msgId};
+        update mail_send_log set status = #{status} where msg_id = #{msgId};
     </update>
     <insert id="insert" parameterType="org.javaboy.vhr.model.MailSendLog">
-        insert into mail_send_log (msgId,empId,routeKey,exchange,tryTime,createTime) values (#{msgId},#{empId},#{routeKey},#{exchange},#{tryTime},#{createTime});
+        insert into mail_send_log (msg_id,emp_id,route_key,exchange,try_time,create_time) values (#{msgId},#{empId},#{routeKey},#{exchange},#{tryTime},#{createTime});
     </insert>
 
-    <select id="getMailSendLogsByStatus" resultType="org.javaboy.vhr.model.MailSendLog">
-        select * from mail_send_log where status=0 and tryTime &lt; sysdate()
-    </select>
+    <select id="getMailSendLogsByStatus" resultType="org.javaboy.vhr.model.MailSendLog"><![CDATA[
+        select * from mail_send_log where status=0 and try_time < now()
+    ]]></select>
     <update id="updateCount">
-        update mail_send_log set count=count+1,updateTime=#{date} where msgId=#{msgId};
+        update mail_send_log set count=count+1,updateTime= #{date} where msg_id = #{msgId};
     </update>
 </mapper>

@@ -35,11 +35,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                     "Authentication method not supported: " + request.getMethod());
         }
         String verify_code = (String) request.getSession().getAttribute("verify_code");
-        if (request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE) || request.getContentType().contains(MediaType.APPLICATION_JSON_UTF8_VALUE)) {
+        if (request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
             Map<String, String> loginData = new HashMap<>();
             try {
                 loginData = new ObjectMapper().readValue(request.getInputStream(), Map.class);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }finally {
                 String code = loginData.get("code");
                 checkCode(response, code, verify_code);
@@ -66,7 +66,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
-    public void checkCode(HttpServletResponse resp, String code, String verify_code) {
+    private void checkCode(HttpServletResponse resp, String code, String verify_code) {
         if (code == null || verify_code == null || "".equals(code) || !verify_code.toLowerCase().equals(code.toLowerCase())) {
             //验证码不正确
             throw new AuthenticationServiceException("验证码不正确");

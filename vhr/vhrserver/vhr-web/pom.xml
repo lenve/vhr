@@ -7,7 +7,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.javaboy</groupId>
     <artifactId>vhr-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>vhr-web</name>
@@ -27,6 +26,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
