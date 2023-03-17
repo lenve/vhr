@@ -1,4 +1,4 @@
-vhr 是一个脚手架，如需业务完整的项目，请移步这里->[TienChin](https://github.com/lenve/tienchin)
+#### vhr 是一个脚手架，如需业务完整的项目，请移步这里->[TienChin](https://github.com/lenve/tienchin)
 
 扫码加微信（微信ID：**a_java_boy3**），备注微人事，进群讨论。
 
