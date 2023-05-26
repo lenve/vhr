@@ -3,6 +3,7 @@ package org.javaboy.vhr.model;
 import java.util.Date;
 
 public class MsgContent {
+
     private Integer id;
 
     private String title;

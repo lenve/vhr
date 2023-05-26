@@ -1,10 +1,10 @@
 package org.javaboy.vhr.mapper;
 
 import org.javaboy.vhr.model.Role;
-
 import java.util.List;
 
 public interface RoleMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Role record);

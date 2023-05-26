@@ -3,6 +3,7 @@ package org.javaboy.vhr.mapper;
 import org.javaboy.vhr.model.SysMsg;
 
 public interface SysMsgMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(SysMsg record);

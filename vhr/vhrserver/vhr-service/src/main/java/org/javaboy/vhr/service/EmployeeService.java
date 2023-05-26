@@ -11,7 +11,6 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,15 +28,22 @@ import java.util.UUID;
  */
 @Service
 public class EmployeeService {
+
     @Autowired
     EmployeeMapper employeeMapper;
+
     @Autowired
     RabbitTemplate rabbitTemplate;
+
     @Autowired
     MailSendLogService mailSendLogService;
+
     public final static Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+
     DecimalFormat decimalFormat = new DecimalFormat("##.00");
 
     public RespPageBean getEmployeeByPage(Integer page, Integer size, Employee employee, Date[] beginDateScope) {

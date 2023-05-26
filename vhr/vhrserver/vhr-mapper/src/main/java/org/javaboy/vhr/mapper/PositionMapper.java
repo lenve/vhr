@@ -2,10 +2,10 @@ package org.javaboy.vhr.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.Position;
-
 import java.util.List;
 
 public interface PositionMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Position record);

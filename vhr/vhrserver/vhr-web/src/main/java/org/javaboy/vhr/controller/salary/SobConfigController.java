@@ -8,14 +8,15 @@ import org.javaboy.vhr.service.EmployeeService;
 import org.javaboy.vhr.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/salary/sobcfg")
 public class SobConfigController {
+
     @Autowired
     EmployeeService employeeService;
+
     @Autowired
     SalaryService salaryService;
 

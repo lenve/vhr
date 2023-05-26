@@ -3,10 +3,10 @@ package org.javaboy.vhr.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.Hr;
 import org.javaboy.vhr.model.Role;
-
 import java.util.List;
 
 public interface HrMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Hr record);

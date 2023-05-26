@@ -3,6 +3,7 @@ package org.javaboy.vhr.model;
 import java.util.Date;
 
 public class OpLog {
+
     private Integer id;
 
     private Date adddate;

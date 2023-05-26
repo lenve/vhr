@@ -9,5 +9,4 @@ class MailserverApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

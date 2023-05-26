@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 public class Hr implements UserDetails {
+
     private Integer id;
 
     private String name;
@@ -30,12 +30,15 @@ public class Hr implements UserDetails {
     private String userface;
 
     private String remark;
+
     private List<Role> roles;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Hr hr = (Hr) o;
         return Objects.equals(username, hr.username);
     }

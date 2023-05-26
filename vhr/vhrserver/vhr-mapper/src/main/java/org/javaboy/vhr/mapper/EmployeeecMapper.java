@@ -3,6 +3,7 @@ package org.javaboy.vhr.mapper;
 import org.javaboy.vhr.model.Employeeec;
 
 public interface EmployeeecMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Employeeec record);

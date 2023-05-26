@@ -1,6 +1,7 @@
 package org.javaboy.vhr.model;
 
 public class SysMsg {
+
     private Integer id;
 
     private Integer mid;

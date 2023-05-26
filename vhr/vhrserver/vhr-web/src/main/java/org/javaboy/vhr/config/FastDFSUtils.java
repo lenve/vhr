@@ -6,7 +6,6 @@ import org.csource.fastdfs.StorageClient1;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 
 /**
@@ -19,6 +18,7 @@ import java.io.IOException;
  * @时间 2020-03-02 23:26
  */
 public class FastDFSUtils {
+
     private static StorageClient1 client1;
 
     static {
@@ -45,5 +45,4 @@ public class FastDFSUtils {
         }
         return null;
     }
-
 }

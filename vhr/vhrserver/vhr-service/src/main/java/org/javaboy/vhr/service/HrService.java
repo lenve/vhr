@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
@@ -25,8 +24,10 @@ import java.util.List;
  */
 @Service
 public class HrService implements UserDetailsService {
+
     @Autowired
     HrMapper hrMapper;
+
     @Autowired
     HrRoleMapper hrRoleMapper;
 
@@ -41,7 +42,7 @@ public class HrService implements UserDetailsService {
     }
 
     public List<Hr> getAllHrs(String keywords) {
-        return hrMapper.getAllHrs(HrUtils.getCurrentHr().getId(),keywords);
+        return hrMapper.getAllHrs(HrUtils.getCurrentHr().getId(), keywords);
     }
 
     public Integer updateHr(Hr hr) {

@@ -6,7 +6,6 @@ import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.service.JobLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -21,8 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/basic/joblevel")
 public class JobLevelController {
+
     @Autowired
     JobLevelService jobLevelService;
+
     @GetMapping("/")
     public List<JobLevel> getAllJobLevels() {
         return jobLevelService.getAllJobLevels();

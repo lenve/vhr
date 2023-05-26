@@ -8,7 +8,6 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-
 import java.util.Collection;
 
 /**
@@ -22,6 +21,7 @@ import java.util.Collection;
  */
 @Component
 public class CustomUrlDecisionManager implements AccessDecisionManager {
+
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         for (ConfigAttribute configAttribute : configAttributes) {
@@ -29,7 +29,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
             if ("ROLE_LOGIN".equals(needRole)) {
                 if (authentication instanceof AnonymousAuthenticationToken) {
                     throw new AccessDeniedException("尚未登录，请登录!");
-                }else {
+                } else {
                     return;
                 }
             }

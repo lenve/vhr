@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -202,7 +201,6 @@ public class POIUtils {
             cell25.setCellStyle(dateCellStyle);
             cell25.setCellValue(emp.getConversionTime());
         }
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         HttpHeaders headers = new HttpHeaders();
         try {
@@ -242,22 +240,24 @@ public class POIUtils {
                 for (int j = 0; j < physicalNumberOfRows; j++) {
                     //5. 跳过标题行
                     if (j == 0) {
-                        continue;//跳过标题行
+                        //跳过标题行
+                        continue;
                     }
                     //6. 获取行
                     HSSFRow row = sheet.getRow(j);
                     if (row == null) {
-                        continue;//防止数据中间有空行
+                        //防止数据中间有空行
+                        continue;
                     }
                     //7. 获取列数
                     int physicalNumberOfCells = row.getPhysicalNumberOfCells();
                     employee = new Employee();
                     for (int k = 0; k < physicalNumberOfCells; k++) {
                         HSSFCell cell = row.getCell(k);
-                        switch (cell.getCellType()) {
+                        switch(cell.getCellType()) {
                             case STRING:
                                 String cellValue = cell.getStringCellValue();
-                                switch (k) {
+                                switch(k) {
                                     case 1:
                                         employee.setName(cellValue);
                                         break;
@@ -322,35 +322,35 @@ public class POIUtils {
                                         break;
                                 }
                                 break;
-                            default: {
-                                switch (k) {
-                                    case 4:
-                                        employee.setBirthday(cell.getDateCellValue());
-                                        break;
-                                    case 19:
-                                        employee.setBeginDate(cell.getDateCellValue());
-                                        break;
-                                    case 23:
-                                        employee.setBeginContract(cell.getDateCellValue());
-                                        break;
-                                    case 24:
-                                        employee.setEndContract(cell.getDateCellValue());
-                                        break;
-                                    case 22:
-                                        employee.setContractTerm(cell.getNumericCellValue());
-                                        break;
-                                    case 25:
-                                        employee.setConversionTime(cell.getDateCellValue());
-                                        break;
+                            default:
+                                {
+                                    switch(k) {
+                                        case 4:
+                                            employee.setBirthday(cell.getDateCellValue());
+                                            break;
+                                        case 19:
+                                            employee.setBeginDate(cell.getDateCellValue());
+                                            break;
+                                        case 23:
+                                            employee.setBeginContract(cell.getDateCellValue());
+                                            break;
+                                        case 24:
+                                            employee.setEndContract(cell.getDateCellValue());
+                                            break;
+                                        case 22:
+                                            employee.setContractTerm(cell.getNumericCellValue());
+                                            break;
+                                        case 25:
+                                            employee.setConversionTime(cell.getDateCellValue());
+                                            break;
+                                    }
                                 }
-                            }
-                            break;
+                                break;
                         }
                     }
                     list.add(employee);
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
