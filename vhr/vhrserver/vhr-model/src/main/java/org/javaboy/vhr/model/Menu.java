@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Menu implements Serializable {
+
     private Integer id;
 
     private String url;
@@ -21,7 +22,9 @@ public class Menu implements Serializable {
     private Integer parentId;
 
     private Boolean enabled;
+
     private List<Menu> children;
+
     private List<Role> roles;
 
     public List<Role> getRoles() {

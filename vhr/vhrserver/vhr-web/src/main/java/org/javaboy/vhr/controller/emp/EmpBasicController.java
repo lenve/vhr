@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -24,22 +23,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/employee/basic")
 public class EmpBasicController {
+
     @Autowired
     EmployeeService employeeService;
+
     @Autowired
     NationService nationService;
+
     @Autowired
     PoliticsstatusService politicsstatusService;
+
     @Autowired
     JobLevelService jobLevelService;
+
     @Autowired
     PositionService positionService;
+
     @Autowired
     DepartmentService departmentService;
 
     @GetMapping("/")
     public RespPageBean getEmployeeByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Employee employee, Date[] beginDateScope) {
-        return employeeService.getEmployeeByPage(page, size, employee,beginDateScope);
+        return employeeService.getEmployeeByPage(page, size, employee, beginDateScope);
     }
 
     @PostMapping("/")
@@ -88,8 +93,7 @@ public class EmpBasicController {
 
     @GetMapping("/maxWorkID")
     public RespBean maxWorkID() {
-        RespBean respBean = RespBean.build().setStatus(200)
-                .setObj(String.format("%08d", employeeService.maxWorkID() + 1));
+        RespBean respBean = RespBean.build().setStatus(200).setObj(String.format("%08d", employeeService.maxWorkID() + 1));
         return respBean;
     }
 
@@ -100,7 +104,7 @@ public class EmpBasicController {
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportData() {
-        List<Employee> list = (List<Employee>) employeeService.getEmployeeByPage(null, null, new Employee(),null).getData();
+        List<Employee> list = (List<Employee>) employeeService.getEmployeeByPage(null, null, new Employee(), null).getData();
         return POIUtils.employee2Excel(list);
     }
 

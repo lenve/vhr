@@ -1,6 +1,7 @@
 package org.javaboy.vhr.model;
 
 public class EmpSalary {
+
     private Integer id;
 
     private Integer eid;

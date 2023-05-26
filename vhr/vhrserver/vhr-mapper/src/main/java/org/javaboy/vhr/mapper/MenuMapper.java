@@ -1,10 +1,10 @@
 package org.javaboy.vhr.mapper;
 
 import org.javaboy.vhr.model.Menu;
-
 import java.util.List;
 
 public interface MenuMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Menu record);

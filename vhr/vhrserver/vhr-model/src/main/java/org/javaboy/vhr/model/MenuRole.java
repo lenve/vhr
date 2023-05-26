@@ -1,6 +1,7 @@
 package org.javaboy.vhr.model;
 
 public class MenuRole {
+
     private Integer id;
 
     private Integer mid;

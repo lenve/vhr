@@ -5,7 +5,6 @@ import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -20,8 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/basic/pos")
 public class PositionController {
+
     @Autowired
     PositionService positionService;
+
     @GetMapping("/")
     public List<Position> getAllPositions() {
         return positionService.getAllPositions();

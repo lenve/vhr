@@ -17,7 +17,6 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -39,10 +38,13 @@ public class MailReceiver {
 
     @Autowired
     JavaMailSender javaMailSender;
+
     @Autowired
     MailProperties mailProperties;
+
     @Autowired
     TemplateEngine templateEngine;
+
     @Autowired
     StringRedisTemplate redisTemplate;
 
@@ -55,7 +57,8 @@ public class MailReceiver {
         if (redisTemplate.opsForHash().entries("mail_log").containsKey(msgId)) {
             //redis 中包含该 key，说明该消息已经被消费过
             logger.info(msgId + ":消息已经被消费");
-            channel.basicAck(tag, false);//确认消息已消费
+            //确认消息已消费
+            channel.basicAck(tag, false);
             return;
         }
         //收到消息，发送邮件

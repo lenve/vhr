@@ -4,12 +4,12 @@ import org.javaboy.vhr.mapper.SalaryMapper;
 import org.javaboy.vhr.model.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class SalaryService {
+
     @Autowired
     SalaryMapper salaryMapper;
 

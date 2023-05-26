@@ -5,7 +5,6 @@ import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -20,12 +19,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/basic/department")
 public class DepartmentController {
+
     @Autowired
     DepartmentService departmentService;
+
     @GetMapping("/")
     public List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
+
     @PostMapping("/")
     public RespBean addDep(@RequestBody Department dep) {
         departmentService.addDep(dep);

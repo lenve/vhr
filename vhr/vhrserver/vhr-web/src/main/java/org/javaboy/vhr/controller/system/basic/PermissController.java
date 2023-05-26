@@ -7,7 +7,6 @@ import org.javaboy.vhr.service.MenuService;
 import org.javaboy.vhr.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -22,14 +21,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/basic/permiss")
 public class PermissController {
+
     @Autowired
     RoleService roleService;
+
     @Autowired
     MenuService menuService;
+
     @GetMapping("/")
     public List<Role> getAllRoles() {
         return roleService.getAllRoles();
     }
+
     @GetMapping("/menus")
     public List<Menu> getAllMenus() {
         return menuService.getAllMenus();

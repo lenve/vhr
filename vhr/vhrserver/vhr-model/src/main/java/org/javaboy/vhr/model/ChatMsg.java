@@ -3,10 +3,15 @@ package org.javaboy.vhr.model;
 import java.util.Date;
 
 public class ChatMsg {
+
     private String from;
+
     private String to;
+
     private String content;
+
     private Date date;
+
     private String fromNickname;
 
     public String getFromNickname() {

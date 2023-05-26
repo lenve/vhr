@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.MenuRole;
 
 public interface MenuRoleMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(MenuRole record);

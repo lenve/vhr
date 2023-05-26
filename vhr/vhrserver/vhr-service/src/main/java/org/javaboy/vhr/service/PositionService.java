@@ -5,7 +5,6 @@ import org.javaboy.vhr.model.Position;
 import org.javaboy.vhr.model.RespBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +19,10 @@ import java.util.List;
  */
 @Service
 public class PositionService {
+
     @Autowired
     PositionMapper positionMapper;
+
     public List<Position> getAllPositions() {
         return positionMapper.getAllPositions();
     }

@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @时间 2019-09-27 7:07
  */
 public class Meta implements Serializable {
+
     private Boolean keepAlive;
 
     private Boolean requireAuth;

@@ -4,7 +4,6 @@ import org.javaboy.vhr.mapper.JobLevelMapper;
 import org.javaboy.vhr.model.JobLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import java.util.List;
  */
 @Service
 public class JobLevelService {
+
     @Autowired
     JobLevelMapper jobLevelMapper;
 

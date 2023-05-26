@@ -3,6 +3,7 @@ package org.javaboy.vhr.model;
 import java.util.Date;
 
 public class Appraise {
+
     private Integer id;
 
     private Integer eid;

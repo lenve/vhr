@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Map;
 
 /**
@@ -58,7 +57,7 @@ public class HrInfoController {
     }
 
     @PostMapping("/hr/userface")
-    public RespBean updateHrUserface(MultipartFile file, Integer id,Authentication authentication) {
+    public RespBean updateHrUserface(MultipartFile file, Integer id, Authentication authentication) {
         String fileId = FastDFSUtils.upload(file);
         String url = nginxHost + fileId;
         if (hrService.updateUserface(url, id) == 1) {
@@ -69,5 +68,4 @@ public class HrInfoController {
         }
         return RespBean.error("更新失败!");
     }
-
 }
