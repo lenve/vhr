@@ -45,11 +45,15 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
 
     @Override
     public boolean supports(ConfigAttribute attribute) {
-        return true;
+        return proceedWithTask(attribute);
     }
 
     @Override
     public boolean supports(Class<?> clazz) {
+        return proceedWithTask(clazz);
+    }
+
+    public boolean proceedWithTask(ConfigAttribute attribute) {
         return true;
     }
 }

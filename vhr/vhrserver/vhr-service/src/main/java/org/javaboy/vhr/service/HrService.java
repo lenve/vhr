@@ -46,7 +46,7 @@ public class HrService implements UserDetailsService {
     }
 
     public Integer updateHr(Hr hr) {
-        return hrMapper.updateByPrimaryKeySelective(hr);
+        return update(hr);
     }
 
     @Transactional
@@ -64,7 +64,7 @@ public class HrService implements UserDetailsService {
     }
 
     public Integer updateHyById(Hr hr) {
-        return hrMapper.updateByPrimaryKeySelective(hr);
+        return update(hr);
     }
 
     public boolean updateHrPasswd(String oldpass, String pass, Integer hrid) {
@@ -82,5 +82,9 @@ public class HrService implements UserDetailsService {
 
     public Integer updateUserface(String url, Integer id) {
         return hrMapper.updateUserface(url, id);
+    }
+
+    public Integer update(Hr hr) {
+        return hrMapper.updateByPrimaryKeySelective(hr);
     }
 }

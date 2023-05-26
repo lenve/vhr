@@ -106,17 +106,17 @@ public class Hr implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isValid();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isValid();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isValid();
     }
 
     @Override
@@ -160,5 +160,9 @@ public class Hr implements UserDetails {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public boolean isValid() {
+        return true;
     }
 }
