@@ -13,28 +13,31 @@ export default new Router({
             path: '/',
             name: 'Login',
             component: Login,
-            hidden:true
+            hidden: true
         }, {
             path: '/home',
             name: 'Home',
             component: Home,
-            hidden:true,
-            meta:{
-                roles:['admin','user']
+            hidden: true,
+            meta: {
+                roles: ['admin', 'user']
             },
-            children:[
+            children: [
                 {
                     path: '/chat',
                     name: '在线聊天',
                     component: FriendChat,
-                    hidden:true
-                },{
+                    hidden: true
+                }, {
                     path: '/hrinfo',
                     name: '个人中心',
                     component: HrInfo,
-                    hidden:true
+                    hidden: true
                 }
             ]
+        }, {
+            path: '*',
+            redirect: '/home'
         }
     ]
 })
