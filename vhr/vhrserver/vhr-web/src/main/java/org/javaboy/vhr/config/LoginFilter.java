@@ -28,11 +28,11 @@ import java.util.Map;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Autowired
     SessionRegistry sessionRegistry;
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (!request.getMethod().equals("POST")) {
-            throw new AuthenticationServiceException(
-                    "Authentication method not supported: " + request.getMethod());
+            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
         String verify_code = (String) request.getSession().getAttribute("verify_code");
         if (request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE) || request.getContentType().contains(MediaType.APPLICATION_JSON_UTF8_VALUE)) {
@@ -40,9 +40,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             try {
                 loginData = new ObjectMapper().readValue(request.getInputStream(), Map.class);
             } catch (IOException e) {
-            }finally {
+            } finally {
                 String code = loginData.get("code");
-                checkCode(response, code, verify_code);
+                checkCode(request, response, code, verify_code);
             }
             String username = loginData.get(getUsernameParameter());
             String password = loginData.get(getPasswordParameter());
@@ -53,23 +53,24 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 password = "";
             }
             username = username.trim();
-            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
-                    username, password);
+            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
             setDetails(request, authRequest);
             Hr principal = new Hr();
             principal.setUsername(username);
             sessionRegistry.registerNewSession(request.getSession(true).getId(), principal);
             return this.getAuthenticationManager().authenticate(authRequest);
         } else {
-            checkCode(response, request.getParameter("code"), verify_code);
+            checkCode(request, response, request.getParameter("code"), verify_code);
             return super.attemptAuthentication(request, response);
         }
     }
 
-    public void checkCode(HttpServletResponse resp, String code, String verify_code) {
+    public void checkCode(HttpServletRequest request, HttpServletResponse resp, String code, String verify_code) {
         if (code == null || verify_code == null || "".equals(code) || !verify_code.toLowerCase().equals(code.toLowerCase())) {
-            //验证码不正确
+            // 验证码不正确
             throw new AuthenticationServiceException("验证码不正确");
         }
+        // 验证通过后使验证码失效
+        request.getSession().removeAttribute("verify_code");
     }
 }
