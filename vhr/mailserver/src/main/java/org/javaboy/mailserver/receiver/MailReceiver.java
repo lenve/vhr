@@ -60,7 +60,7 @@ public class MailReceiver {
         }
         //收到消息，发送邮件
         MimeMessage msg = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(msg);
+        MimeMessageHelper helper = new MimeMessageHelper(msg, "utf8");
         try {
             helper.setTo(employee.getEmail());
             helper.setFrom(mailProperties.getUsername());
