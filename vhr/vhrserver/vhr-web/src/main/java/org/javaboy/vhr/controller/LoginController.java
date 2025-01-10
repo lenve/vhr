@@ -27,6 +27,7 @@ public class LoginController {
         return RespBean.error("尚未登录，请登录!");
     }
 
+    /*
     @GetMapping("/verifyCode")
     public void verifyCode(HttpServletRequest request, HttpServletResponse resp) throws IOException {
         VerificationCode code = new VerificationCode();
@@ -36,4 +37,5 @@ public class LoginController {
         session.setAttribute("verify_code", text);
         VerificationCode.output(image,resp.getOutputStream());
     }
+    */
 }
