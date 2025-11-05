@@ -16,10 +16,11 @@
         <result column="accumulationFundBase" property="accumulationFundBase" jdbcType="INTEGER"/>
         <result column="accumulationFundPer" property="accumulationFundPer" jdbcType="REAL"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, basicSalary, bonus, lunchSalary, trafficSalary, allSalary, pensionBase, pensionPer, 
-    createDate, medicalBase, medicalPer, accumulationFundBase, accumulationFundPer, name
+    createDate, medicalBase, medicalPer, accumulationFundBase, accumulationFundPer, name, enabled
   </sql>
     <select id="getAllSalaries" resultMap="BaseResultMap">
         select
@@ -41,12 +42,12 @@
       lunchSalary, trafficSalary, allSalary, 
       pensionBase, pensionPer, createDate, 
       medicalBase, medicalPer, accumulationFundBase, 
-      accumulationFundPer, name)
+      accumulationFundPer, name, enabled) 
     values (#{id,jdbcType=INTEGER}, #{basicSalary,jdbcType=INTEGER}, #{bonus,jdbcType=INTEGER}, 
       #{lunchSalary,jdbcType=INTEGER}, #{trafficSalary,jdbcType=INTEGER}, #{allSalary,jdbcType=INTEGER}, 
       #{pensionBase,jdbcType=INTEGER}, #{pensionPer,jdbcType=REAL}, #{createDate,jdbcType=TIMESTAMP}, 
       #{medicalBase,jdbcType=INTEGER}, #{medicalPer,jdbcType=REAL}, #{accumulationFundBase,jdbcType=INTEGER}, 
-      #{accumulationFundPer,jdbcType=REAL}, #{name,jdbcType=VARCHAR})
+      #{accumulationFundPer,jdbcType=REAL}, #{name,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT})
   </insert>
     <insert id="insertSelective" parameterType="org.javaboy.vhr.model.Salary">
         insert into salary
@@ -93,6 +94,9 @@
             <if test="name != null">
                 name,
             </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -136,6 +140,9 @@
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BIT},
             </if>
         </trim>
     </insert>
@@ -181,6 +188,9 @@
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -198,7 +208,8 @@
       medicalPer = #{medicalPer,jdbcType=REAL},
       accumulationFundBase = #{accumulationFundBase,jdbcType=INTEGER},
       accumulationFundPer = #{accumulationFundPer,jdbcType=REAL},
-      name = #{name,jdbcType=VARCHAR}
+      name = #{name,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -99,6 +99,17 @@
     <insert id="updateEmployeeSalaryById">
         REPLACE INTO empsalary (eid,sid) VALUES(#{eid},#{sid})
     </insert>
+    <select id="getEmployeesBySalaryId" resultMap="AllEmployeeInfo">
+        SELECT e.*,p.`id` as pid,p.`name` as pname,n.`id` as nid,n.`name` as nname,d.`id` as did,d.`name` as dname,j.`id` as jid,j.`name` as jname,pos.`id` as posid,pos.`name` as posname
+        FROM employee e
+        JOIN empsalary es ON e.`id`=es.`eid`
+        JOIN nation n ON e.`nationId`=n.`id`
+        JOIN politicsstatus p ON e.`politicId`=p.`id`
+        JOIN department d ON e.`departmentId`=d.`id`
+        JOIN joblevel j ON e.`jobLevelId`=j.`id`
+        JOIN position pos ON e.`posId`=pos.`id`
+        WHERE es.`sid`=#{salaryId}
+    </select>
     <select id="getEmployeeById" resultMap="AllEmployeeInfo">
         select e.*,p.`id` as pid,p.`name` as pname,n.`id` as nid,n.`name` as nname,d.`id` as did,d.`name` as
         dname,j.`id` as jid,j.`name` as jname,pos.`id` as posid,pos.`name` as posname from employee e,nation

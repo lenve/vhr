@@ -34,6 +34,8 @@ public class Salary {
 
     private String name;
 
+    private Boolean enabled;
+
     public Integer getId() {
         return id;
     }
@@ -144,5 +146,13 @@ public class Salary {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }
