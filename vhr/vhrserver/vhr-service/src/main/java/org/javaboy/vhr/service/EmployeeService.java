@@ -109,4 +109,8 @@ public class EmployeeService {
     public Employee getEmployeeById(Integer empId) {
         return employeeMapper.getEmployeeById(empId);
     }
+
+    public List<Employee> getEmployeesBySalaryId(Integer salaryId) {
+        return employeeMapper.getEmployeesBySalaryId(salaryId);
+    }
 }

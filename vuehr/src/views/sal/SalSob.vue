@@ -28,6 +28,10 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button @click="showEditSalaryView(scope.row)">编辑</el-button>
+                        <el-button :type="scope.row.enabled ? 'warning' : 'success'" @click="toggleEnable(scope.row)">
+                            {{ scope.row.enabled ? '禁用' : '启用' }}
+                        </el-button>
+                        <el-button type="primary" @click="copySalary(scope.row)">复制</el-button>
                         <el-button type="danger" @click="deleteSalary(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -135,12 +139,73 @@
                 this.activeItemIndex--;
             },
             nextStep() {
+                // 表单验证
+                let isValid = true;
+                let errorMsg = '';
+                
+                switch (this.activeItemIndex) {
+                    case 0: // 基本工资
+                        if (this.salary.basicSalary <= 0) {
+                            isValid = false;
+                            errorMsg = '基本工资必须大于0';
+                        }
+                        break;
+                    case 1: // 交通补助
+                        if (this.salary.trafficSalary < 0) {
+                            isValid = false;
+                            errorMsg = '交通补助不能为负数';
+                        }
+                        break;
+                    case 2: // 午餐补助
+                        if (this.salary.lunchSalary < 0) {
+                            isValid = false;
+                            errorMsg = '午餐补助不能为负数';
+                        }
+                        break;
+                    case 3: // 奖金
+                        if (this.salary.bonus < 0) {
+                            isValid = false;
+                            errorMsg = '奖金不能为负数';
+                        }
+                        break;
+                    case 4: // 养老金比率
+                    case 6: // 医疗保险比率
+                    case 8: // 公积金比率
+                        const ratio = this.salary[Object.keys(this.salary)[this.activeItemIndex]];
+                        if (ratio < 0 || ratio > 100) {
+                            isValid = false;
+                            errorMsg = '比率必须在0-100之间';
+                        }
+                        break;
+                    case 5: // 养老金基数
+                    case 7: // 医疗保险基数
+                    case 9: // 公积金基数
+                        const base = this.salary[Object.keys(this.salary)[this.activeItemIndex]];
+                        if (base < 0) {
+                            isValid = false;
+                            errorMsg = '基数不能为负数';
+                        }
+                        break;
+                    case 10: // 账套名称
+                        if (!this.salary.name || this.salary.name.trim() === '') {
+                            isValid = false;
+                            errorMsg = '账套名称不能为空';
+                        }
+                        break;
+                }
+                
+                if (!isValid) {
+                    this.$message.error(errorMsg);
+                    return;
+                }
+                
                 if (this.activeItemIndex == 10) {
                     if (this.salary.id) {
                         this.putRequest("/salary/sob/", this.salary).then(resp=>{
                             if (resp) {
                                 this.initSalaries();
                                 this.dialogVisible = false;
+                                this.$message.success('账套修改成功');
                             }
                         })
                     } else {
@@ -148,6 +213,7 @@
                             if (resp) {
                                 this.initSalaries();
                                 this.dialogVisible = false;
+                                this.$message.success('账套添加成功');
                             }
                         });
                     }
@@ -180,6 +246,23 @@
                         this.salaries = resp;
                     }
                 })
+            },
+            toggleEnable(salary) {
+                const url = salary.enabled ? "/salary/sob/disable/" + salary.id : "/salary/sob/enable/" + salary.id;
+                this.putRequest(url).then(resp => {
+                    if (resp) {
+                        this.initSalaries();
+                        this.$message.success(salary.enabled ? '账套已禁用' : '账套已启用');
+                    }
+                });
+            },
+            copySalary(salary) {
+                this.postRequest("/salary/sob/copy/" + salary.id).then(resp => {
+                    if (resp) {
+                        this.initSalaries();
+                        this.$message.success('账套复制成功');
+                    }
+                });
             }
         }
     }
