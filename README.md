@@ -1,3 +1,5 @@
+#### 当前版本为 2026 全新版本（2026.10.24更新）
+
 #### vhr 是一个脚手架，如需业务完整的项目，请移步这里->[TienChin](https://github.com/lenve/tienchin)
 #### 本项目已使用 SpringBoot3+Vue3 重构，地址：[https://github.com/lenve/vhr2.0](https://github.com/lenve/vhr2.0)
 
