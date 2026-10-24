@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,16 +30,18 @@ import java.util.UUID;
  */
 @Service
 public class EmployeeService {
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+    /**
+     * 合同年限保留的小数位数（如 1.50 年）
+     */
+    private static final String CONTRACT_TERM_PATTERN = "##.00";
+
     @Autowired
     EmployeeMapper employeeMapper;
     @Autowired
     RabbitTemplate rabbitTemplate;
     @Autowired
     MailSendLogService mailSendLogService;
-    public final static Logger logger = LoggerFactory.getLogger(EmployeeService.class);
-    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-    SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-    DecimalFormat decimalFormat = new DecimalFormat("##.00");
 
     public RespPageBean getEmployeeByPage(Integer page, Integer size, Employee employee, Date[] beginDateScope) {
         if (page != null && size != null) {
@@ -53,9 +56,13 @@ public class EmployeeService {
     }
 
     public Integer addEmp(Employee employee) {
-        Date beginContract = employee.getBeginContract();
-        Date endContract = employee.getEndContract();
-        double month = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + (Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract)));
+        //按年月差计算合同期限（年），与原逻辑保持一致；LocalDate 线程安全
+        LocalDate beginContract = toLocalDate(employee.getBeginContract());
+        LocalDate endContract = toLocalDate(employee.getEndContract());
+        int yearDiff = endContract.getYear() - beginContract.getYear();
+        int monthDiff = endContract.getMonthValue() - beginContract.getMonthValue();
+        double month = yearDiff * 12 + monthDiff;
+        DecimalFormat decimalFormat = new DecimalFormat(CONTRACT_TERM_PATTERN);
         employee.setContractTerm(Double.parseDouble(decimalFormat.format(month / 12)));
         int result = employeeMapper.insertSelective(employee);
         if (result == 1) {
@@ -68,7 +75,7 @@ public class EmployeeService {
             mailSendLog.setExchange(MailConstants.MAIL_EXCHANGE_NAME);
             mailSendLog.setRouteKey(MailConstants.MAIL_ROUTING_KEY_NAME);
             mailSendLog.setEmpId(emp.getId());
-            mailSendLog.setTryTime(new Date(System.currentTimeMillis() + 1000 * 60 * MailConstants.MSG_TIMEOUT));
+            mailSendLog.setTryTime(new Date(System.currentTimeMillis() + MailConstants.ONE_MINUTE_IN_MILLIS * MailConstants.MSG_TIMEOUT));
             mailSendLogService.insert(mailSendLog);
             rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME, MailConstants.MAIL_ROUTING_KEY_NAME, emp, new CorrelationData(msgId));
         }
@@ -108,5 +115,12 @@ public class EmployeeService {
 
     public Employee getEmployeeById(Integer empId) {
         return employeeMapper.getEmployeeById(empId);
+    }
+
+    /**
+     * java.util.Date 转 java.time.LocalDate
+     */
+    private LocalDate toLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }

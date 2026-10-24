@@ -62,6 +62,13 @@ public class HrService implements UserDetailsService {
         return hrMapper.getAllHrsExceptCurrentHr(HrUtils.getCurrentHr().getId());
     }
 
+    /**
+     * 按 id 查询 hr，返回数据库中的最新资料
+     */
+    public Hr getHrById(Integer id) {
+        return hrMapper.selectByPrimaryKey(id);
+    }
+
     public Integer updateHyById(Hr hr) {
         return hrMapper.updateByPrimaryKeySelective(hr);
     }

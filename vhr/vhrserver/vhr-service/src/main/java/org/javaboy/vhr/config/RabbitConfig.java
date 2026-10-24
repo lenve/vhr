@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
-    public final static Logger logger = LoggerFactory.getLogger(RabbitConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(RabbitConfig.class);
     @Autowired
     CachingConnectionFactory cachingConnectionFactory;
     @Autowired
@@ -28,15 +28,16 @@ public class RabbitConfig {
         rabbitTemplate.setConfirmCallback((data, ack, cause) -> {
             String msgId = data.getId();
             if (ack) {
-                logger.info(msgId + ":消息发送成功");
-                mailSendLogService.updateMailSendLogStatus(msgId, 1);//修改数据库中的记录，消息投递成功
+                logger.info("{}:消息发送成功", msgId);
+                //消息投递成功，更新数据库中的记录状态
+                mailSendLogService.updateMailSendLogStatus(msgId, MailConstants.SUCCESS);
             } else {
-                logger.info(msgId + ":消息发送失败");
+                logger.info("{}:消息发送失败", msgId);
             }
         });
-        rabbitTemplate.setReturnCallback((msg, repCode, repText, exchange, routingkey) -> {
-            logger.info("消息发送失败");
-        });
+        rabbitTemplate.setReturnsCallback(returned ->
+                logger.error("消息路由失败，exchange: {}, routingKey: {}, replyText: {}",
+                        returned.getExchange(), returned.getRoutingKey(), returned.getReplyText()));
         return rabbitTemplate;
     }
 

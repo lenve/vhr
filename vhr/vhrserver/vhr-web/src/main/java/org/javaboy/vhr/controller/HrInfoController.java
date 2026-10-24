@@ -34,7 +34,13 @@ public class HrInfoController {
 
     @GetMapping("/hr/info")
     public Hr getCurrentHr(Authentication authentication) {
-        return ((Hr) authentication.getPrincipal());
+        //principal 是登录时的快照，头像等资料变更后不会更新，
+        //这里从数据库实时查询，保证前端刷新页面即可看到最新资料
+        Hr current = (Hr) authentication.getPrincipal();
+        Hr hr = hrService.getHrById(current.getId());
+        //密码哈希不能返回给前端
+        hr.setPassword(null);
+        return hr;
     }
 
     @PutMapping("/hr/info")

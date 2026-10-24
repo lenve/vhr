@@ -1,17 +1,18 @@
 <template>
     <div>
         <div style="margin-top: 10px;display: flex;justify-content: center">
-            <el-input v-model="keywords" placeholder="通过用户名搜索用户..." prefix-icon="el-icon-search"
-                      style="width: 400px;margin-right: 10px" @keydown.enter.native="doSearch"></el-input>
-            <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
+            <el-input v-model="keywords" placeholder="通过用户名搜索用户..."
+                      style="width: 400px;margin-right: 10px" @keydown.enter="doSearch"><template #prefix><el-icon><Search/></el-icon></template></el-input>
+            <el-button type="primary" @click="doSearch"><el-icon><Search/></el-icon>搜索</el-button>
         </div>
         <div class="hr-container">
             <el-card class="hr-card" v-for="(hr,index) in hrs" :key="index">
-                <div slot="header" class="clearfix">
+                <template #header>
+            <div class="clearfix">
                     <span>{{hr.name}}</span>
-                    <el-button style="float: right; padding: 3px 0;color: #e30007;" type="text"
-                               icon="el-icon-delete" @click="deleteHr(hr)"></el-button>
+                    <el-button style="float: right; padding: 3px 0;color: #e30007;" link @click="deleteHr(hr)"><el-icon><Delete/></el-icon></el-button>
                 </div>
+            </template>
                 <div>
                     <div class="img-container">
                         <img :src="hr.userface" :alt="hr.name" :title="hr.name" class="userface-img">
@@ -50,7 +51,7 @@
                                             :value="r.id">
                                     </el-option>
                                 </el-select>
-                                <el-button slot="reference" icon="el-icon-more" type="text"></el-button>
+                                <template #reference><el-button link><el-icon><MoreFilled/></el-icon></el-button></template>
                             </el-popover>
                         </div>
                         <div>备注：{{hr.remark}}</div>

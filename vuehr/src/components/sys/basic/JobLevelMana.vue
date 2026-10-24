@@ -1,8 +1,8 @@
 <template>
     <div>
         <div>
-            <el-input size="small" v-model="jl.name" style="width: 300px;" prefix-icon="el-icon-plus"
-                      placeholder="添加职称..."></el-input>
+            <el-input size="small" v-model="jl.name" style="width: 300px;"
+                      placeholder="添加职称..."><template #prefix><el-icon><Plus/></el-icon></template></el-input>
             <el-select v-model="jl.titleLevel" placeholder="职称等级" size="small"
                        style="margin-left: 5px;margin-right: 5px">
                 <el-option
@@ -12,7 +12,7 @@
                         :value="item">
                 </el-option>
             </el-select>
-            <el-button icon="el-icon-plus" type="primary" size="small" @click="addJobLevel">添加</el-button>
+            <el-button type="primary" size="small" @click="addJobLevel"><el-icon><Plus/></el-icon>添加</el-button>
         </div>
         <div style="margin-top: 10px">
             <el-table
@@ -20,7 +20,6 @@
                     border
                     v-loading="loading"
                     element-loading-text="正在加载..."
-                    element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(0, 0, 0, 0.8)"
                     size="small"
                     @selection-change="handleSelectionChange"
@@ -49,14 +48,14 @@
                 </el-table-column>
                 <el-table-column
                         label="是否启用">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-tag type="success" v-if="scope.row.enabled">已启用</el-tag>
                         <el-tag type="danger" v-else>未启用</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
                         label="操作">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button size="small" @click="showEditView(scope.row)">编辑</el-button>
                         <el-button size="small" type="danger" @click="deleteHandler(scope.row)">删除</el-button>
                     </template>
@@ -69,7 +68,7 @@
         </div>
         <el-dialog
                 title="修改职称"
-                :visible.sync="dialogVisible"
+                v-model="dialogVisible"
                 width="30%">
             <div>
                 <table>
@@ -111,10 +110,12 @@
                     </tr>
                 </table>
             </div>
-            <span slot="footer" class="dialog-footer">
+            <template #footer>
+                <span class="dialog-footer">
     <el-button size="small" @click="dialogVisible = false">取 消</el-button>
     <el-button size="small" type="primary" @click="doUpdate">确 定</el-button>
   </span>
+            </template>
         </el-dialog>
     </div>
 </template>

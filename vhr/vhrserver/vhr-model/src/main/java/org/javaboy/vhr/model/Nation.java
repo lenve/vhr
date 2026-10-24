@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Nation implements Serializable {
+
+    /**
+     * 序列化版本号（阿里巴巴Java开发规范【强制】要求显式声明）
+     */
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     private String name;
@@ -44,5 +50,13 @@ public class Nation implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Nation{" +
+                "id=" + id +
+                "name='" + name + '\'' +
+                '}';
     }
 }

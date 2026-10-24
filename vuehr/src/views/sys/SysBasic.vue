@@ -11,11 +11,11 @@
 </template>
 
 <script>
-    import DepMana from '../../components/sys/basic/DepMana'
-    import PosMana from '../../components/sys/basic/PosMana'
-    import JobLevelMana from '../../components/sys/basic/JobLevelMana'
-    import EcMana from '../../components/sys/basic/EcMana'
-    import PermissMana from '../../components/sys/basic/PermissMana'
+    import DepMana from '../../components/sys/basic/DepMana.vue'
+    import PosMana from '../../components/sys/basic/PosMana.vue'
+    import JobLevelMana from '../../components/sys/basic/JobLevelMana.vue'
+    import EcMana from '../../components/sys/basic/EcMana.vue'
+    import PermissMana from '../../components/sys/basic/PermissMana.vue'
     export default {
         name: "SysBasic",
         data(){

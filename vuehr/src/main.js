@@ -1,136 +1,64 @@
-import Vue from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import {
-    Button,
-    Input,
-    Table,
-    TableColumn,
-    Dialog,
-    Card,
-    Container,
-    Icon,
-    Select,
-    Form,
-    Tag,
-    Tree,
-    Pagination,
-    Badge,
-    Loading,
-    Message,
-    MessageBox,
-    Menu,
-    Tabs,
-    TabPane,
-    Breadcrumb,
-    BreadcrumbItem,
-    Dropdown,
-    Steps,
-    Step,
-    Tooltip,
-    Popover,
-    Collapse,
-    FormItem,
-    Checkbox,
-    Header,
-    DropdownMenu,
-    DropdownItem,
-    Aside,
-    Main,
-    MenuItem,
-    Submenu,
-    Option,
-    Col,
-    Row,
-    Upload,
-    Radio,
-    DatePicker,
-    RadioGroup,
-    CollapseItem,
-    Switch
-} from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.prototype.$ELEMENT = {size: 'small', zIndex: 3000};
-Vue.use(Switch);
-Vue.use(CollapseItem);
-Vue.use(Radio);
-Vue.use(RadioGroup);
-Vue.use(DatePicker);
-Vue.use(Upload);
-Vue.use(Row);
-Vue.use(Col);
-Vue.use(Option);
-Vue.use(Submenu);
-Vue.use(MenuItem);
-Vue.use(Header);
-Vue.use(DropdownMenu);
-Vue.use(DropdownItem);
-Vue.use(Aside);
-Vue.use(Main);
-Vue.use(Checkbox);
-Vue.use(FormItem);
-Vue.use(Collapse);
-Vue.use(Popover);
-Vue.use(Menu);
-Vue.use(Tabs);
-Vue.use(TabPane);
-Vue.use(Breadcrumb);
-Vue.use(BreadcrumbItem);
-Vue.use(Dropdown);
-Vue.use(Steps);
-Vue.use(Step);
-Vue.use(Tooltip);
-Vue.use(Tree);
-Vue.use(Pagination);
-Vue.use(Badge);
-Vue.use(Loading);
-Vue.use(Button);
-Vue.use(Input);
-Vue.use(Table);
-Vue.use(TableColumn);
-Vue.use(Dialog);
-Vue.use(Card);
-Vue.use(Container);
-Vue.use(Icon);
-Vue.use(Select);
-Vue.use(Form);
-Vue.use(Tag);
-Vue.prototype.$alert = MessageBox.alert
-Vue.prototype.$confirm = MessageBox.confirm
-
-import {postRequest} from "./utils/api";
-import {postKeyValueRequest} from "./utils/api";
-import {putRequest} from "./utils/api";
-import {deleteRequest} from "./utils/api";
-import {getRequest} from "./utils/api";
-import {initMenu} from "./utils/menus";
+import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import {ElMessage, ElMessageBox, ElNotification} from 'element-plus'
+import 'element-plus/dist/index.css'
 import 'font-awesome/css/font-awesome.min.css'
+import {deleteRequest, getRequest, postKeyValueRequest, postRequest, putRequest} from "./utils/api";
+import {initMenu} from "./utils/menus";
 
-Vue.prototype.postRequest = postRequest;
-Vue.prototype.postKeyValueRequest = postKeyValueRequest;
-Vue.prototype.putRequest = putRequest;
-Vue.prototype.deleteRequest = deleteRequest;
-Vue.prototype.getRequest = getRequest;
+const app = createApp(App)
 
-Vue.config.productionTip = false
+//注册 Element Plus 图标
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
 
-router.beforeEach((to, from, next) => {
+app.use(ElementPlus, {locale: zhCn})
+app.use(router)
+app.use(store)
+
+app.config.globalProperties.$ELEMENT = {size: 'small', zIndex: 3000}
+app.config.globalProperties.postRequest = postRequest;
+app.config.globalProperties.postKeyValueRequest = postKeyValueRequest;
+app.config.globalProperties.putRequest = putRequest;
+app.config.globalProperties.deleteRequest = deleteRequest;
+app.config.globalProperties.getRequest = getRequest;
+//Element Plus 不再自动挂载全局方法，这里手动挂载，兼容原有写法
+app.config.globalProperties.$message = ElMessage;
+app.config.globalProperties.$alert = ElMessageBox.alert;
+app.config.globalProperties.$confirm = ElMessageBox.confirm;
+app.config.globalProperties.$prompt = ElMessageBox.prompt;
+app.config.globalProperties.$notify = ElNotification;
+
+//全页加载时记录原始地址：动态路由注册前，catch-all 会在解析阶段把未注册的
+//动态地址（如 /emp/basic）重定向到 /home，导致原始地址丢失，需要事后恢复
+window.sessionStorage.setItem('vhr_init_path', location.pathname + location.search);
+
+//Vue Router 5 起导航守卫不再推荐使用 next()，直接返回结果即可
+router.beforeEach(async (to) => {
     if (to.path == '/') {
-        next();
-    } else {
-        if (window.sessionStorage.getItem("user")) {
-            initMenu(router, store);
-            next();
-        } else {
-            next('/?redirect=' + to.path);
-        }
+        return true;
     }
+    const initPath = window.sessionStorage.getItem('vhr_init_path');
+    if (!window.sessionStorage.getItem("user")) {
+        window.sessionStorage.removeItem('vhr_init_path');
+        return '/?redirect=' + (initPath && initPath.startsWith('/') ? initPath : to.fullPath);
+    }
+    //首次导航时动态路由还未注册，等菜单加载完成并重新触发一次导航
+    if (store.state.routes.length === 0) {
+        await initMenu(router, store);
+        window.sessionStorage.removeItem('vhr_init_path');
+        if (initPath && initPath.startsWith('/') && initPath !== '/') {
+            return initPath;
+        }
+        return to.fullPath;
+    }
+    return true;
 })
 
-new Vue({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app')
+app.mount('#app')

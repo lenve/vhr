@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Department implements Serializable {
+
+    /**
+     * 序列化版本号（阿里巴巴Java开发规范【强制】要求显式声明）
+     */
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     private String name;
@@ -105,5 +111,18 @@ public class Department implements Serializable {
 
     public void setParent(Boolean parent) {
         isParent = parent;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                "name='" + name + '\'' +
+                "parentId=" + parentId +
+                "depPath='" + depPath + '\'' +
+                "enabled=" + enabled +
+                "isParent=" + isParent +
+                "result=" + result +
+                '}';
     }
 }

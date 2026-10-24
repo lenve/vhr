@@ -2,32 +2,32 @@
     <div
             v-loading="globalLoading"
             element-loading-text="正在添加..."
-            element-loading-spinner="el-icon-loading"
             element-loading-background="rgba(0, 0, 0, 0.8)"
     >
         <div class="permissManaTool">
             <el-input size="small" placeholder="请输入角色英文名" v-model="role.name">
-                <template slot="prepend">ROLE_</template>
+                <template #prepend>ROLE_</template>
             </el-input>
             <el-input size="small" placeholder="请输入角色中文名" v-model="role.nameZh"
-                      @keydown.enter.native="doAddRole"></el-input>
-            <el-button type="primary" size="small" icon="el-icon-plus" @click="doAddRole">添加角色</el-button>
+                      @keydown.enter="doAddRole"></el-input>
+            <el-button type="primary" size="small" @click="doAddRole"><el-icon><Plus/></el-icon>添加角色</el-button>
         </div>
         <div class="permissManaMain">
             <el-collapse v-model="activeName"
                          v-loading="loading"
                          element-loading-text="正在加载..."
-                         element-loading-spinner="el-icon-loading"
                          element-loading-background="rgba(0, 0, 0, 0.8)"
                          accordion
                          @change="change">
                 <el-collapse-item :title="r.nameZh" :name="r.id" v-for="(r,index) in roles" :key="index">
                     <el-card class="box-card">
-                        <div slot="header" class="clearfix">
+                        <template #header>
+            <div class="clearfix">
                             <span>可访问的资源</span>
-                            <el-button style="float: right; padding: 3px 0;color: #ff0000;" icon="el-icon-delete"
-                                       type="text" @click="deleteRole(r)"></el-button>
+                            <el-button style="float: right; padding: 3px 0;color: #ff0000;"
+                                       link @click="deleteRole(r)"><el-icon><Delete/></el-icon></el-button>
                         </div>
+            </template>
                         <div>
                             <el-tree
                                     show-checkbox

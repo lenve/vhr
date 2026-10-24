@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <el-table :data="emps" border stripe size="mini">
+            <el-table :data="emps" border stripe size="small">
                 <el-table-column type="selection" align="left" width="55"></el-table-column>
                 <el-table-column prop="name" label="姓名" fixed width="120" align="left"></el-table-column>
                 <el-table-column prop="workID" label="工号" width="120" align="left"></el-table-column>
@@ -9,9 +9,9 @@
                 <el-table-column prop="phone" label="电话号码" width="120" align="left"></el-table-column>
                 <el-table-column prop="department.name" label="所属部门" width="120" align="left"></el-table-column>
                 <el-table-column label="所属部门" align="center">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-tooltip placement="right" v-if="scope.row.salary">
-                            <div slot="content">
+                            <template #content><div>
                                 <table>
                                     <tr>
                                         <td>基本工资</td>
@@ -58,14 +58,14 @@
                                         <td>{{scope.row.salary.createDate}}</td>
                                     </tr>
                                 </table>
-                            </div>
+                            </div></template>
                             <el-tag>{{scope.row.salary.name}}</el-tag>
                         </el-tooltip>
                         <el-tag v-else>暂未设置</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" align="center">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-popover
                                 placement="left"
                                 title="修改工资账套"
@@ -74,7 +74,7 @@
                                 width="200"
                                 trigger="click">
                             <div>
-                                <el-select v-model="currentSalary" placeholder="请选择" size="mini">
+                                <el-select v-model="currentSalary" placeholder="请选择" size="small">
                                     <el-option
                                             v-for="item in salaries"
                                             :key="item.id"
@@ -83,7 +83,7 @@
                                     </el-option>
                                 </el-select>
                             </div>
-                            <el-button slot="reference" type="danger">修改工资账套</el-button>
+                            <template #reference><el-button type="danger">修改工资账套</el-button></template>
                         </el-popover>
                     </template>
                 </el-table-column>

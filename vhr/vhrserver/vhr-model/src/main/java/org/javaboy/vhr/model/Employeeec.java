@@ -72,4 +72,17 @@ public class Employeeec {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Employeeec{" +
+                "id=" + id +
+                "eid=" + eid +
+                "ecdate=" + ecdate +
+                "ecreason='" + ecreason + '\'' +
+                "ecpoint=" + ecpoint +
+                "ectype=" + ectype +
+                "remark='" + remark + '\'' +
+                '}';
+    }
 }

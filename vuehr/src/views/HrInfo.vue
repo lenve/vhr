@@ -1,9 +1,11 @@
 <template>
     <div v-if="hr">
         <el-card class="box-card" style="width: 400px">
-            <div slot="header" class="clearfix">
+            <template #header>
+            <div class="clearfix">
                 <span>{{hr.name}}</span>
             </div>
+            </template>
             <div>
                 <div style="display: flex;justify-content: center">
                     <el-upload
@@ -37,7 +39,7 @@
         </el-card>
         <el-dialog
                 title="修改用户信息"
-                :visible.sync="dialogVisible"
+                v-model="dialogVisible"
                 width="30%">
             <div>
                 <table>
@@ -75,14 +77,16 @@
                     </tr>
                 </table>
             </div>
-            <span slot="footer" class="dialog-footer">
+            <template #footer>
+                <span class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="updateHrInfo">确 定</el-button>
   </span>
+            </template>
         </el-dialog>
         <el-dialog
                 title="修改密码"
-                :visible.sync="passwdDialogVisible"
+                v-model="passwdDialogVisible"
                 width="30%">
             <div>
                 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"

@@ -7,6 +7,12 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Position implements Serializable {
+
+    /**
+     * 序列化版本号（阿里巴巴Java开发规范【强制】要求显式声明）
+     */
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     @Override
@@ -69,5 +75,15 @@ public class Position implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "id=" + id +
+                "name='" + name + '\'' +
+                "createDate=" + createDate +
+                "enabled=" + enabled +
+                '}';
     }
 }

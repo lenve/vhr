@@ -48,4 +48,15 @@ public class ChatMsg {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "ChatMsg{" +
+                "from='" + from + '\'' +
+                "to='" + to + '\'' +
+                "content='" + content + '\'' +
+                "date=" + date +
+                "fromNickname='" + fromNickname + '\'' +
+                '}';
+    }
 }

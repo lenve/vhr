@@ -1,8 +1,8 @@
 <template>
     <div>
         <div style="display: flex;justify-content: space-between">
-            <el-button icon="el-icon-plus" type="primary" @click="showAddSalaryView">添加工资账套</el-button>
-            <el-button icon="el-icon-refresh" type="success" @click="initSalaries"></el-button>
+            <el-button type="primary" @click="showAddSalaryView"><el-icon><Plus/></el-icon>添加工资账套</el-button>
+            <el-button type="success" @click="initSalaries"><el-icon><Refresh/></el-icon></el-button>
         </div>
         <div style="margin-top: 10px">
             <el-table :data="salaries" border stripe>
@@ -26,7 +26,7 @@
                     <el-table-column width="70" prop="accumulationFundBase" label="基数"></el-table-column>
                 </el-table-column>
                 <el-table-column label="操作">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button @click="showEditSalaryView(scope.row)">编辑</el-button>
                         <el-button type="danger" @click="deleteSalary(scope.row)">删除</el-button>
                     </template>
@@ -35,7 +35,7 @@
         </div>
         <el-dialog
                 :title="dialogTitle"
-                :visible.sync="dialogVisible"
+                v-model="dialogVisible"
                 width="50%">
             <div style="display: flex;justify-content: space-around;align-items: center">
                 <el-steps direction="vertical" :active="activeItemIndex">
@@ -45,10 +45,12 @@
                           v-for="(value,title,index) in salary"
                           :key="index" v-show="activeItemIndex==index" style="width: 200px"></el-input>
             </div>
-            <span slot="footer" class="dialog-footer">
+            <template #footer>
+                <span class="dialog-footer">
     <el-button @click="preStep">{{activeItemIndex==10?'取消':'上一步'}}</el-button>
     <el-button type="primary" @click="nextStep">{{activeItemIndex==10?'完成':'下一步'}}</el-button>
   </span>
+            </template>
         </el-dialog>
     </div>
 </template>

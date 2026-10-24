@@ -85,4 +85,19 @@ public class MailSendLog {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "MailSendLog{" +
+                "msgId='" + msgId + '\'' +
+                "empId=" + empId +
+                "status=" + status +
+                "routeKey='" + routeKey + '\'' +
+                "exchange='" + exchange + '\'' +
+                "count=" + count +
+                "tryTime=" + tryTime +
+                "createTime=" + createTime +
+                "updateTime=" + updateTime +
+                '}';
+    }
 }

@@ -30,4 +30,13 @@ public class MenuRole {
     public void setRid(Integer rid) {
         this.rid = rid;
     }
+
+    @Override
+    public String toString() {
+        return "MenuRole{" +
+                "id=" + id +
+                "mid=" + mid +
+                "rid=" + rid +
+                '}';
+    }
 }

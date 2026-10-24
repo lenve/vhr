@@ -75,4 +75,17 @@ public class AdjustSalary {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "AdjustSalary{" +
+                "id=" + id +
+                "eid=" + eid +
+                "asdate=" + asdate +
+                "beforesalary=" + beforesalary +
+                "aftersalary=" + aftersalary +
+                "reason='" + reason + '\'' +
+                "remark='" + remark + '\'' +
+                '}';
+    }
 }

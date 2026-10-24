@@ -72,4 +72,17 @@ public class Employeeremove {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Employeeremove{" +
+                "id=" + id +
+                "eid=" + eid +
+                "afterdepid=" + afterdepid +
+                "afterjobid=" + afterjobid +
+                "removedate=" + removedate +
+                "reason='" + reason + '\'' +
+                "remark='" + remark + '\'' +
+                '}';
+    }
 }

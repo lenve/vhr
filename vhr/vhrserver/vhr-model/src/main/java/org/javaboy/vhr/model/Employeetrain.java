@@ -52,4 +52,15 @@ public class Employeetrain {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Employeetrain{" +
+                "id=" + id +
+                "eid=" + eid +
+                "traindate=" + traindate +
+                "traincontent='" + traincontent + '\'' +
+                "remark='" + remark + '\'' +
+                '}';
+    }
 }

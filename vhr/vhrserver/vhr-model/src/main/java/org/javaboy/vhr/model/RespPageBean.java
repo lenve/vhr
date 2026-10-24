@@ -30,4 +30,11 @@ public class RespPageBean {
     public void setData(List<?> data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "RespPageBean{" +
+                "total=" + total +
+                '}';
+    }
 }

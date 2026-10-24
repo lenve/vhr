@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>4.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.javaboy</groupId>
@@ -17,6 +17,17 @@
         <module>vhrserver</module>
         <module>mailserver</module>
     </modules>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mybatis-spring-boot.version>4.1.0</mybatis-spring-boot.version>
+        <druid.version>1.2.28</druid.version>
+        <poi.version>6.0.0</poi.version>
+        <fastdfs-client.version>1.27.0.0</fastdfs-client.version>
+    </properties>
 
 
 </project>

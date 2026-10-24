@@ -42,4 +42,14 @@ public class OpLog {
     public void setHrid(Integer hrid) {
         this.hrid = hrid;
     }
+
+    @Override
+    public String toString() {
+        return "OpLog{" +
+                "id=" + id +
+                "adddate=" + adddate +
+                "operate='" + operate + '\'' +
+                "hrid=" + hrid +
+                '}';
+    }
 }

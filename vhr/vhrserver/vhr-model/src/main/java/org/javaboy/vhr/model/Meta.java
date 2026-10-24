@@ -12,6 +12,12 @@ import java.io.Serializable;
  * @时间 2019-09-27 7:07
  */
 public class Meta implements Serializable {
+
+    /**
+     * 序列化版本号（阿里巴巴Java开发规范【强制】要求显式声明）
+     */
+    private static final long serialVersionUID = 1L;
+
     private Boolean keepAlive;
 
     private Boolean requireAuth;
@@ -30,5 +36,13 @@ public class Meta implements Serializable {
 
     public void setRequireAuth(Boolean requireAuth) {
         this.requireAuth = requireAuth;
+    }
+
+    @Override
+    public String toString() {
+        return "Meta{" +
+                "keepAlive=" + keepAlive +
+                "requireAuth=" + requireAuth +
+                '}';
     }
 }

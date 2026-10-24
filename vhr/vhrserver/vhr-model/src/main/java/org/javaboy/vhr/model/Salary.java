@@ -145,4 +145,24 @@ public class Salary {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "id=" + id +
+                "basicSalary=" + basicSalary +
+                "bonus=" + bonus +
+                "lunchSalary=" + lunchSalary +
+                "trafficSalary=" + trafficSalary +
+                "allSalary=" + allSalary +
+                "pensionBase=" + pensionBase +
+                "pensionPer=" + pensionPer +
+                "createDate=" + createDate +
+                "medicalBase=" + medicalBase +
+                "medicalPer=" + medicalPer +
+                "accumulationFundBase=" + accumulationFundBase +
+                "accumulationFundPer=" + accumulationFundPer +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

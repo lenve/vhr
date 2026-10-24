@@ -50,4 +50,15 @@ public class SysMsg {
     public void setState(Integer state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return "SysMsg{" +
+                "id=" + id +
+                "mid=" + mid +
+                "type=" + type +
+                "hrid=" + hrid +
+                "state=" + state +
+                '}';
+    }
 }

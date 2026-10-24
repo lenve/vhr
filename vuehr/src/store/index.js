@@ -1,15 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { Notification } from 'element-ui';
+import {createStore} from 'vuex'
+import {ElNotification} from 'element-plus';
 import {getRequest} from "../utils/api";
-import '../utils/stomp'
-import '../utils/sockjs'
+import {Client} from '@stomp/stompjs'
+import SockJS from 'sockjs-client'
 
-Vue.use(Vuex)
-
-const now = new Date();
-
-const store = new Vuex.Store({
+const store = createStore({
     state: {
         routes: [],
         sessions: {},
@@ -28,16 +23,16 @@ const store = new Vuex.Store({
             state.routes = data;
         },
         changeCurrentSession(state, currentSession) {
-            Vue.set(state.isDot, state.currentHr.username + '#' + currentSession.username, false);
+            //Vue 3 的响应式可以直接新增属性，不再需要 Vue.set
+            state.isDot[state.currentHr.username + '#' + currentSession.username] = false;
             state.currentSession = currentSession;
         },
         addMessage(state, msg) {
-            let mss = state.sessions[state.currentHr.username + '#' + msg.to];
-            if (!mss) {
-                // state.sessions[state.currentHr.username+'#'+msg.to] = [];
-                Vue.set(state.sessions, state.currentHr.username + '#' + msg.to, []);
+            let key = state.currentHr.username + '#' + msg.to;
+            if (!state.sessions[key]) {
+                state.sessions[key] = [];
             }
-            state.sessions[state.currentHr.username + '#' + msg.to].push({
+            state.sessions[key].push({
                 content: msg.content,
                 date: new Date(),
                 self: !msg.notSelf
@@ -56,25 +51,31 @@ const store = new Vuex.Store({
     },
     actions: {
         connect(context) {
-            context.state.stomp = Stomp.over(new SockJS('/ws/ep'));
-            context.state.stomp.connect({}, success => {
-                context.state.stomp.subscribe('/user/queue/chat', msg => {
+            //@stomp/stompjs 新版 API：用 Client 替代 Stomp.over
+            const client = new Client({
+                webSocketFactory: () => new SockJS('/ws/ep'),
+                reconnectDelay: 5000,
+                debug: () => {
+                }
+            });
+            client.onConnect = () => {
+                client.subscribe('/user/queue/chat', msg => {
                     let receiveMsg = JSON.parse(msg.body);
                     if (!context.state.currentSession || receiveMsg.from != context.state.currentSession.username) {
-                        Notification.info({
+                        ElNotification.info({
                             title: '【' + receiveMsg.fromNickname + '】发来一条消息',
                             message: receiveMsg.content.length > 10 ? receiveMsg.content.substr(0, 10) : receiveMsg.content,
                             position: 'bottom-right'
                         })
-                        Vue.set(context.state.isDot, context.state.currentHr.username + '#' + receiveMsg.from, true);
+                        context.state.isDot[context.state.currentHr.username + '#' + receiveMsg.from] = true;
                     }
                     receiveMsg.notSelf = true;
                     receiveMsg.to = receiveMsg.from;
                     context.commit('addMessage', receiveMsg);
                 })
-            }, error => {
-
-            })
+            };
+            client.activate();
+            context.state.stomp = client;
         },
         initData(context) {
             context.commit('INIT_DATA')
@@ -92,8 +93,7 @@ store.watch(function (state) {
 }, function (val) {
     localStorage.setItem('vue-chat-session', JSON.stringify(val));
 }, {
-    deep: true/*这个貌似是开启watch监测的判断,官方说明也比较模糊*/
+    deep: true
 })
-
 
 export default store;

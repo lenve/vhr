@@ -8,13 +8,15 @@ spring:
     username: guest
     password: guest
     host: 127.0.0.1
-    publisher-confirms: true
+    #Spring Boot 2.4 中的 publisher-confirms 已移除，改为 publisher-confirm-type
+    publisher-confirm-type: correlated
     publisher-returns: true
-  redis:
-    host: 127.0.0.1
-    database: 0
-    port: 6379
-    password: 123
+  data:
+    redis:
+      host: 127.0.0.1
+      database: 0
+      port: 6379
+      password: 123
   cache:
     cache-names: menus_cache
 server:

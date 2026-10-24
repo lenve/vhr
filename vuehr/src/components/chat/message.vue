@@ -3,7 +3,7 @@
         <ul v-if="currentSession">
             <li v-for="entry in sessions[user.username+'#'+currentSession.username]">
                 <p class="time">
-                    <span>{{entry.date | time}}</span>
+                    <span>{{formatTime(entry.date)}}</span>
                 </p>
                 <div class="main" :class="{self:entry.self}">
                     <img class="avatar" :src="entry.self ? user.userface : currentSession.userface" alt="">
@@ -28,8 +28,9 @@
             'sessions',
             'currentSession'
         ]),
-        filters: {
-            time(date) {
+        methods: {
+            //Vue 3 已移除过滤器，改为方法调用
+            formatTime(date) {
                 if (date) {
                     date = new Date(date);
                 }

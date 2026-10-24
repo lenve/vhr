@@ -10,6 +10,15 @@ package org.javaboy.vhr.model;
  * @时间 2019-09-20 8:39
  */
 public class RespBean {
+    /**
+     * 业务处理成功状态码
+     */
+    private static final int STATUS_SUCCESS = 200;
+    /**
+     * 业务处理失败状态码
+     */
+    private static final int STATUS_ERROR = 500;
+
     private Integer status;
     private String msg;
     private Object obj;
@@ -19,19 +28,19 @@ public class RespBean {
     }
 
     public static RespBean ok(String msg) {
-        return new RespBean(200, msg, null);
+        return new RespBean(STATUS_SUCCESS, msg, null);
     }
 
     public static RespBean ok(String msg, Object obj) {
-        return new RespBean(200, msg, obj);
+        return new RespBean(STATUS_SUCCESS, msg, obj);
     }
 
     public static RespBean error(String msg) {
-        return new RespBean(500, msg, null);
+        return new RespBean(STATUS_ERROR, msg, null);
     }
 
     public static RespBean error(String msg, Object obj) {
-        return new RespBean(500, msg, obj);
+        return new RespBean(STATUS_ERROR, msg, obj);
     }
 
     private RespBean() {
@@ -68,5 +77,14 @@ public class RespBean {
     public RespBean setObj(Object obj) {
         this.obj = obj;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "RespBean{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", obj=" + obj +
+                '}';
     }
 }

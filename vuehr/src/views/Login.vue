@@ -5,26 +5,25 @@
                 ref="loginForm"
                 v-loading="loading"
                 element-loading-text="正在登录..."
-                element-loading-spinner="el-icon-loading"
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 :model="loginForm"
                 class="loginContainer">
             <h3 class="loginTitle">系统登录</h3>
             <el-form-item prop="username">
-                <el-input size="normal" type="text" v-model="loginForm.username" auto-complete="off"
+                <el-input size="default" type="text" v-model="loginForm.username" auto-complete="off"
                           placeholder="请输入用户名"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-                <el-input size="normal" type="password" v-model="loginForm.password" auto-complete="off"
+                <el-input size="default" type="password" v-model="loginForm.password" auto-complete="off"
                           placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item prop="code">
-                <el-input size="normal" type="text" v-model="loginForm.code" auto-complete="off"
-                          placeholder="点击图片更换验证码" @keydown.enter.native="submitLogin" style="width: 250px"></el-input>
+                <el-input size="default" type="text" v-model="loginForm.code" auto-complete="off"
+                          placeholder="点击图片更换验证码" @keydown.enter="submitLogin" style="width: 250px"></el-input>
                 <img :src="vcUrl" @click="updateVerifyCode" alt="" style="cursor: pointer">
             </el-form-item>
-            <el-checkbox size="normal" class="loginRemember" v-model="checked"></el-checkbox>
-            <el-button size="normal" type="primary" style="width: 100%;" @click="submitLogin">登录</el-button>
+            <el-checkbox size="default" class="loginRemember" v-model="checked"></el-checkbox>
+            <el-button size="default" type="primary" style="width: 100%;" @click="submitLogin">登录</el-button>
         </el-form>
     </div>
 </template>

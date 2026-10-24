@@ -30,4 +30,13 @@ public class EmpSalary {
     public void setSid(Integer sid) {
         this.sid = sid;
     }
+
+    @Override
+    public String toString() {
+        return "EmpSalary{" +
+                "id=" + id +
+                "eid=" + eid +
+                "sid=" + sid +
+                '}';
+    }
 }

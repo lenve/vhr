@@ -6,14 +6,12 @@
                     class="addPosInput"
                     v-loading="loading"
                     element-loading-text="正在加载..."
-                    element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(0, 0, 0, 0.8)"
                     placeholder="添加职位..."
-                    prefix-icon="el-icon-plus"
-                    @keydown.enter.native="addPosition"
-                    v-model="pos.name">
+                    @keydown.enter="addPosition"
+                    v-model="pos.name"><template #prefix><el-icon><Plus/></el-icon></template>
             </el-input>
-            <el-button icon="el-icon-plus" size="small" type="primary" @click="addPosition">添加</el-button>
+            <el-button size="small" type="primary" @click="addPosition"><el-icon><Plus/></el-icon>添加</el-button>
         </div>
         <div class="posManaMain">
             <el-table
@@ -44,19 +42,19 @@
                 </el-table-column>
                 <el-table-column
                         label="是否启用">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-tag size="small" type="success" v-if="scope.row.enabled">已启用</el-tag>
                         <el-tag size="small" type="danger" v-else>未启用</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
-                                size="mini"
+                                size="small"
                                 @click="showEditView(scope.$index, scope.row)">编辑
                         </el-button>
                         <el-button
-                                size="mini"
+                                size="small"
                                 type="danger"
                                 @click="handleDelete(scope.$index, scope.row)">删除
                         </el-button>
@@ -69,7 +67,7 @@
         </div>
         <el-dialog
                 title="修改职位"
-                :visible.sync="dialogVisible"
+                v-model="dialogVisible"
                 width="30%">
             <div>
                 <div>
@@ -85,10 +83,12 @@
                     </el-switch>
                 </div>
             </div>
-            <span slot="footer" class="dialog-footer">
+            <template #footer>
+                <span class="dialog-footer">
     <el-button size="small" @click="dialogVisible = false">取 消</el-button>
     <el-button size="small" type="primary" @click="doUpdate">确 定</el-button>
   </span>
+            </template>
         </el-dialog>
     </div>
 </template>

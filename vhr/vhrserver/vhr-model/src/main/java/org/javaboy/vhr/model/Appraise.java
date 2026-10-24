@@ -62,4 +62,16 @@ public class Appraise {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Appraise{" +
+                "id=" + id +
+                "eid=" + eid +
+                "appdate=" + appdate +
+                "appresult='" + appresult + '\'' +
+                "appcontent='" + appcontent + '\'' +
+                "remark='" + remark + '\'' +
+                '}';
+    }
 }

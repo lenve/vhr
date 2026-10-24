@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Menu implements Serializable {
+
+    /**
+     * 序列化版本号（阿里巴巴Java开发规范【强制】要求显式声明）
+     */
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     private String url;
@@ -110,5 +116,22 @@ public class Menu implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                "url='" + url + '\'' +
+                "path='" + path + '\'' +
+                "component='" + component + '\'' +
+                "name='" + name + '\'' +
+                "iconCls='" + iconCls + '\'' +
+                "meta=" + meta +
+                "parentId=" + parentId +
+                "enabled=" + enabled +
+                "children=" + children +
+                "roles=" + roles +
+                '}';
     }
 }

@@ -10,3 +10,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 vhr.wiki
 人事管理系统需求规格说明书.doc
+
+# browser automation artifacts
+.playwright-cli/

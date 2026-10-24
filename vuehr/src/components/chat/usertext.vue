@@ -24,7 +24,11 @@
                     let msgObj = new Object();
                     msgObj.to = this.currentSession.username;
                     msgObj.content = this.content;
-                    this.$store.state.stomp.send('/ws/chat', {}, JSON.stringify(msgObj));
+                    //@stomp/stompjs 使用 publish 发送消息
+                    this.$store.state.stomp.publish({
+                        destination: '/ws/chat',
+                        body: JSON.stringify(msgObj)
+                    });
                     this.$store.commit('addMessage', msgObj);
                     this.content = '';
                 }

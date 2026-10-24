@@ -1,15 +1,15 @@
 import {
-    Message
-} from 'element-ui';
+    ElMessage
+} from 'element-plus';
 const showMessage = Symbol('showMessage')
 class JavaboyMessage {
     [showMessage](type, options, single) {
         if (single) {
             if (document.getElementsByClassName('el-message').length === 0) {
-                Message[type](options)
+                ElMessage[type](options)
             }
         } else {
-            Message[type](options)
+            ElMessage[type](options)
         }
     }
     info(options, single = true) {

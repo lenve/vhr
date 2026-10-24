@@ -30,4 +30,13 @@ public class HrRole {
     public void setRid(Integer rid) {
         this.rid = rid;
     }
+
+    @Override
+    public String toString() {
+        return "HrRole{" +
+                "id=" + id +
+                "hrid=" + hrid +
+                "rid=" + rid +
+                '}';
+    }
 }
